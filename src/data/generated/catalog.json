@@ -1,0 +1,3692 @@
+{
+ "source": {
+  "title": "SAP T-Code Almanach SK/EN",
+  "edition": "2026-10-23",
+  "pages": 40
+ },
+ "areas": [
+  {
+   "id": "01",
+   "title": {
+    "sk": "Navigácia a orientácia",
+    "en": "Navigation and discovery"
+   },
+   "count": 15
+  },
+  {
+   "id": "02",
+   "title": {
+    "sk": "ABAP vývoj, kvalita a výkon",
+    "en": "ABAP development, quality and performance"
+   },
+   "count": 23
+  },
+  {
+   "id": "03",
+   "title": {
+    "sk": "Prevádzka, Basis a monitoring",
+    "en": "Operations, Basis and monitoring"
+   },
+   "count": 32
+  },
+  {
+   "id": "04",
+   "title": {
+    "sk": "Oprávnenia a bezpečnosť",
+    "en": "Authorizations and security"
+   },
+   "count": 13
+  },
+  {
+   "id": "05",
+   "title": {
+    "sk": "Transporty, customizing a upgrade",
+    "en": "Transports, customizing and upgrades"
+   },
+   "count": 18
+  },
+  {
+   "id": "06",
+   "title": {
+    "sk": "Integrácie, RFC, IDoc a služby",
+    "en": "Integration, RFC, IDoc and services"
+   },
+   "count": 30
+  },
+  {
+   "id": "07",
+   "title": {
+    "sk": "MM: Materiály a nákup",
+    "en": "MM: Materials and purchasing"
+   },
+   "count": 30
+  },
+  {
+   "id": "08",
+   "title": {
+    "sk": "Skladové pohyby a faktúry",
+    "en": "Inventory movements and invoice verification"
+   },
+   "count": 30
+  },
+  {
+   "id": "09",
+   "title": {
+    "sk": "SD: Predaj a distribúcia",
+    "en": "SD: Sales and distribution"
+   },
+   "count": 30
+  },
+  {
+   "id": "10",
+   "title": {
+    "sk": "FI: Účtovníctvo a majetok",
+    "en": "FI: Financial accounting and assets"
+   },
+   "count": 36
+  },
+  {
+   "id": "11",
+   "title": {
+    "sk": "CO: Controlling a kalkulácie",
+    "en": "CO: Controlling and costing"
+   },
+   "count": 20
+  },
+  {
+   "id": "12",
+   "title": {
+    "sk": "PP: Výroba, MRP a kusovníky",
+    "en": "PP: Production, MRP and BOMs"
+   },
+   "count": 30
+  },
+  {
+   "id": "13",
+   "title": {
+    "sk": "Sklad: klasický LE-WM",
+    "en": "Warehouse: classic LE-WM"
+   },
+   "count": 16
+  },
+  {
+   "id": "14",
+   "title": {
+    "sk": "Sklad: Extended Warehouse Management",
+    "en": "Warehouse: Extended Warehouse Management"
+   },
+   "count": 10
+  },
+  {
+   "id": "15",
+   "title": {
+    "sk": "QM: Manažment kvality",
+    "en": "QM: Quality management"
+   },
+   "count": 14
+  },
+  {
+   "id": "16",
+   "title": {
+    "sk": "PM: Údržba technických zariadení",
+    "en": "PM: Plant maintenance"
+   },
+   "count": 15
+  },
+  {
+   "id": "17",
+   "title": {
+    "sk": "BW, extrakcia a dátové toky",
+    "en": "BW, extraction and data flows"
+   },
+   "count": 16
+  },
+  {
+   "id": "18",
+   "title": {
+    "sk": "Konverzia a migrácia S/4HANA",
+    "en": "S/4HANA conversion and migration"
+   },
+   "count": 15
+  }
+ ],
+ "codes": [
+  {
+   "code": "SEARCH_SAP_MENU",
+   "area": "01",
+   "type": "R",
+   "purpose": {
+    "sk": "Vyhľadávanie transakcií podľa názvu alebo menu",
+    "en": "Search transactions by name or menu"
+   }
+  },
+  {
+   "code": "SE93",
+   "area": "01",
+   "type": "A",
+   "purpose": {
+    "sk": "Definícia, zobrazenie a údržba T-kódov",
+    "en": "Display and maintain transaction definitions"
+   }
+  },
+  {
+   "code": "SE16",
+   "area": "01",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie obsahu databázových tabuliek",
+    "en": "Display database table contents"
+   }
+  },
+  {
+   "code": "SE16N",
+   "area": "01",
+   "type": "R",
+   "purpose": {
+    "sk": "Rozšírený prehliadač tabuliek",
+    "en": "Enhanced table data browser"
+   }
+  },
+  {
+   "code": "SE16H",
+   "area": "01",
+   "type": "R",
+   "purpose": {
+    "sk": "Rozšírené dopyty a prehliadanie dát na HANA",
+    "en": "HANA-oriented data browser and queries"
+   }
+  },
+  {
+   "code": "SE11",
+   "area": "01",
+   "type": "A",
+   "purpose": {
+    "sk": "ABAP Dictionary: tabuľky, typy, pohľady",
+    "en": "ABAP Dictionary: tables, types, views"
+   }
+  },
+  {
+   "code": "SE14",
+   "area": "01",
+   "type": "A",
+   "purpose": {
+    "sk": "Databázová utilita pre DDIC objekty",
+    "en": "Database utility for Dictionary objects"
+   }
+  },
+  {
+   "code": "SM30",
+   "area": "01",
+   "type": "W",
+   "purpose": {
+    "sk": "Údržba povolených tabuliek a pohľadov",
+    "en": "Maintain permitted tables and views"
+   }
+  },
+  {
+   "code": "SPRO",
+   "area": "01",
+   "type": "A",
+   "purpose": {
+    "sk": "Konfigurácia procesov cez SAP IMG",
+    "en": "SAP IMG business configuration"
+   }
+  },
+  {
+   "code": "AL11",
+   "area": "01",
+   "type": "R",
+   "purpose": {
+    "sk": "Prehliadanie adresárov aplikačného servera",
+    "en": "Browse application-server directories"
+   }
+  },
+  {
+   "code": "FILE",
+   "area": "01",
+   "type": "A",
+   "purpose": {
+    "sk": "Logické cesty a mená súborov",
+    "en": "Logical file paths and names"
+   }
+  },
+  {
+   "code": "SE84",
+   "area": "01",
+   "type": "R",
+   "purpose": {
+    "sk": "Vyhľadávanie objektov v ABAP repozitári",
+    "en": "Repository information system"
+   }
+  },
+  {
+   "code": "SU3",
+   "area": "01",
+   "type": "W",
+   "purpose": {
+    "sk": "Vlastné používateľské nastavenia",
+    "en": "Maintain own user defaults"
+   }
+  },
+  {
+   "code": "ABAPDOCU",
+   "area": "01",
+   "type": "R",
+   "purpose": {
+    "sk": "Dokumentácia ABAP s príkladmi",
+    "en": "ABAP documentation and examples"
+   }
+  },
+  {
+   "code": "ABAPHELP",
+   "area": "01",
+   "type": "R",
+   "purpose": {
+    "sk": "Vyhľadávanie ABAP kľúčových slov",
+    "en": "ABAP keyword help"
+   }
+  },
+  {
+   "code": "SE21",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Balíky a organizácia repozitára",
+    "en": "Package Builder"
+   }
+  },
+  {
+   "code": "SE24",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Klasický editor tried a rozhraní",
+    "en": "Classic class and interface builder"
+   }
+  },
+  {
+   "code": "SE37",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Funkčné moduly a ich testovanie",
+    "en": "Function modules and their testing"
+   }
+  },
+  {
+   "code": "SE38",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "ABAP programy a reporty",
+    "en": "ABAP program editor"
+   }
+  },
+  {
+   "code": "SA38",
+   "area": "02",
+   "type": "A",
+   "purpose": {
+    "sk": "Spustenie existujúceho ABAP reportu",
+    "en": "Run an existing ABAP report"
+   }
+  },
+  {
+   "code": "SE80",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Object Navigator, klasický Workbench",
+    "en": "Classic ABAP Object Navigator"
+   }
+  },
+  {
+   "code": "SE18",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Definície BAdI a enhancement spotov",
+    "en": "BAdI and enhancement spot definitions"
+   }
+  },
+  {
+   "code": "SE19",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Implementácie BAdI",
+    "en": "BAdI implementations"
+   }
+  },
+  {
+   "code": "SE91",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Katalóg správ (message classes)",
+    "en": "Message class maintenance"
+   }
+  },
+  {
+   "code": "SE41",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Menu Painter: GUI statusy",
+    "en": "Menu Painter and GUI statuses"
+   }
+  },
+  {
+   "code": "SE51",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Screen Painter: dynpro obrazovky",
+    "en": "Screen Painter for classic dynpros"
+   }
+  },
+  {
+   "code": "SE71",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Klasické SAPscript formuláre",
+    "en": "Classic SAPscript forms"
+   }
+  },
+  {
+   "code": "SMARTFORMS",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Vývoj Smart Forms formulárov",
+    "en": "Smart Forms form designer"
+   }
+  },
+  {
+   "code": "SFP",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "Adobe Forms a rozhrania formulárov",
+    "en": "Adobe Forms interface and layout"
+   }
+  },
+  {
+   "code": "SHDB",
+   "area": "02",
+   "type": "L",
+   "purpose": {
+    "sk": "Nahrávanie transakcií pre batch input",
+    "en": "Transaction recordings for batch input"
+   }
+  },
+  {
+   "code": "SEGW",
+   "area": "02",
+   "type": "W",
+   "purpose": {
+    "sk": "OData Gateway Service Builder (klasický)",
+    "en": "Classic OData Gateway Service Builder"
+   }
+  },
+  {
+   "code": "SAT",
+   "area": "02",
+   "type": "R",
+   "purpose": {
+    "sk": "Analýza času behu ABAP",
+    "en": "ABAP runtime analysis"
+   }
+  },
+  {
+   "code": "ST05",
+   "area": "02",
+   "type": "R",
+   "purpose": {
+    "sk": "SQL trace a analýza DB volaní",
+    "en": "SQL trace and database-call analysis"
+   }
+  },
+  {
+   "code": "ST12",
+   "area": "02",
+   "type": "O",
+   "purpose": {
+    "sk": "Kombinovaná ABAP/SQL trace (ak dostupná)",
+    "en": "Combined ABAP/SQL trace where available"
+   }
+  },
+  {
+   "code": "SCI",
+   "area": "02",
+   "type": "R",
+   "purpose": {
+    "sk": "Code Inspector a pravidlá statickej analýzy",
+    "en": "Code Inspector and static checks"
+   }
+  },
+  {
+   "code": "ATC",
+   "area": "02",
+   "type": "R",
+   "purpose": {
+    "sk": "ABAP Test Cockpit, kontrola kvality",
+    "en": "ABAP Test Cockpit quality checks"
+   }
+  },
+  {
+   "code": "SLIN",
+   "area": "02",
+   "type": "R",
+   "purpose": {
+    "sk": "Rozšírená syntaxová kontrola ABAP",
+    "en": "Extended ABAP program check"
+   }
+  },
+  {
+   "code": "SCAT",
+   "area": "02",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasické testovacie záznamy (historické)",
+    "en": "Classic test-case recording (legacy)"
+   }
+  },
+  {
+   "code": "SM04",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Prihlásení používatelia na serveri",
+    "en": "Logged-on users on an application server"
+   }
+  },
+  {
+   "code": "AL08",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Prihlásení používatelia v systéme",
+    "en": "Logged-on users across the system"
+   }
+  },
+  {
+   "code": "SM36",
+   "area": "03",
+   "type": "W",
+   "purpose": {
+    "sk": "Plánovanie background jobov",
+    "en": "Schedule background jobs"
+   }
+  },
+  {
+   "code": "SM37",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Kontrola behov a logov jobov",
+    "en": "Monitor background jobs and logs"
+   }
+  },
+  {
+   "code": "SM50",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Pracovné procesy na aplikačnom serveri",
+    "en": "Local work process monitor"
+   }
+  },
+  {
+   "code": "SM51",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam aplikačných serverov",
+    "en": "Application server overview"
+   }
+  },
+  {
+   "code": "SM66",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Globálny prehľad pracovných procesov",
+    "en": "Global work process overview"
+   }
+  },
+  {
+   "code": "SM12",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Zámky SAP (enqueue); zásahy opatrne",
+    "en": "SAP enqueue locks; handle with care"
+   }
+  },
+  {
+   "code": "SM13",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Monitor neúspešných update záznamov",
+    "en": "Update records and failed updates"
+   }
+  },
+  {
+   "code": "SM21",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Systémový log",
+    "en": "System log"
+   }
+  },
+  {
+   "code": "SLG1",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Aplikačné logy podľa objektu a času",
+    "en": "Application logs by object and time"
+   }
+  },
+  {
+   "code": "ST22",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "ABAP dumpy a ich príčiny",
+    "en": "ABAP short dumps and root causes"
+   }
+  },
+  {
+   "code": "ST03N",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Workload a časové charakteristiky",
+    "en": "Workload and response-time analysis"
+   }
+  },
+  {
+   "code": "STAD",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Detailné štatistiky požiadaviek",
+    "en": "Single-record workload statistics"
+   }
+  },
+  {
+   "code": "ST02",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Pamäť, buffery a tuning",
+    "en": "Memory and buffer tuning overview"
+   }
+  },
+  {
+   "code": "ST06",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Metriky operačného systému",
+    "en": "Operating system monitor"
+   }
+  },
+  {
+   "code": "ST11",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Trace súbory pracovných procesov",
+    "en": "Developer trace files"
+   }
+  },
+  {
+   "code": "ST04",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Databázový monitor (podľa platformy)",
+    "en": "Database performance monitor (DB-specific)"
+   }
+  },
+  {
+   "code": "DBACOCKPIT",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Konzola administrácie databázy",
+    "en": "Database administration cockpit"
+   }
+  },
+  {
+   "code": "DB02",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "DB kapacita a priestor (podľa DB)",
+    "en": "Database storage and space (DB-dependent)"
+   }
+  },
+  {
+   "code": "DB12",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "História a monitoring DB záloh",
+    "en": "Database backup logs and monitoring"
+   }
+  },
+  {
+   "code": "RZ10",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Profilové parametre - konfigurácia",
+    "en": "Maintain instance/profile parameters"
+   }
+  },
+  {
+   "code": "RZ11",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Zobrazenie a prípadná úprava parametrov",
+    "en": "Display or change profile parameters"
+   }
+  },
+  {
+   "code": "RZ20",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "CCMS monitorovanie a alarmy",
+    "en": "CCMS monitoring and alerts"
+   }
+  },
+  {
+   "code": "RZ21",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Nastavenie CCMS monitorovania",
+    "en": "CCMS monitoring configuration"
+   }
+  },
+  {
+   "code": "SMICM",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Internet Communication Manager monitor",
+    "en": "Internet Communication Manager monitor"
+   }
+  },
+  {
+   "code": "SP01",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Spracovanie a prehliadanie spool výstupov",
+    "en": "Display and manage spool requests"
+   }
+  },
+  {
+   "code": "SPAD",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Konfigurácia tlačových zariadení",
+    "en": "Spool and output-device administration"
+   }
+  },
+  {
+   "code": "SMLG",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Skupiny serverov pre prihlásenie",
+    "en": "Logon groups maintenance"
+   }
+  },
+  {
+   "code": "SMGW",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "RFC Gateway monitor",
+    "en": "RFC Gateway monitor"
+   }
+  },
+  {
+   "code": "SICK",
+   "area": "03",
+   "type": "R",
+   "purpose": {
+    "sk": "Základná kontrola konzistencie inštalácie",
+    "en": "Installation consistency check"
+   }
+  },
+  {
+   "code": "SM02",
+   "area": "03",
+   "type": "A",
+   "purpose": {
+    "sk": "Systémové správy pre používateľov",
+    "en": "System-wide user messages"
+   }
+  },
+  {
+   "code": "SU01",
+   "area": "04",
+   "type": "A",
+   "purpose": {
+    "sk": "Správa jednotlivých používateľov",
+    "en": "Maintain individual users"
+   }
+  },
+  {
+   "code": "SU10",
+   "area": "04",
+   "type": "A",
+   "purpose": {
+    "sk": "Hromadná správa používateľov",
+    "en": "Mass user maintenance"
+   }
+  },
+  {
+   "code": "SU50",
+   "area": "04",
+   "type": "W",
+   "purpose": {
+    "sk": "Vlastné používateľské údaje",
+    "en": "Maintain own user data"
+   }
+  },
+  {
+   "code": "SU53",
+   "area": "04",
+   "type": "R",
+   "purpose": {
+    "sk": "Posledné neúspešné autorizačné kontroly",
+    "en": "Last failed authorization check"
+   }
+  },
+  {
+   "code": "SU56",
+   "area": "04",
+   "type": "R",
+   "purpose": {
+    "sk": "Používateľský authorization buffer",
+    "en": "User authorization buffer"
+   }
+  },
+  {
+   "code": "SUIM",
+   "area": "04",
+   "type": "R",
+   "purpose": {
+    "sk": "Reporty rolí, profilov a používateľov",
+    "en": "User and role information system"
+   }
+  },
+  {
+   "code": "SU24",
+   "area": "04",
+   "type": "A",
+   "purpose": {
+    "sk": "Návrhové autorizačné hodnoty transakcií",
+    "en": "Transaction authorization proposals"
+   }
+  },
+  {
+   "code": "SU25",
+   "area": "04",
+   "type": "A",
+   "purpose": {
+    "sk": "Údržba autorizačných dát pri upgrade",
+    "en": "Authorization data migration after upgrades"
+   }
+  },
+  {
+   "code": "SU21",
+   "area": "04",
+   "type": "A",
+   "purpose": {
+    "sk": "Objekty a polia autorizácií",
+    "en": "Authorization objects and fields"
+   }
+  },
+  {
+   "code": "PFCG",
+   "area": "04",
+   "type": "A",
+   "purpose": {
+    "sk": "Vytváranie a údržba rolí",
+    "en": "Role creation and maintenance"
+   }
+  },
+  {
+   "code": "STAUTHTRACE",
+   "area": "04",
+   "type": "R",
+   "purpose": {
+    "sk": "Detailné sledovanie kontrol oprávnení",
+    "en": "Detailed authorization trace"
+   }
+  },
+  {
+   "code": "SM19",
+   "area": "04",
+   "type": "A",
+   "purpose": {
+    "sk": "Konfigurácia Security Audit Log",
+    "en": "Security Audit Log configuration"
+   }
+  },
+  {
+   "code": "SM20",
+   "area": "04",
+   "type": "R",
+   "purpose": {
+    "sk": "Vyhodnotenie Security Audit Log",
+    "en": "Security Audit Log analysis"
+   }
+  },
+  {
+   "code": "SE01",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Transport Organizer a požiadavky",
+    "en": "Transport Organizer and requests"
+   }
+  },
+  {
+   "code": "SE03",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Pokročilé transportné nástroje",
+    "en": "Transport Organizer tools"
+   }
+  },
+  {
+   "code": "SE09",
+   "area": "05",
+   "type": "W",
+   "purpose": {
+    "sk": "Workbench transportné požiadavky",
+    "en": "Workbench transport requests"
+   }
+  },
+  {
+   "code": "SE10",
+   "area": "05",
+   "type": "W",
+   "purpose": {
+    "sk": "Customizing transportné požiadavky",
+    "en": "Customizing transport requests"
+   }
+  },
+  {
+   "code": "STMS",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Transport Management System",
+    "en": "Transport Management System"
+   }
+  },
+  {
+   "code": "STMS_IMPORT",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Prehľad a import transportov",
+    "en": "Transport import overview and execution"
+   }
+  },
+  {
+   "code": "SCC1",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Kopírovanie objektov transportu medzi klientmi",
+    "en": "Copy transport objects across clients"
+   }
+  },
+  {
+   "code": "SCC3",
+   "area": "05",
+   "type": "R",
+   "purpose": {
+    "sk": "Logy a monitoring kopírovania klienta",
+    "en": "Client-copy logs and monitoring"
+   }
+  },
+  {
+   "code": "SCC4",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Konfigurácia a ochrana klientov",
+    "en": "Client configuration and protection"
+   }
+  },
+  {
+   "code": "SCCL",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Lokálna kópia klienta",
+    "en": "Local client copy"
+   }
+  },
+  {
+   "code": "SCC9",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Vzdialená kópia klienta",
+    "en": "Remote client copy"
+   }
+  },
+  {
+   "code": "SE06",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Nastavenia zmien systému po inštalácii",
+    "en": "System change-option setup"
+   }
+  },
+  {
+   "code": "SPDD",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Úpravy DDIC pri upgrade/konverzii",
+    "en": "Dictionary modification adjustment"
+   }
+  },
+  {
+   "code": "SPAU",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Úpravy modifikácií SAP po upgrade",
+    "en": "SAP object modification adjustment"
+   }
+  },
+  {
+   "code": "SNOTE",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "SAP Notes: kontrola a implementácia",
+    "en": "SAP Notes review and implementation"
+   }
+  },
+  {
+   "code": "SPAM",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Support Package Manager",
+    "en": "Support Package Manager"
+   }
+  },
+  {
+   "code": "SAINT",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Inštalácia SAP doplnkov",
+    "en": "SAP add-on installation manager"
+   }
+  },
+  {
+   "code": "SGEN",
+   "area": "05",
+   "type": "A",
+   "purpose": {
+    "sk": "Generovanie ABAP loadov",
+    "en": "Generate ABAP loads"
+   }
+  },
+  {
+   "code": "SM59",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "RFC destinácie, konektivita a test spojenia",
+    "en": "RFC destinations and connectivity checks"
+   }
+  },
+  {
+   "code": "SM58",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Zaseknuté alebo chybné tRFC volania",
+    "en": "Transactional RFC error monitor"
+   }
+  },
+  {
+   "code": "SMQ1",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Odchádzajúce qRFC fronty",
+    "en": "Outbound qRFC queue monitor"
+   }
+  },
+  {
+   "code": "SMQ2",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Prichádzajúce qRFC fronty",
+    "en": "Inbound qRFC queue monitor"
+   }
+  },
+  {
+   "code": "SMQ3",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Uložené qRFC fronty",
+    "en": "Saved qRFC queue monitor"
+   }
+  },
+  {
+   "code": "SMQS",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Plánovač odchádzajúcich qRFC front",
+    "en": "Outbound qRFC scheduler registration"
+   }
+  },
+  {
+   "code": "SMQR",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Plánovač prichádzajúcich qRFC front",
+    "en": "Inbound qRFC scheduler registration"
+   }
+  },
+  {
+   "code": "WE02",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie a diagnostika IDoc správ",
+    "en": "Display and diagnose IDocs"
+   }
+  },
+  {
+   "code": "WE05",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Výpisy a filtrovanie IDoc správ",
+    "en": "IDoc list and status selection"
+   }
+  },
+  {
+   "code": "WE09",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Vyhľadávanie IDoc podľa obsahu",
+    "en": "Search IDoc content"
+   }
+  },
+  {
+   "code": "WE19",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Simulácia a testovanie IDoc",
+    "en": "IDoc testing and simulation"
+   }
+  },
+  {
+   "code": "WE20",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Partnerské profily IDoc",
+    "en": "IDoc partner profiles"
+   }
+  },
+  {
+   "code": "WE21",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Porty používané v IDoc",
+    "en": "IDoc port definitions"
+   }
+  },
+  {
+   "code": "WE30",
+   "area": "06",
+   "type": "W",
+   "purpose": {
+    "sk": "Typy IDoc",
+    "en": "IDoc type editor"
+   }
+  },
+  {
+   "code": "WE31",
+   "area": "06",
+   "type": "W",
+   "purpose": {
+    "sk": "Segmenty IDoc",
+    "en": "IDoc segment editor"
+   }
+  },
+  {
+   "code": "WE60",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Dokumentácia IDoc štruktúr",
+    "en": "IDoc structure documentation"
+   }
+  },
+  {
+   "code": "BD87",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Reprocessing IDoc podľa statusu",
+    "en": "Reprocess IDocs by status"
+   }
+  },
+  {
+   "code": "BD64",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "ALE distribučný model",
+    "en": "ALE distribution model"
+   }
+  },
+  {
+   "code": "BD54",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Logické systémy v ALE",
+    "en": "ALE logical system maintenance"
+   }
+  },
+  {
+   "code": "WE81",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Typy správ IDoc",
+    "en": "IDoc message types"
+   }
+  },
+  {
+   "code": "WE82",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Priradenie typov IDoc k správam",
+    "en": "Assignment of IDoc types to messages"
+   }
+  },
+  {
+   "code": "SICF",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Aktivácia a správa HTTP služieb",
+    "en": "HTTP service activation and maintenance"
+   }
+  },
+  {
+   "code": "/IWFND/MAINT_SERVICE",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Registrácia klasických OData služieb",
+    "en": "Classic SAP Gateway OData service activation"
+   }
+  },
+  {
+   "code": "/IWFND/ERROR_LOG",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Chyby SAP Gateway vo frontend systéme",
+    "en": "Frontend SAP Gateway error log"
+   }
+  },
+  {
+   "code": "/IWBEP/ERROR_LOG",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Chyby OData v backend systéme",
+    "en": "Backend OData error log"
+   }
+  },
+  {
+   "code": "SRT_MONI",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Monitor SOAP webových služieb",
+    "en": "SOAP web service message monitoring"
+   }
+  },
+  {
+   "code": "SRT_UTIL",
+   "area": "06",
+   "type": "R",
+   "purpose": {
+    "sk": "Diagnostika, trace a log webových služieb",
+    "en": "SOAP web services troubleshooting"
+   }
+  },
+  {
+   "code": "SPROXY",
+   "area": "06",
+   "type": "W",
+   "purpose": {
+    "sk": "ABAP Enterprise Service Proxy",
+    "en": "ABAP Enterprise Service Proxy tools"
+   }
+  },
+  {
+   "code": "SOAMANAGER",
+   "area": "06",
+   "type": "A",
+   "purpose": {
+    "sk": "Konfigurácia SOAP endpointov a služieb",
+    "en": "Web service configuration cockpit"
+   }
+  },
+  {
+   "code": "SXMB_MONI",
+   "area": "06",
+   "type": "O",
+   "purpose": {
+    "sk": "Klasický XI/PI message monitor",
+    "en": "Classic XI/PI message monitor"
+   }
+  },
+  {
+   "code": "MM01",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie materiálu",
+    "en": "Create material master"
+   }
+  },
+  {
+   "code": "MM02",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena materiálu",
+    "en": "Change material master"
+   }
+  },
+  {
+   "code": "MM03",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie materiálu",
+    "en": "Display material master"
+   }
+  },
+  {
+   "code": "MM17",
+   "area": "07",
+   "type": "A",
+   "purpose": {
+    "sk": "Hromadná zmena materiálov",
+    "en": "Mass maintenance of materials"
+   }
+  },
+  {
+   "code": "MM50",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Rozšírenie materiálových pohľadov",
+    "en": "Extend material master views"
+   }
+  },
+  {
+   "code": "MM60",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam materiálov",
+    "en": "Material master list"
+   }
+  },
+  {
+   "code": "ME51N",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie požiadavky na nákup",
+    "en": "Create purchase requisition"
+   }
+  },
+  {
+   "code": "ME52N",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena požiadavky na nákup",
+    "en": "Change purchase requisition"
+   }
+  },
+  {
+   "code": "ME53N",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie požiadavky na nákup",
+    "en": "Display purchase requisition"
+   }
+  },
+  {
+   "code": "ME54N",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Uvoľnenie nákupnej požiadavky (ak nastavené)",
+    "en": "Release purchase requisition (if configured)"
+   }
+  },
+  {
+   "code": "ME5A",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam nákupných požiadaviek",
+    "en": "Purchase requisition list"
+   }
+  },
+  {
+   "code": "ME21N",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie nákupnej objednávky",
+    "en": "Create purchase order"
+   }
+  },
+  {
+   "code": "ME22N",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena nákupnej objednávky",
+    "en": "Change purchase order"
+   }
+  },
+  {
+   "code": "ME23N",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie nákupnej objednávky",
+    "en": "Display purchase order"
+   }
+  },
+  {
+   "code": "ME2N",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam nákupných objednávok",
+    "en": "Purchase orders by document"
+   }
+  },
+  {
+   "code": "ME2L",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Objednávky podľa dodávateľa",
+    "en": "Purchase orders by supplier"
+   }
+  },
+  {
+   "code": "ME2M",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Objednávky podľa materiálu",
+    "en": "Purchase orders by material"
+   }
+  },
+  {
+   "code": "ME11",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Vytvorenie nákupného infozáznamu",
+    "en": "Create purchasing info record"
+   }
+  },
+  {
+   "code": "ME12",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena nákupného infozáznamu",
+    "en": "Change purchasing info record"
+   }
+  },
+  {
+   "code": "ME13",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie nákupného infozáznamu",
+    "en": "Display purchasing info record"
+   }
+  },
+  {
+   "code": "ME31K",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Vytvorenie nákupnej rámcovej zmluvy",
+    "en": "Create purchasing contract"
+   }
+  },
+  {
+   "code": "ME32K",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena nákupnej rámcovej zmluvy",
+    "en": "Change purchasing contract"
+   }
+  },
+  {
+   "code": "ME33K",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie nákupnej rámcovej zmluvy",
+    "en": "Display purchasing contract"
+   }
+  },
+  {
+   "code": "ME31L",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Vytvorenie dodávkového harmonogramu",
+    "en": "Create scheduling agreement"
+   }
+  },
+  {
+   "code": "ME32L",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena dodávkového harmonogramu",
+    "en": "Change scheduling agreement"
+   }
+  },
+  {
+   "code": "ME33L",
+   "area": "07",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie dodávkového harmonogramu",
+    "en": "Display scheduling agreement"
+   }
+  },
+  {
+   "code": "ME38",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Harmonogramy dodávok k dohode",
+    "en": "Maintain delivery schedule lines"
+   }
+  },
+  {
+   "code": "ME57",
+   "area": "07",
+   "type": "W",
+   "purpose": {
+    "sk": "Priraďovanie zdrojov nákupnej požiadavke",
+    "en": "Assign sources to purchase requisitions"
+   }
+  },
+  {
+   "code": "ME59N",
+   "area": "07",
+   "type": "A",
+   "purpose": {
+    "sk": "Automatická tvorba nákupných objednávok",
+    "en": "Automatic PO creation from requisitions"
+   }
+  },
+  {
+   "code": "MRBR",
+   "area": "07",
+   "type": "A",
+   "purpose": {
+    "sk": "Uvoľnenie blokovaných logistických faktúr",
+    "en": "Release blocked logistics invoices"
+   }
+  },
+  {
+   "code": "MIGO",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Príjem, výdaj, prevod a storno zásob",
+    "en": "Goods receipts, issues, transfers and reversals"
+   }
+  },
+  {
+   "code": "MIRO",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Zaúčtovanie dodávateľskej logistickej faktúry",
+    "en": "Post logistics invoice verification"
+   }
+  },
+  {
+   "code": "MIR4",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie logistickej faktúry",
+    "en": "Display logistics invoice document"
+   }
+  },
+  {
+   "code": "MIR7",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Predbežné uloženie logistickej faktúry",
+    "en": "Park logistics invoice"
+   }
+  },
+  {
+   "code": "MR8M",
+   "area": "08",
+   "type": "A",
+   "purpose": {
+    "sk": "Storno logistickej faktúry",
+    "en": "Cancel logistics invoice"
+   }
+  },
+  {
+   "code": "MMBE",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Stav zásob materiálu podľa lokality",
+    "en": "Stock overview by material and location"
+   }
+  },
+  {
+   "code": "MB52",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zásoby v závode a na skladových miestach",
+    "en": "List of warehouse stocks on hand"
+   }
+  },
+  {
+   "code": "MB51",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam materiálových dokladov",
+    "en": "Material document list"
+   }
+  },
+  {
+   "code": "MB5B",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zásoby k dátumu účtovania",
+    "en": "Stock at a posting date"
+   }
+  },
+  {
+   "code": "MB5L",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Porovnanie skladových a účtovných hodnôt",
+    "en": "Stock values and balances comparison"
+   }
+  },
+  {
+   "code": "MB21",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie rezervácie materiálu",
+    "en": "Create material reservation"
+   }
+  },
+  {
+   "code": "MB22",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena rezervácie materiálu",
+    "en": "Change material reservation"
+   }
+  },
+  {
+   "code": "MB23",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie rezervácie materiálu",
+    "en": "Display material reservation"
+   }
+  },
+  {
+   "code": "MB24",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Prehľad rezervácií",
+    "en": "Reservation list"
+   }
+  },
+  {
+   "code": "MB26",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam výdajok / picking list",
+    "en": "Picking list for reservations"
+   }
+  },
+  {
+   "code": "MI01",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie inventúrneho dokladu IM",
+    "en": "Create inventory count document"
+   }
+  },
+  {
+   "code": "MI02",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena inventúrneho dokladu IM",
+    "en": "Change inventory count document"
+   }
+  },
+  {
+   "code": "MI03",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie inventúrneho dokladu IM",
+    "en": "Display inventory count document"
+   }
+  },
+  {
+   "code": "MI04",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Zápis fyzicky spočítaného množstva",
+    "en": "Enter physical inventory count"
+   }
+  },
+  {
+   "code": "MI05",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena výsledkov inventúry",
+    "en": "Change inventory count"
+   }
+  },
+  {
+   "code": "MI07",
+   "area": "08",
+   "type": "A",
+   "purpose": {
+    "sk": "Zaúčtovanie inventúrnych rozdielov",
+    "en": "Post inventory differences"
+   }
+  },
+  {
+   "code": "MI20",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam rozdielov fyzickej inventúry",
+    "en": "List of physical inventory differences"
+   }
+  },
+  {
+   "code": "MSC1N",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie šarže materiálu",
+    "en": "Create material batch"
+   }
+  },
+  {
+   "code": "MSC2N",
+   "area": "08",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena šarže materiálu",
+    "en": "Change material batch"
+   }
+  },
+  {
+   "code": "MSC3N",
+   "area": "08",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie šarže materiálu",
+    "en": "Display material batch"
+   }
+  },
+  {
+   "code": "OMJJ",
+   "area": "08",
+   "type": "A",
+   "purpose": {
+    "sk": "Konfigurácia druhov skladových pohybov",
+    "en": "Movement type configuration"
+   }
+  },
+  {
+   "code": "MB1A",
+   "area": "08",
+   "type": "L",
+   "purpose": {
+    "sk": "Historický výdaj materiálu; prednosť MIGO",
+    "en": "Legacy goods issue; prefer MIGO"
+   }
+  },
+  {
+   "code": "MB1B",
+   "area": "08",
+   "type": "L",
+   "purpose": {
+    "sk": "Historický prevod materiálu; prednosť MIGO",
+    "en": "Legacy transfer posting; prefer MIGO"
+   }
+  },
+  {
+   "code": "MB1C",
+   "area": "08",
+   "type": "L",
+   "purpose": {
+    "sk": "Historický ostatný príjem; prednosť MIGO",
+    "en": "Legacy other goods receipt; prefer MIGO"
+   }
+  },
+  {
+   "code": "MB01",
+   "area": "08",
+   "type": "L",
+   "purpose": {
+    "sk": "Historický príjem k objednávke; prednosť MIGO",
+    "en": "Legacy purchase order goods receipt; prefer MIGO"
+   }
+  },
+  {
+   "code": "VA01",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie odberateľskej objednávky",
+    "en": "Create sales order"
+   }
+  },
+  {
+   "code": "VA02",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena odberateľskej objednávky",
+    "en": "Change sales order"
+   }
+  },
+  {
+   "code": "VA03",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie odberateľskej objednávky",
+    "en": "Display sales order"
+   }
+  },
+  {
+   "code": "VA05",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam odberateľských objednávok",
+    "en": "Sales order list"
+   }
+  },
+  {
+   "code": "VA11",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie predajného dopytu",
+    "en": "Create sales inquiry"
+   }
+  },
+  {
+   "code": "VA12",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena predajného dopytu",
+    "en": "Change sales inquiry"
+   }
+  },
+  {
+   "code": "VA13",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie predajného dopytu",
+    "en": "Display sales inquiry"
+   }
+  },
+  {
+   "code": "VA21",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie cenovej ponuky",
+    "en": "Create sales quotation"
+   }
+  },
+  {
+   "code": "VA22",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena cenovej ponuky",
+    "en": "Change sales quotation"
+   }
+  },
+  {
+   "code": "VA23",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie cenovej ponuky",
+    "en": "Display sales quotation"
+   }
+  },
+  {
+   "code": "VA41",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie predajnej zmluvy",
+    "en": "Create sales contract"
+   }
+  },
+  {
+   "code": "VA42",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena predajnej zmluvy",
+    "en": "Change sales contract"
+   }
+  },
+  {
+   "code": "VA43",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie predajnej zmluvy",
+    "en": "Display sales contract"
+   }
+  },
+  {
+   "code": "VL01N",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Vytvorenie výstupnej dodávky",
+    "en": "Create outbound delivery"
+   }
+  },
+  {
+   "code": "VL02N",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena a spracovanie výstupnej dodávky",
+    "en": "Change and process outbound delivery"
+   }
+  },
+  {
+   "code": "VL03N",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie výstupnej dodávky",
+    "en": "Display outbound delivery"
+   }
+  },
+  {
+   "code": "VL06O",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Monitoring výstupných dodávok",
+    "en": "Outbound delivery monitor"
+   }
+  },
+  {
+   "code": "VL31N",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Vytvorenie príjemky / inbound delivery",
+    "en": "Create inbound delivery"
+   }
+  },
+  {
+   "code": "VL32N",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena príjemky / inbound delivery",
+    "en": "Change inbound delivery"
+   }
+  },
+  {
+   "code": "VL33N",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie príjemky / inbound delivery",
+    "en": "Display inbound delivery"
+   }
+  },
+  {
+   "code": "VF01",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Vytvorenie fakturačného dokladu",
+    "en": "Create billing document"
+   }
+  },
+  {
+   "code": "VF02",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena fakturačného dokladu",
+    "en": "Change billing document"
+   }
+  },
+  {
+   "code": "VF03",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie fakturačného dokladu",
+    "en": "Display billing document"
+   }
+  },
+  {
+   "code": "VF04",
+   "area": "09",
+   "type": "A",
+   "purpose": {
+    "sk": "Zoznam položiek pripravených na fakturáciu",
+    "en": "Billing due list"
+   }
+  },
+  {
+   "code": "VF05",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam fakturačných dokladov",
+    "en": "Billing document list"
+   }
+  },
+  {
+   "code": "VF11",
+   "area": "09",
+   "type": "A",
+   "purpose": {
+    "sk": "Storno fakturačného dokladu",
+    "en": "Cancel billing document"
+   }
+  },
+  {
+   "code": "VK11",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie cenovej podmienky",
+    "en": "Create pricing condition record"
+   }
+  },
+  {
+   "code": "VK12",
+   "area": "09",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena cenovej podmienky",
+    "en": "Change pricing condition record"
+   }
+  },
+  {
+   "code": "VK13",
+   "area": "09",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie cenovej podmienky",
+    "en": "Display pricing condition record"
+   }
+  },
+  {
+   "code": "VOV8",
+   "area": "09",
+   "type": "A",
+   "purpose": {
+    "sk": "Konfigurácia typov predajných dokladov",
+    "en": "Sales document type configuration"
+   }
+  },
+  {
+   "code": "FB01",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Zaúčtovanie účtovného dokladu (klasické)",
+    "en": "Post accounting document (classic)"
+   }
+  },
+  {
+   "code": "FB02",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena povolených údajov účtovného dokladu",
+    "en": "Change allowed fields in accounting document"
+   }
+  },
+  {
+   "code": "FB03",
+   "area": "10",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie účtovného dokladu",
+    "en": "Display accounting document"
+   }
+  },
+  {
+   "code": "FB50",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Účtovanie priamo do hlavnej knihy",
+    "en": "G/L account posting"
+   }
+  },
+  {
+   "code": "FB60",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Dodávateľská faktúra vo FI",
+    "en": "Enter supplier invoice in FI"
+   }
+  },
+  {
+   "code": "FB70",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Odberateľská faktúra vo FI",
+    "en": "Enter customer invoice in FI"
+   }
+  },
+  {
+   "code": "FB08",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Storno účtovného dokladu",
+    "en": "Reverse accounting document"
+   }
+  },
+  {
+   "code": "FBRA",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Reset vyrovnania / clearingu",
+    "en": "Reset cleared items"
+   }
+  },
+  {
+   "code": "F-02",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Klasické všeobecné zaúčtovanie",
+    "en": "Classic general posting"
+   }
+  },
+  {
+   "code": "F-28",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Zaúčtovanie prijatej platby",
+    "en": "Post incoming customer payment"
+   }
+  },
+  {
+   "code": "F-32",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Vyrovnanie otvorených položiek odberateľa",
+    "en": "Clear customer open items"
+   }
+  },
+  {
+   "code": "F-44",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Vyrovnanie otvorených položiek dodávateľa",
+    "en": "Clear supplier open items"
+   }
+  },
+  {
+   "code": "F-53",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Zaúčtovanie odchádzajúcej platby",
+    "en": "Post outgoing supplier payment"
+   }
+  },
+  {
+   "code": "F-03",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Vyrovnanie položiek hlavnej knihy",
+    "en": "Clear G/L open items"
+   }
+  },
+  {
+   "code": "F110",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Automatický platobný program",
+    "en": "Automatic payment program"
+   }
+  },
+  {
+   "code": "FBL1N",
+   "area": "10",
+   "type": "R",
+   "purpose": {
+    "sk": "Položky dodávateľských účtov",
+    "en": "Supplier line items"
+   }
+  },
+  {
+   "code": "FBL3N",
+   "area": "10",
+   "type": "R",
+   "purpose": {
+    "sk": "Položky účtov hlavnej knihy",
+    "en": "G/L account line items"
+   }
+  },
+  {
+   "code": "FBL5N",
+   "area": "10",
+   "type": "R",
+   "purpose": {
+    "sk": "Položky odberateľských účtov",
+    "en": "Customer line items"
+   }
+  },
+  {
+   "code": "FAGLL03",
+   "area": "10",
+   "type": "R",
+   "purpose": {
+    "sk": "Položky hlavnej knihy (New G/L)",
+    "en": "G/L line-item browser (New G/L)"
+   }
+  },
+  {
+   "code": "FS00",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Centrálna správa G/L účtov",
+    "en": "Central G/L master data maintenance"
+   }
+  },
+  {
+   "code": "FSP0",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Základné údaje G/L účtu v účtovej osnove",
+    "en": "G/L master data at chart-of-accounts level"
+   }
+  },
+  {
+   "code": "FSS0",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Údaje G/L účtu pre účtovný okruh",
+    "en": "G/L master data at company-code level"
+   }
+  },
+  {
+   "code": "OB52",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Otvorenie a uzavretie účtovných období",
+    "en": "Open and close posting periods"
+   }
+  },
+  {
+   "code": "OB08",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Údržba výmenných kurzov",
+    "en": "Exchange-rate maintenance"
+   }
+  },
+  {
+   "code": "OBA7",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Nastavenie typov FI dokladov",
+    "en": "Accounting document type configuration"
+   }
+  },
+  {
+   "code": "F.01",
+   "area": "10",
+   "type": "R",
+   "purpose": {
+    "sk": "Klasická finančná výkazová zostava",
+    "en": "Classic financial statement report"
+   }
+  },
+  {
+   "code": "AS01",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie kmeňového záznamu majetku",
+    "en": "Create fixed asset master"
+   }
+  },
+  {
+   "code": "AS02",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena kmeňového záznamu majetku",
+    "en": "Change fixed asset master"
+   }
+  },
+  {
+   "code": "AS03",
+   "area": "10",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie kmeňového záznamu majetku",
+    "en": "Display fixed asset master"
+   }
+  },
+  {
+   "code": "AW01N",
+   "area": "10",
+   "type": "R",
+   "purpose": {
+    "sk": "Prehliadač hodnôt majetku",
+    "en": "Asset Explorer"
+   }
+  },
+  {
+   "code": "ABZON",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Nadobudnutie majetku bez nákupu",
+    "en": "Asset acquisition with automatic offsetting entry"
+   }
+  },
+  {
+   "code": "AFAB",
+   "area": "10",
+   "type": "A",
+   "purpose": {
+    "sk": "Spustenie účtovania odpisov",
+    "en": "Depreciation posting run"
+   }
+  },
+  {
+   "code": "F-47",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Žiadosť o preddavok dodávateľovi",
+    "en": "Supplier down payment request"
+   }
+  },
+  {
+   "code": "F-48",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Zaúčtovanie preddavku dodávateľovi",
+    "en": "Post supplier down payment"
+   }
+  },
+  {
+   "code": "F-54",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Vyrovnanie preddavku dodávateľa",
+    "en": "Clear supplier down payment"
+   }
+  },
+  {
+   "code": "F-29",
+   "area": "10",
+   "type": "W",
+   "purpose": {
+    "sk": "Zaúčtovanie preddavku od odberateľa",
+    "en": "Post customer down payment"
+   }
+  },
+  {
+   "code": "KS01",
+   "area": "11",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie nákladového strediska",
+    "en": "Create cost center"
+   }
+  },
+  {
+   "code": "KS02",
+   "area": "11",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena nákladového strediska",
+    "en": "Change cost center"
+   }
+  },
+  {
+   "code": "KS03",
+   "area": "11",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie nákladového strediska",
+    "en": "Display cost center"
+   }
+  },
+  {
+   "code": "KSB1",
+   "area": "11",
+   "type": "R",
+   "purpose": {
+    "sk": "Skutočné náklady na nákladových strediskách",
+    "en": "Cost center actual line items"
+   }
+  },
+  {
+   "code": "KO01",
+   "area": "11",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie interného príkazu",
+    "en": "Create internal order"
+   }
+  },
+  {
+   "code": "KO02",
+   "area": "11",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena interného príkazu",
+    "en": "Change internal order"
+   }
+  },
+  {
+   "code": "KO03",
+   "area": "11",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie interného príkazu",
+    "en": "Display internal order"
+   }
+  },
+  {
+   "code": "KOB1",
+   "area": "11",
+   "type": "R",
+   "purpose": {
+    "sk": "Skutočné položky interného príkazu",
+    "en": "Internal order actual line items"
+   }
+  },
+  {
+   "code": "KO88",
+   "area": "11",
+   "type": "A",
+   "purpose": {
+    "sk": "Vysporiadanie interného príkazu",
+    "en": "Individual internal order settlement"
+   }
+  },
+  {
+   "code": "KSU5",
+   "area": "11",
+   "type": "A",
+   "purpose": {
+    "sk": "Spustenie cyklu assessment",
+    "en": "Execute assessment cycle"
+   }
+  },
+  {
+   "code": "KSV5",
+   "area": "11",
+   "type": "A",
+   "purpose": {
+    "sk": "Spustenie cyklu distribution",
+    "en": "Execute distribution cycle"
+   }
+  },
+  {
+   "code": "KP06",
+   "area": "11",
+   "type": "W",
+   "purpose": {
+    "sk": "Plánovanie nákladov na nákladové strediská",
+    "en": "Cost center cost planning"
+   }
+  },
+  {
+   "code": "KB11N",
+   "area": "11",
+   "type": "W",
+   "purpose": {
+    "sk": "Manuálne preúčtovanie nákladov",
+    "en": "Manual cost reposting"
+   }
+  },
+  {
+   "code": "OKB9",
+   "area": "11",
+   "type": "A",
+   "purpose": {
+    "sk": "Automatické priradenie CO objektu",
+    "en": "Automatic CO account assignment"
+   }
+  },
+  {
+   "code": "KE30",
+   "area": "11",
+   "type": "R",
+   "purpose": {
+    "sk": "Reporty profitability analysis (CO-PA)",
+    "en": "Profitability analysis reports"
+   }
+  },
+  {
+   "code": "KE24",
+   "area": "11",
+   "type": "R",
+   "purpose": {
+    "sk": "Skutočné položky v CO-PA (podľa modelu)",
+    "en": "CO-PA actual line items (model-dependent)"
+   }
+  },
+  {
+   "code": "CK11N",
+   "area": "11",
+   "type": "W",
+   "purpose": {
+    "sk": "Kalkulácia ceny materiálu",
+    "en": "Create material cost estimate"
+   }
+  },
+  {
+   "code": "CK13N",
+   "area": "11",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie kalkulácie ceny materiálu",
+    "en": "Display material cost estimate"
+   }
+  },
+  {
+   "code": "CK40N",
+   "area": "11",
+   "type": "A",
+   "purpose": {
+    "sk": "Hromadné kalkulácie cien",
+    "en": "Costing run"
+   }
+  },
+  {
+   "code": "CK24",
+   "area": "11",
+   "type": "A",
+   "purpose": {
+    "sk": "Označenie a uvoľnenie štandardnej ceny",
+    "en": "Mark and release standard cost estimate"
+   }
+  },
+  {
+   "code": "MD01N",
+   "area": "12",
+   "type": "A",
+   "purpose": {
+    "sk": "MRP Live plánovanie materiálov",
+    "en": "MRP Live material planning"
+   }
+  },
+  {
+   "code": "MD02",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Jednopoložkové viacúrovňové MRP",
+    "en": "Single-item, multi-level MRP run"
+   }
+  },
+  {
+   "code": "MD03",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Jednopoložkové jednoúrovňové MRP",
+    "en": "Single-item, single-level MRP run"
+   }
+  },
+  {
+   "code": "MD04",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Aktuálny zoznam zásob a potrieb",
+    "en": "Current stock/requirements list"
+   }
+  },
+  {
+   "code": "MD05",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam výsledkov posledného MRP",
+    "en": "MRP list (snapshot)"
+   }
+  },
+  {
+   "code": "MD06",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Hromadné spracovanie MRP zoznamov",
+    "en": "Collective MRP list display"
+   }
+  },
+  {
+   "code": "MD07",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Kolektívny aktuálny prehľad potrieb",
+    "en": "Collective stock/requirements overview"
+   }
+  },
+  {
+   "code": "MD61",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie nezávislých plánovaných potrieb",
+    "en": "Create planned independent requirements"
+   }
+  },
+  {
+   "code": "MD62",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena plánovaných nezávislých potrieb",
+    "en": "Change planned independent requirements"
+   }
+  },
+  {
+   "code": "MD63",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie plánovaných nezávislých potrieb",
+    "en": "Display planned independent requirements"
+   }
+  },
+  {
+   "code": "MD11",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie plánovanej objednávky",
+    "en": "Create planned order"
+   }
+  },
+  {
+   "code": "MD12",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena plánovanej objednávky",
+    "en": "Change planned order"
+   }
+  },
+  {
+   "code": "MD13",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie plánovanej objednávky",
+    "en": "Display planned order"
+   }
+  },
+  {
+   "code": "CS01",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie kusovníka materiálu",
+    "en": "Create material BOM"
+   }
+  },
+  {
+   "code": "CS02",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena kusovníka materiálu",
+    "en": "Change material BOM"
+   }
+  },
+  {
+   "code": "CS03",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie kusovníka materiálu",
+    "en": "Display material BOM"
+   }
+  },
+  {
+   "code": "CS11",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Jednoúrovňový rozpad kusovníka",
+    "en": "Single-level BOM explosion"
+   }
+  },
+  {
+   "code": "CA01",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie pracovného postupu / routing",
+    "en": "Create production routing"
+   }
+  },
+  {
+   "code": "CA02",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena pracovného postupu / routing",
+    "en": "Change production routing"
+   }
+  },
+  {
+   "code": "CA03",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie pracovného postupu / routing",
+    "en": "Display production routing"
+   }
+  },
+  {
+   "code": "CR01",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie pracoviska",
+    "en": "Create work center"
+   }
+  },
+  {
+   "code": "CR02",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena pracoviska",
+    "en": "Change work center"
+   }
+  },
+  {
+   "code": "CR03",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie pracoviska",
+    "en": "Display work center"
+   }
+  },
+  {
+   "code": "CO01",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie výrobného príkazu",
+    "en": "Create production order"
+   }
+  },
+  {
+   "code": "CO02",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena výrobného príkazu",
+    "en": "Change production order"
+   }
+  },
+  {
+   "code": "CO03",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie výrobného príkazu",
+    "en": "Display production order"
+   }
+  },
+  {
+   "code": "CO11N",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Potvrdenie výrobnej operácie",
+    "en": "Confirm production order operation"
+   }
+  },
+  {
+   "code": "COOIS",
+   "area": "12",
+   "type": "R",
+   "purpose": {
+    "sk": "Informačný systém výrobných príkazov",
+    "en": "Production order information system"
+   }
+  },
+  {
+   "code": "COHV",
+   "area": "12",
+   "type": "A",
+   "purpose": {
+    "sk": "Hromadné spracovanie výrobných príkazov",
+    "en": "Mass processing of production orders"
+   }
+  },
+  {
+   "code": "MFBF",
+   "area": "12",
+   "type": "W",
+   "purpose": {
+    "sk": "Spätné vykazovanie v repetitívnej výrobe",
+    "en": "Repetitive manufacturing backflush"
+   }
+  },
+  {
+   "code": "LS01N",
+   "area": "13",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie skladovej pozície (bin)",
+    "en": "Create storage bin"
+   }
+  },
+  {
+   "code": "LS02N",
+   "area": "13",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena skladovej pozície",
+    "en": "Change storage bin"
+   }
+  },
+  {
+   "code": "LS03N",
+   "area": "13",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie skladovej pozície",
+    "en": "Display storage bin"
+   }
+  },
+  {
+   "code": "LS24",
+   "area": "13",
+   "type": "R",
+   "purpose": {
+    "sk": "Zásoba podľa materiálu a pozície",
+    "en": "Stock by material and bin"
+   }
+  },
+  {
+   "code": "LS26",
+   "area": "13",
+   "type": "R",
+   "purpose": {
+    "sk": "Prehľad zásob materiálu vo WM",
+    "en": "Warehouse stock overview by material"
+   }
+  },
+  {
+   "code": "LT01",
+   "area": "13",
+   "type": "W",
+   "purpose": {
+    "sk": "Manuálne založenie transfer order",
+    "en": "Create transfer order manually"
+   }
+  },
+  {
+   "code": "LT03",
+   "area": "13",
+   "type": "W",
+   "purpose": {
+    "sk": "Transfer order z dodávky",
+    "en": "Create transfer order for delivery"
+   }
+  },
+  {
+   "code": "LT10",
+   "area": "13",
+   "type": "W",
+   "purpose": {
+    "sk": "Transfer order zo zoznamu zásob",
+    "en": "Create transfer order from stock list"
+   }
+  },
+  {
+   "code": "LT12",
+   "area": "13",
+   "type": "W",
+   "purpose": {
+    "sk": "Potvrdenie transfer order",
+    "en": "Confirm transfer order"
+   }
+  },
+  {
+   "code": "LT15",
+   "area": "13",
+   "type": "A",
+   "purpose": {
+    "sk": "Storno nepotvrdeného transfer order",
+    "en": "Cancel unconfirmed transfer order"
+   }
+  },
+  {
+   "code": "LT21",
+   "area": "13",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie transfer order",
+    "en": "Display transfer order"
+   }
+  },
+  {
+   "code": "LX02",
+   "area": "13",
+   "type": "R",
+   "purpose": {
+    "sk": "Prehľad skladovej zásoby",
+    "en": "Warehouse stock list"
+   }
+  },
+  {
+   "code": "LI01N",
+   "area": "13",
+   "type": "W",
+   "purpose": {
+    "sk": "Vytvorenie WM inventúrneho dokladu",
+    "en": "Create WM physical inventory document"
+   }
+  },
+  {
+   "code": "LI11N",
+   "area": "13",
+   "type": "W",
+   "purpose": {
+    "sk": "Zápis výsledkov WM inventúry",
+    "en": "Enter WM inventory count"
+   }
+  },
+  {
+   "code": "LI20",
+   "area": "13",
+   "type": "A",
+   "purpose": {
+    "sk": "Zaúčtovanie inventúrnych rozdielov vo WM",
+    "en": "Clear WM inventory differences"
+   }
+  },
+  {
+   "code": "LI21",
+   "area": "13",
+   "type": "A",
+   "purpose": {
+    "sk": "Prenos/zaúčtovanie rozdielov do IM",
+    "en": "Clear inventory differences in IM"
+   }
+  },
+  {
+   "code": "/SCWM/MON",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Centrálny monitor EWM skladu",
+    "en": "EWM warehouse monitor"
+   }
+  },
+  {
+   "code": "/SCWM/PRDI",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Správa prichádzajúcej dodávky EWM",
+    "en": "Maintain EWM inbound delivery"
+   }
+  },
+  {
+   "code": "/SCWM/PRDO",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Správa odchádzajúcej dodávky EWM",
+    "en": "Maintain EWM outbound delivery order"
+   }
+  },
+  {
+   "code": "/SCWM/IDN",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Oznámenie prichádzajúcej dodávky",
+    "en": "Inbound delivery notification"
+   }
+  },
+  {
+   "code": "/SCWM/ODR",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Požiadavka na odchádzajúcu dodávku",
+    "en": "Outbound delivery request"
+   }
+  },
+  {
+   "code": "/SCWM/TO_DISP",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Zobrazenie warehouse task",
+    "en": "Display warehouse task"
+   }
+  },
+  {
+   "code": "/SCWM/TO_CONF",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Potvrdenie warehouse task",
+    "en": "Confirm warehouse task"
+   }
+  },
+  {
+   "code": "/SCWM/RFUI",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Mobilné RF spracovanie v sklade",
+    "en": "Radio-frequency warehouse processing"
+   }
+  },
+  {
+   "code": "/SCWM/ERP_STOCKCHECK",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Kontrola rozdielov zásob ERP a EWM",
+    "en": "Compare ERP and EWM stock levels"
+   }
+  },
+  {
+   "code": "/SCWM/TU",
+   "area": "14",
+   "type": "O",
+   "purpose": {
+    "sk": "Správa dopravných jednotiek",
+    "en": "Transportation unit maintenance"
+   }
+  },
+  {
+   "code": "QA32",
+   "area": "15",
+   "type": "R",
+   "purpose": {
+    "sk": "Pracovný zoznam kontrolných dávok",
+    "en": "Inspection lot worklist"
+   }
+  },
+  {
+   "code": "QA33",
+   "area": "15",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie kontrolných dávok",
+    "en": "Display inspection lots"
+   }
+  },
+  {
+   "code": "QA11",
+   "area": "15",
+   "type": "W",
+   "purpose": {
+    "sk": "Rozhodnutie o použití kontrolnej dávky",
+    "en": "Record usage decision for inspection lot"
+   }
+  },
+  {
+   "code": "QA12",
+   "area": "15",
+   "type": "A",
+   "purpose": {
+    "sk": "Zmena rozhodnutia o použití (podľa stavu)",
+    "en": "Change usage decision where permitted"
+   }
+  },
+  {
+   "code": "QE51N",
+   "area": "15",
+   "type": "W",
+   "purpose": {
+    "sk": "Zadanie výsledkov kontroly",
+    "en": "Record inspection results"
+   }
+  },
+  {
+   "code": "QP01",
+   "area": "15",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie kontrolného plánu",
+    "en": "Create inspection plan"
+   }
+  },
+  {
+   "code": "QP02",
+   "area": "15",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena kontrolného plánu",
+    "en": "Change inspection plan"
+   }
+  },
+  {
+   "code": "QP03",
+   "area": "15",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie kontrolného plánu",
+    "en": "Display inspection plan"
+   }
+  },
+  {
+   "code": "QS21",
+   "area": "15",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie kmeňového znaku kvality",
+    "en": "Create master inspection characteristic"
+   }
+  },
+  {
+   "code": "QS22",
+   "area": "15",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena kmeňového znaku kvality",
+    "en": "Change master inspection characteristic"
+   }
+  },
+  {
+   "code": "QS23",
+   "area": "15",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie kmeňového znaku kvality",
+    "en": "Display master inspection characteristic"
+   }
+  },
+  {
+   "code": "QM01",
+   "area": "15",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie hlásenia kvality",
+    "en": "Create quality notification"
+   }
+  },
+  {
+   "code": "QM02",
+   "area": "15",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena hlásenia kvality",
+    "en": "Change quality notification"
+   }
+  },
+  {
+   "code": "QM03",
+   "area": "15",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie hlásenia kvality",
+    "en": "Display quality notification"
+   }
+  },
+  {
+   "code": "IW21",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie hlásenia údržby",
+    "en": "Create maintenance notification"
+   }
+  },
+  {
+   "code": "IW22",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena hlásenia údržby",
+    "en": "Change maintenance notification"
+   }
+  },
+  {
+   "code": "IW23",
+   "area": "16",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie hlásenia údržby",
+    "en": "Display maintenance notification"
+   }
+  },
+  {
+   "code": "IW31",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie príkazu údržby",
+    "en": "Create maintenance order"
+   }
+  },
+  {
+   "code": "IW32",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena príkazu údržby",
+    "en": "Change maintenance order"
+   }
+  },
+  {
+   "code": "IW33",
+   "area": "16",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie príkazu údržby",
+    "en": "Display maintenance order"
+   }
+  },
+  {
+   "code": "IW38",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Zoznam a spracovanie príkazov údržby",
+    "en": "Change maintenance orders in list"
+   }
+  },
+  {
+   "code": "IW39",
+   "area": "16",
+   "type": "R",
+   "purpose": {
+    "sk": "Zoznam príkazov údržby - zobrazenie",
+    "en": "Display maintenance order list"
+   }
+  },
+  {
+   "code": "IE01",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie zariadenia (equipment)",
+    "en": "Create equipment master"
+   }
+  },
+  {
+   "code": "IE02",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena zariadenia (equipment)",
+    "en": "Change equipment master"
+   }
+  },
+  {
+   "code": "IE03",
+   "area": "16",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie zariadenia (equipment)",
+    "en": "Display equipment master"
+   }
+  },
+  {
+   "code": "IL01",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Založenie funkčného miesta",
+    "en": "Create functional location"
+   }
+  },
+  {
+   "code": "IL02",
+   "area": "16",
+   "type": "W",
+   "purpose": {
+    "sk": "Zmena funkčného miesta",
+    "en": "Change functional location"
+   }
+  },
+  {
+   "code": "IL03",
+   "area": "16",
+   "type": "R",
+   "purpose": {
+    "sk": "Zobrazenie funkčného miesta",
+    "en": "Display functional location"
+   }
+  },
+  {
+   "code": "IP10",
+   "area": "16",
+   "type": "A",
+   "purpose": {
+    "sk": "Plánovanie termínov plánov údržby",
+    "en": "Schedule maintenance plans"
+   }
+  },
+  {
+   "code": "RSA1",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "BW Administrator Workbench (klasický)",
+    "en": "Classic BW Administrator Workbench"
+   }
+  },
+  {
+   "code": "RSA2",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Definícia a detail extraktorov",
+    "en": "Display DataSource metadata"
+   }
+  },
+  {
+   "code": "RSA3",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Test extrakcie DataSource",
+    "en": "DataSource extraction test"
+   }
+  },
+  {
+   "code": "RSA5",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Aktivácia dodaných DataSource (klasická)",
+    "en": "Activate delivered DataSources (classic)"
+   }
+  },
+  {
+   "code": "RSA6",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Údržba aktívnych DataSource (klasická)",
+    "en": "Maintain active DataSources (classic)"
+   }
+  },
+  {
+   "code": "RSA7",
+   "area": "17",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasický delta queue monitor",
+    "en": "Classic delta queue monitor"
+   }
+  },
+  {
+   "code": "RSDS",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Správa DataSource v BW",
+    "en": "Maintain BW DataSources"
+   }
+  },
+  {
+   "code": "RSO2",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Generické DataSource",
+    "en": "Generic DataSource maintenance"
+   }
+  },
+  {
+   "code": "RSPC",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Procesné reťazce BW",
+    "en": "BW process chain maintenance"
+   }
+  },
+  {
+   "code": "RSPCM",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Monitorovanie procesných reťazcov",
+    "en": "BW process chain monitor"
+   }
+  },
+  {
+   "code": "RSRT",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Analýza a testovanie BW query",
+    "en": "BW query monitor"
+   }
+  },
+  {
+   "code": "RSRV",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Konzistenčné kontroly BW objektov",
+    "en": "BW object consistency checks"
+   }
+  },
+  {
+   "code": "ODQMON",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Monitor Operational Delta Queue",
+    "en": "Operational Delta Queue monitor"
+   }
+  },
+  {
+   "code": "LTRC",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "SLT replikácia - monitor (ak nainštalovaná)",
+    "en": "SLT replication monitor, if installed"
+   }
+  },
+  {
+   "code": "RSECADMIN",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Správa analytických oprávnení BW",
+    "en": "BW analysis authorization maintenance"
+   }
+  },
+  {
+   "code": "LISTCUBE",
+   "area": "17",
+   "type": "O",
+   "purpose": {
+    "sk": "Technické zobrazenie dát InfoProvidera",
+    "en": "Display InfoProvider data"
+   }
+  },
+  {
+   "code": "BP",
+   "area": "18",
+   "type": "W",
+   "purpose": {
+    "sk": "Kmeňové údaje Business Partner",
+    "en": "Business Partner master data"
+   }
+  },
+  {
+   "code": "CVI_COCKPIT",
+   "area": "18",
+   "type": "O",
+   "purpose": {
+    "sk": "Príprava integrácie zákazník/dodávateľ (ECC)",
+    "en": "Customer/Vendor Integration cockpit (ECC prep)"
+   }
+  },
+  {
+   "code": "MDS_LOAD_COCKPIT",
+   "area": "18",
+   "type": "O",
+   "purpose": {
+    "sk": "Synchronizácia BP a customer/vendor (podľa verzie)",
+    "en": "BP to customer/vendor synchronization cockpit"
+   }
+  },
+  {
+   "code": "LTMOM",
+   "area": "18",
+   "type": "W",
+   "purpose": {
+    "sk": "Migration Object Modeler pre S/4HANA",
+    "en": "S/4HANA Migration Object Modeler"
+   }
+  },
+  {
+   "code": "LTMC",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Starý Migration Cockpit - deprecated",
+    "en": "Old Migration Cockpit - deprecated"
+   }
+  },
+  {
+   "code": "LSMW",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Starý Legacy System Migration Workbench",
+    "en": "Legacy System Migration Workbench"
+   }
+  },
+  {
+   "code": "XD01",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasické založenie zákazníka (ECC)",
+    "en": "Classic customer creation (ECC)"
+   }
+  },
+  {
+   "code": "XD02",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasická zmena zákazníka (ECC)",
+    "en": "Classic customer change (ECC)"
+   }
+  },
+  {
+   "code": "XD03",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasické zobrazenie zákazníka (ECC)",
+    "en": "Classic customer display (ECC)"
+   }
+  },
+  {
+   "code": "XK01",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasické založenie dodávateľa (ECC)",
+    "en": "Classic supplier creation (ECC)"
+   }
+  },
+  {
+   "code": "XK02",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasická zmena dodávateľa (ECC)",
+    "en": "Classic supplier change (ECC)"
+   }
+  },
+  {
+   "code": "XK03",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasické zobrazenie dodávateľa (ECC)",
+    "en": "Classic supplier display (ECC)"
+   }
+  },
+  {
+   "code": "FD01",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasické založenie FI zákazníka (ECC)",
+    "en": "Classic FI customer creation (ECC)"
+   }
+  },
+  {
+   "code": "FK01",
+   "area": "18",
+   "type": "L",
+   "purpose": {
+    "sk": "Klasické založenie FI dodávateľa (ECC)",
+    "en": "Classic FI vendor creation (ECC)"
+   }
+  },
+  {
+   "code": "CNV_NA_MC",
+   "area": "18",
+   "type": "O",
+   "purpose": {
+    "sk": "Kontrola SAP Notes pre Migration Cockpit",
+    "en": "SAP Note Analyzer for Migration Cockpit"
+   }
+  }
+ ]
+}

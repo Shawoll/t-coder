@@ -1,0 +1,33 @@
+{
+  "name": "t-coder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A mobile-friendly SAP T-code almanac and troubleshooting helper (SK/EN), styled like a classic SAP GUI.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "data:extract": "node scripts/extract-pdf.mjs",
+    "data:build": "node scripts/build-catalog.ts",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2",
+    "vite-plugin-pwa": "^2.0.0",
+    "vitest": "^5.0.3"
+  },
+  "dependencies": {
+    "@fontsource/arimo": "^5.3.0",
+    "@fontsource/cousine": "^5.3.0"
+  }
+}

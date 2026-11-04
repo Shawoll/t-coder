@@ -1,0 +1,1565 @@
+===== PAGE 1 =====
+PRAKTICKÁ REFERENČNÁ PRÍRUČKA / PRACTICAL FIELD GUIDE
+SAP T-CODE
+ALMANACH
+393 transakcií · 18 oblastí · SK / EN
+Zrozumiteľný sprievodca transakciami SAP ECC a SAP S/4HANA – od ABAP developmentu a Basis
+až po FI, MM, SD, výrobu, sklad a migrácie.
+A bilingual reference for developers, architects, process owners and SAP transformation teams.
+Includes modern S/4HANA caveats, troubleshooting playbooks and an alphabetical index.
+VYDANIE / EDITION 23. 10. 2026 URČENIE / FOCUS
+SAP GUI, S/4HANA, BTP ABAP – rozdiely a použiteľnosť
+===== PAGE 2 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+Ako používať almanach
+How to use this almanac
+Toto je kurátorovaný referenčný výber 393 unikátnych transakčných kódov, nie oficiálny úplný register
+všetkých SAP transakcií. Účelom je rozumieť, kde začať, ako spolu systémy súvisia a aké riziko má daná akcia.
+This is a curated selection of 393 unique transaction codes, not an official exhaustive register. Its purpose is orientation, process
+awareness and safe triage.
+ZÁSADNÉ / ESSENTIAL
+Prítomnosť T-kódu sa líši podľa produktu, release, aktívnych komponentov, zákazníckej konfigurácie a oprávnení.
+Kód „existuje“ neznamená, že je vhodný pre cieľový postup.
+Availability varies by product, release, component activation, customizing and authorizations. Existence does not
+equal recommended usage.
+Legenda značiek / Legend
+R — Zobrazenie / čítanie Read / inspect
+W — Vytvorenie / zmena / účtovanie Write / change / post
+A — Administrácia, nastavenia, silný dopad Administration / elevated impact
+O — Voliteľný modul alebo závislosť od verzie Optional component / release-specific
+L — Legacy, nahradené alebo problematické v S/4 Legacy / replaced / S/4 caveat
+Značka vyjadruje primárny charakter, nie záruku oprávnenia ani bezpečnosti. Aj „R“ môže sprístupniť citlivé
+údaje; „W“ ani „A“ nikdy nespúšťaj na produkcii bez oprávnenia, testu a schválenia.
+Tags describe typical intent, not permissions or safety. Read-only screens may reveal sensitive data; writes and administrative
+changes require proper controls.
+Navigácia cez SAP GUI / Command field
+/n Ukončí aktuálnu transakciu / Ends current transaction
+/nST22 Otvorí ST22 v aktuálnej session / Opens ST22 in current session
+/o Otvorí novú session / Opens a new session
+/oSM37 SM37 v novej session / SM37 in a new session
+F1 / F4 Pomoc k poľu / vyhľadávacia pomoc · Field help / possible entries
+Nezamieňaj príkazové pole SAP GUI s vyhľadávaním v Fiori Launchpade: v novších verziách možno niektoré
+T-kódy/Fiori app IDs spustiť aj z vyhľadávania, ale iba ak sú sprístupnené a autorizované [S14].
+SAP GUI command field and Fiori Launchpad search are not identical. Supported transactions and app IDs can be launchable via Fiori
+search when authorized [S14].
+Referenčný katalóg · over platnosť v cieľovom systéme 2
+===== PAGE 3 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+ECC vs S/4HANA vs ABAP Cloud
+Which world are you working in?
+SAP ERP ECC Klasické SAP GUI transakcie sú bežné; historické moduly a dátové modely.
+Classic GUI T-codes and traditional data models.
+S/4HANA on-prem / Private
+Cloud
+Klasické kódy a Fiori môžu koexistovať. Dôležité zmeny: BP, ACDOCA,
+moderné API a migračné nástroje.
+GUI and Fiori may coexist; check simplifications and released objects.
+S/4HANA Public Cloud Fiori a roly/katalógy sú primárne. Niektoré SAP GUI for HTML appky alebo
+technické ID môžu existovať – nikdy nepredpokladaj ECC paritu.
+Fiori-first, but some GUI-based apps/IDs exist; no ECC parity assumption.
+SAP BTP ABAP Environment Bez SAP GUI; vývoj cez Eclipse ADT, ABAP Cloud, released APIs, CDS a RAP.
+Táto príručka je tu najmä procesný kontext.
+No SAP GUI; develop in Eclipse ADT using ABAP Cloud [S03, S04].
+5 pravidiel pri práci / Five operating rules
+01. Zisti systém, klienta, release a prostredie skôr než čokoľvek spustíš.
+Identify product, client, release and landscape first.
+02. Začni diagnostikou a presným dokladom, nie náhodným preklikávaním.
+Start with a document ID and observable evidence.
+03. Odliš problém dát, procesu, konfigurácie, kódu a oprávnenia.
+Separate data, process, customizing, code and authorization issues.
+04. Pri dávkových opravách ošetri duplicity, rollback a idempotenciu.
+For bulk recovery, consider duplicates, reversibility and idempotency.
+05. Po oprave urob technické aj biznis overenie s vlastníkom procesu.
+Perform technical and business validation with the process owner.
+Ako si overiť konkrétny T-kód / Verify in your system
+1. V SE93 vyhľadaj definíciu a balík. 2. V SE16N/SE16H vieš autorizovane prezrieť TSTC/TSTCT. 3. Skontroluj, či
+má používateľ S_TCODE, súvisiace procesné oprávnenia a Fiori role. 4. Potvrď vhodnosť pre konkrétny release v
+SAP Help, Simplification List a Fiori Apps Reference Library [S01, S02, S16].
+Use SE93/TSTC/TSTCT to verify existence, security tools to verify authorization, and release documentation to confirm whether it
+remains a recommended flow.
+Referenčný katalóg · over platnosť v cieľovom systéme 3
+===== PAGE 4 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+Rýchly štart: 48 najdôležitejších
+Fast start: 48 essential codes
+ABAP / Technické
+SE93 SE11 SE16N SE38
+SE80 ATC ST05 SAT
+ST22 SLG1 SM37 SM59
+Nákup, sklad, predaj
+MM03 ME23N ME2N MIGO
+MMBE MB51 MIRO VA03
+VL03N VF03 BP /SCWM/MON
+Basis, integrácie, security
+SM12 SM21 SM50 ST03N
+STAD SM58 SMQ1 SMQ2
+WE02 BD87 SU53 PFCG
+Finance, migrácie, zmeny
+FB03 FB60 FBL1N FBL5N
+FS00 OB52 SE09 STMS
+SPDD SPAU LTMOM CVI_COCKPIT
+DÔLEŽITÉ / NOTE
+Prvý krok pri incidente: ST22 (dump), SM37 (job), SLG1 (biznis log), WE02 (IDoc), SU53 (oprávnenie), SMQ1/SMQ2
+(fronta), ST05/SAT (výkon).
+First-response toolbox: ST22, SM37, SLG1, WE02, SU53, SMQ1/SMQ2 and ST05/SAT.
+Referenčný katalóg · over platnosť v cieľovom systéme 4
+===== PAGE 5 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+Obsah
+Contents
+Ako používať almanach
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+ECC vs S/4HANA vs ABAP Cloud
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+Rýchly štart: 48 najdôležitejších
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+Obsah
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+01 Navigácia a orientácia
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+02 ABAP vývoj, kvalita a výkon
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+03 Prevádzka, Basis a monitoring
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+04 Oprávnenia a bezpečnosť
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+05 Transporty, customizing a upgrade
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+06 Integrácie, RFC, IDoc a služby
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+07 MM: Materiály a nákup
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+08 Skladové pohyby a faktúry
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+09 SD: Predaj a distribúcia
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+10 FI: Účtovníctvo a majetok
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+11 CO: Controlling a kalkulácie
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+12 PP: Výroba, MRP a kusovníky
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+13 Sklad: klasický LE-WM
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+14 Sklad: Extended Warehouse Management
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+15 QM: Manažment kvality
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+16 PM: Údržba technických zariadení
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+17 BW, extrakcia a dátové toky
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+18 Konverzia a migrácia S/4HANA
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+10 diagnostických scenárov
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+Procesy end-to-end
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+SAP dátové kľúče a tabuľky
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+Typy pohybov ≠ T-kódy
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+S/4HANA: čo sa mení
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+Otázky na precvičenie
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+Abecedný index T-kódov
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+Zdroje a metodika
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+Vnútorné odkazy v obsahu aj v abecednom indexe sú klikateľné. Vyhľadávanie v PDF umožňuje nájsť ľubovoľný
+T-kód alebo anglický výraz.
+The table of contents and alphabetic index contain internal links; the PDF is fully searchable by transaction or English term.
+Referenčný katalóg · over platnosť v cieľovom systéme 5
+===== PAGE 6 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+01 Navigácia a orientácia
+Navigation and discovery · 15 T-codes
+Najprv zisti, či ide o kód SAP GUI, Fiori aplikáciu alebo Z/Y zákaznícku transakciu. SE93 opisuje transakciu; TSTC
+obsahuje technické kódy a TSTCT ich popisy.
+Start by confirming whether you are dealing with a SAP GUI transaction, Fiori app, or Z/Y customer transaction. SE93 defines
+transactions; TSTC and TSTCT store codes and descriptions.
+T-CODE ÚČEL / PURPOSE TYP
+SEARCH_SAP_MENU Vyhľadávanie transakcií podľa názvu alebo menu
+Search transactions by name or menu R / read
+SE93 Definícia, zobrazenie a údržba T-kódov
+Display and maintain transaction definitions A / admin
+SE16 Zobrazenie obsahu databázových tabuliek
+Display database table contents R / read
+SE16N Rozšírený prehliadač tabuliek
+Enhanced table data browser R / read
+SE16H Rozšírené dopyty a prehliadanie dát na HANA
+HANA-oriented data browser and queries R / read
+SE11 ABAP Dictionary: tabuľky, typy, pohľady
+ABAP Dictionary: tables, types, views A / admin
+SE14 Databázová utilita pre DDIC objekty
+Database utility for Dictionary objects A / admin
+SM30 Údržba povolených tabuliek a pohľadov
+Maintain permitted tables and views W / write
+SPRO Konfigurácia procesov cez SAP IMG
+SAP IMG business configuration A / admin
+AL11 Prehliadanie adresárov aplikačného servera
+Browse application-server directories R / read
+FILE Logické cesty a mená súborov
+Logical file paths and names A / admin
+SE84 Vyhľadávanie objektov v ABAP repozitári
+Repository information system R / read
+SU3 Vlastné používateľské nastavenia
+Maintain own user defaults W / write
+ABAPDOCU Dokumentácia ABAP s príkladmi
+ABAP documentation and examples R / read
+ABAPHELP Vyhľadávanie ABAP kľúčových slov
+ABAP keyword help R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 6
+===== PAGE 7 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+02 ABAP vývoj, kvalita a výkon
+ABAP development, quality and performance · 23 T-codes
+V klasickom ABAP-e sú tieto nástroje bežné. Pri ABAP Cloud preferuj Eclipse ADT, released APIs, CDS a RAP;
+starý Workbench nemusí byť povolený.
+These are common in classic ABAP. For ABAP Cloud, prefer Eclipse ADT, released APIs, CDS and RAP; classic Workbench tools may be
+unavailable.
+T-CODE ÚČEL / PURPOSE TYP
+SE21 Balíky a organizácia repozitára
+Package Builder W / write
+SE24 Klasický editor tried a rozhraní
+Classic class and interface builder W / write
+SE37 Funkčné moduly a ich testovanie
+Function modules and their testing W / write
+SE38 ABAP programy a reporty
+ABAP program editor W / write
+SA38 Spustenie existujúceho ABAP reportu
+Run an existing ABAP report A / admin
+SE80 Object Navigator, klasický Workbench
+Classic ABAP Object Navigator W / write
+SE18 Definície BAdI a enhancement spotov
+BAdI and enhancement spot definitions W / write
+SE19 Implementácie BAdI
+BAdI implementations W / write
+SE91 Katalóg správ (message classes)
+Message class maintenance W / write
+SE41 Menu Painter: GUI statusy
+Menu Painter and GUI statuses W / write
+SE51 Screen Painter: dynpro obrazovky
+Screen Painter for classic dynpros W / write
+SE71 Klasické SAPscript formuláre
+Classic SAPscript forms W / write
+SMARTFORMS Vývoj Smart Forms formulárov
+Smart Forms form designer W / write
+SFP Adobe Forms a rozhrania formulárov
+Adobe Forms interface and layout W / write
+SHDB Nahrávanie transakcií pre batch input
+Transaction recordings for batch input L / legacy
+SEGW OData Gateway Service Builder (klasický)
+Classic OData Gateway Service Builder W / write
+SAT Analýza času behu ABAP
+ABAP runtime analysis R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 7
+===== PAGE 8 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+ST05 SQL trace a analýza DB volaní
+SQL trace and database-call analysis R / read
+ST12 Kombinovaná ABAP/SQL trace (ak dostupná)
+Combined ABAP/SQL trace where available O / opt.
+SCI Code Inspector a pravidlá statickej analýzy
+Code Inspector and static checks R / read
+ATC ABAP Test Cockpit, kontrola kvality
+ABAP Test Cockpit quality checks R / read
+SLIN Rozšírená syntaxová kontrola ABAP
+Extended ABAP program check R / read
+SCAT Klasické testovacie záznamy (historické)
+Classic test-case recording (legacy) L / legacy
+03 Prevádzka, Basis a monitoring
+Operations, Basis and monitoring · 32 T-codes
+Monitor ≠ oprávnenie na zásah. Uvoľňovanie zámkov, jobov alebo výmena parametrov v produkcii vyžaduje
+schválený postup.
+Monitoring does not imply permission to intervene. Releasing locks, changing jobs or parameters in production requires an approved
+procedure.
+T-CODE ÚČEL / PURPOSE TYP
+SM04 Prihlásení používatelia na serveri
+Logged-on users on an application server R / read
+AL08 Prihlásení používatelia v systéme
+Logged-on users across the system R / read
+SM36 Plánovanie background jobov
+Schedule background jobs W / write
+SM37 Kontrola behov a logov jobov
+Monitor background jobs and logs R / read
+SM50 Pracovné procesy na aplikačnom serveri
+Local work process monitor R / read
+SM51 Zoznam aplikačných serverov
+Application server overview R / read
+SM66 Globálny prehľad pracovných procesov
+Global work process overview R / read
+SM12 Zámky SAP (enqueue); zásahy opatrne
+SAP enqueue locks; handle with care A / admin
+SM13 Monitor neúspešných update záznamov
+Update records and failed updates A / admin
+SM21 Systémový log
+System log R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 8
+===== PAGE 9 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+SLG1 Aplikačné logy podľa objektu a času
+Application logs by object and time R / read
+ST22 ABAP dumpy a ich príčiny
+ABAP short dumps and root causes R / read
+ST03N Workload a časové charakteristiky
+Workload and response-time analysis R / read
+STAD Detailné štatistiky požiadaviek
+Single-record workload statistics R / read
+ST02 Pamäť, buffery a tuning
+Memory and buffer tuning overview R / read
+ST06 Metriky operačného systému
+Operating system monitor R / read
+ST11 Trace súbory pracovných procesov
+Developer trace files R / read
+ST04 Databázový monitor (podľa platformy)
+Database performance monitor (DB-specific) R / read
+DBACOCKPIT Konzola administrácie databázy
+Database administration cockpit A / admin
+DB02 DB kapacita a priestor (podľa DB)
+Database storage and space (DB-dependent) R / read
+DB12 História a monitoring DB záloh
+Database backup logs and monitoring R / read
+RZ10 Profilové parametre - konfigurácia
+Maintain instance/profile parameters A / admin
+RZ11 Zobrazenie a prípadná úprava parametrov
+Display or change profile parameters A / admin
+RZ20 CCMS monitorovanie a alarmy
+CCMS monitoring and alerts R / read
+RZ21 Nastavenie CCMS monitorovania
+CCMS monitoring configuration A / admin
+SMICM Internet Communication Manager monitor
+Internet Communication Manager monitor A / admin
+SP01 Spracovanie a prehliadanie spool výstupov
+Display and manage spool requests A / admin
+SPAD Konfigurácia tlačových zariadení
+Spool and output-device administration A / admin
+SMLG Skupiny serverov pre prihlásenie
+Logon groups maintenance A / admin
+SMGW RFC Gateway monitor
+RFC Gateway monitor A / admin
+SICK Základná kontrola konzistencie inštalácie
+Installation consistency check R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 9
+===== PAGE 10 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+SM02 Systémové správy pre používateľov
+System-wide user messages A / admin
+04 Oprávnenia a bezpečnosť
+Authorizations and security · 13 T-codes
+SU53 zachytáva poslednú neúspešnú kontrolu, nie kompletnú pravdu o role. Na širšiu diagnostiku použi
+STAUTHTRACE a analýzu konkrétnych objektov.
+SU53 shows the last failed check, not the full story. Use STAUTHTRACE and role/object analysis for deeper diagnosis.
+T-CODE ÚČEL / PURPOSE TYP
+SU01 Správa jednotlivých používateľov
+Maintain individual users A / admin
+SU10 Hromadná správa používateľov
+Mass user maintenance A / admin
+SU50 Vlastné používateľské údaje
+Maintain own user data W / write
+SU53 Posledné neúspešné autorizačné kontroly
+Last failed authorization check R / read
+SU56 Používateľský authorization buffer
+User authorization buffer R / read
+SUIM Reporty rolí, profilov a používateľov
+User and role information system R / read
+SU24 Návrhové autorizačné hodnoty transakcií
+Transaction authorization proposals A / admin
+SU25 Údržba autorizačných dát pri upgrade
+Authorization data migration after upgrades A / admin
+SU21 Objekty a polia autorizácií
+Authorization objects and fields A / admin
+PFCG Vytváranie a údržba rolí
+Role creation and maintenance A / admin
+STAUTHTRACE Detailné sledovanie kontrol oprávnení
+Detailed authorization trace R / read
+SM19 Konfigurácia Security Audit Log
+Security Audit Log configuration A / admin
+SM20 Vyhodnotenie Security Audit Log
+Security Audit Log analysis R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 10
+===== PAGE 11 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+05 Transporty, customizing a upgrade
+Transports, customizing and upgrades · 18 T-codes
+Transport nie je iba prenos súboru. Over závislosti, poradie importu, plán nasadenia, kontrolné body, testy a
+rollback/forward-fix.
+A transport is not just file movement. Check dependencies, import order, release plan, validation gates and rollback/forward-fix.
+T-CODE ÚČEL / PURPOSE TYP
+SE01 Transport Organizer a požiadavky
+Transport Organizer and requests A / admin
+SE03 Pokročilé transportné nástroje
+Transport Organizer tools A / admin
+SE09 Workbench transportné požiadavky
+Workbench transport requests W / write
+SE10 Customizing transportné požiadavky
+Customizing transport requests W / write
+STMS Transport Management System
+Transport Management System A / admin
+STMS_IMPORT Prehľad a import transportov
+Transport import overview and execution A / admin
+SCC1 Kopírovanie objektov transportu medzi klientmi
+Copy transport objects across clients A / admin
+SCC3 Logy a monitoring kopírovania klienta
+Client-copy logs and monitoring R / read
+SCC4 Konfigurácia a ochrana klientov
+Client configuration and protection A / admin
+SCCL Lokálna kópia klienta
+Local client copy A / admin
+SCC9 Vzdialená kópia klienta
+Remote client copy A / admin
+SE06 Nastavenia zmien systému po inštalácii
+System change-option setup A / admin
+SPDD Úpravy DDIC pri upgrade/konverzii
+Dictionary modification adjustment A / admin
+SPAU Úpravy modifikácií SAP po upgrade
+SAP object modification adjustment A / admin
+SNOTE SAP Notes: kontrola a implementácia
+SAP Notes review and implementation A / admin
+SPAM Support Package Manager
+Support Package Manager A / admin
+SAINT Inštalácia SAP doplnkov
+SAP add-on installation manager A / admin
+SGEN Generovanie ABAP loadov
+Generate ABAP loads A / admin
+Referenčný katalóg · over platnosť v cieľovom systéme 11
+===== PAGE 12 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+06 Integrácie, RFC, IDoc a služby
+Integration, RFC, IDoc and services · 30 T-codes
+Pri integráciách vyhľadaj identifikátor správy, čas, systém odosielateľa/príjemcu, status a prvú skutočnú príčinu.
+Reprocessing môže duplikovať operáciu.
+For integrations, trace message ID, timestamp, sender/receiver, status and first root cause. Reprocessing can duplicate business
+operations.
+T-CODE ÚČEL / PURPOSE TYP
+SM59 RFC destinácie, konektivita a test spojenia
+RFC destinations and connectivity checks A / admin
+SM58 Zaseknuté alebo chybné tRFC volania
+Transactional RFC error monitor A / admin
+SMQ1 Odchádzajúce qRFC fronty
+Outbound qRFC queue monitor A / admin
+SMQ2 Prichádzajúce qRFC fronty
+Inbound qRFC queue monitor A / admin
+SMQ3 Uložené qRFC fronty
+Saved qRFC queue monitor R / read
+SMQS Plánovač odchádzajúcich qRFC front
+Outbound qRFC scheduler registration A / admin
+SMQR Plánovač prichádzajúcich qRFC front
+Inbound qRFC scheduler registration A / admin
+WE02 Zobrazenie a diagnostika IDoc správ
+Display and diagnose IDocs R / read
+WE05 Výpisy a filtrovanie IDoc správ
+IDoc list and status selection R / read
+WE09 Vyhľadávanie IDoc podľa obsahu
+Search IDoc content R / read
+WE19 Simulácia a testovanie IDoc
+IDoc testing and simulation A / admin
+WE20 Partnerské profily IDoc
+IDoc partner profiles A / admin
+WE21 Porty používané v IDoc
+IDoc port definitions A / admin
+WE30 Typy IDoc
+IDoc type editor W / write
+WE31 Segmenty IDoc
+IDoc segment editor W / write
+WE60 Dokumentácia IDoc štruktúr
+IDoc structure documentation R / read
+BD87 Reprocessing IDoc podľa statusu
+Reprocess IDocs by status A / admin
+Referenčný katalóg · over platnosť v cieľovom systéme 12
+===== PAGE 13 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+BD64 ALE distribučný model
+ALE distribution model A / admin
+BD54 Logické systémy v ALE
+ALE logical system maintenance A / admin
+WE81 Typy správ IDoc
+IDoc message types A / admin
+WE82 Priradenie typov IDoc k správam
+Assignment of IDoc types to messages A / admin
+SICF Aktivácia a správa HTTP služieb
+HTTP service activation and maintenance A / admin
+/IWFND/MAINT_SERVICE Registrácia klasických OData služieb
+Classic SAP Gateway OData service activation A / admin
+/IWFND/ERROR_LOG Chyby SAP Gateway vo frontend systéme
+Frontend SAP Gateway error log R / read
+/IWBEP/ERROR_LOG Chyby OData v backend systéme
+Backend OData error log R / read
+SRT_MONI Monitor SOAP webových služieb
+SOAP web service message monitoring R / read
+SRT_UTIL Diagnostika, trace a log webových služieb
+SOAP web services troubleshooting R / read
+SPROXY ABAP Enterprise Service Proxy
+ABAP Enterprise Service Proxy tools W / write
+SOAMANAGER Konfigurácia SOAP endpointov a služieb
+Web service configuration cockpit A / admin
+SXMB_MONI Klasický XI/PI message monitor
+Classic XI/PI message monitor O / opt.
+Referenčný katalóg · over platnosť v cieľovom systéme 13
+===== PAGE 14 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+07 MM: Materiály a nákup
+MM: Materials and purchasing · 30 T-codes
+Nákupný proces nie je len ME21N. Master data, schvaľovanie, objednávka, GR, invoice verification a platba
+tvoria jeden end-to-end tok.
+Procurement is not just ME21N. Master data, approvals, PO, goods receipt, invoice verification and payment form one end-to-end
+flow.
+T-CODE ÚČEL / PURPOSE TYP
+MM01 Založenie materiálu
+Create material master W / write
+MM02 Zmena materiálu
+Change material master W / write
+MM03 Zobrazenie materiálu
+Display material master R / read
+MM17 Hromadná zmena materiálov
+Mass maintenance of materials A / admin
+MM50 Rozšírenie materiálových pohľadov
+Extend material master views W / write
+MM60 Zoznam materiálov
+Material master list R / read
+ME51N Založenie požiadavky na nákup
+Create purchase requisition W / write
+ME52N Zmena požiadavky na nákup
+Change purchase requisition W / write
+ME53N Zobrazenie požiadavky na nákup
+Display purchase requisition R / read
+ME54N Uvoľnenie nákupnej požiadavky (ak nastavené)
+Release purchase requisition (if configured) W / write
+ME5A Zoznam nákupných požiadaviek
+Purchase requisition list R / read
+ME21N Založenie nákupnej objednávky
+Create purchase order W / write
+ME22N Zmena nákupnej objednávky
+Change purchase order W / write
+ME23N Zobrazenie nákupnej objednávky
+Display purchase order R / read
+ME2N Zoznam nákupných objednávok
+Purchase orders by document R / read
+ME2L Objednávky podľa dodávateľa
+Purchase orders by supplier R / read
+ME2M Objednávky podľa materiálu
+Purchase orders by material R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 14
+===== PAGE 15 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+ME11 Vytvorenie nákupného infozáznamu
+Create purchasing info record W / write
+ME12 Zmena nákupného infozáznamu
+Change purchasing info record W / write
+ME13 Zobrazenie nákupného infozáznamu
+Display purchasing info record R / read
+ME31K Vytvorenie nákupnej rámcovej zmluvy
+Create purchasing contract W / write
+ME32K Zmena nákupnej rámcovej zmluvy
+Change purchasing contract W / write
+ME33K Zobrazenie nákupnej rámcovej zmluvy
+Display purchasing contract R / read
+ME31L Vytvorenie dodávkového harmonogramu
+Create scheduling agreement W / write
+ME32L Zmena dodávkového harmonogramu
+Change scheduling agreement W / write
+ME33L Zobrazenie dodávkového harmonogramu
+Display scheduling agreement R / read
+ME38 Harmonogramy dodávok k dohode
+Maintain delivery schedule lines W / write
+ME57 Priraďovanie zdrojov nákupnej požiadavke
+Assign sources to purchase requisitions W / write
+ME59N Automatická tvorba nákupných objednávok
+Automatic PO creation from requisitions A / admin
+MRBR Uvoľnenie blokovaných logistických faktúr
+Release blocked logistics invoices A / admin
+Referenčný katalóg · over platnosť v cieľovom systéme 15
+===== PAGE 16 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+08 Skladové pohyby a faktúry
+Inventory movements and invoice verification · 30 T-codes
+Oddel fyzický stav zásoby, pohybový doklad a účtovný dopad. Druhy pohybov (101, 201, 261...) nie sú T-kódy.
+Klasické MB1* postupy nahraď MIGO/Fiori.
+Separate physical stock, material document and accounting impact. Movement types (101, 201, 261...) are not T-codes. Prefer
+MIGO/Fiori to legacy MB1* flows.
+T-CODE ÚČEL / PURPOSE TYP
+MIGO Príjem, výdaj, prevod a storno zásob
+Goods receipts, issues, transfers and reversals W / write
+MIRO Zaúčtovanie dodávateľskej logistickej faktúry
+Post logistics invoice verification W / write
+MIR4 Zobrazenie logistickej faktúry
+Display logistics invoice document R / read
+MIR7 Predbežné uloženie logistickej faktúry
+Park logistics invoice W / write
+MR8M Storno logistickej faktúry
+Cancel logistics invoice A / admin
+MMBE Stav zásob materiálu podľa lokality
+Stock overview by material and location R / read
+MB52 Zásoby v závode a na skladových miestach
+List of warehouse stocks on hand R / read
+MB51 Zoznam materiálových dokladov
+Material document list R / read
+MB5B Zásoby k dátumu účtovania
+Stock at a posting date R / read
+MB5L Porovnanie skladových a účtovných hodnôt
+Stock values and balances comparison R / read
+MB21 Založenie rezervácie materiálu
+Create material reservation W / write
+MB22 Zmena rezervácie materiálu
+Change material reservation W / write
+MB23 Zobrazenie rezervácie materiálu
+Display material reservation R / read
+MB24 Prehľad rezervácií
+Reservation list R / read
+MB26 Zoznam výdajok / picking list
+Picking list for reservations R / read
+MI01 Založenie inventúrneho dokladu IM
+Create inventory count document W / write
+MI02 Zmena inventúrneho dokladu IM
+Change inventory count document W / write
+Referenčný katalóg · over platnosť v cieľovom systéme 16
+===== PAGE 17 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+MI03 Zobrazenie inventúrneho dokladu IM
+Display inventory count document R / read
+MI04 Zápis fyzicky spočítaného množstva
+Enter physical inventory count W / write
+MI05 Zmena výsledkov inventúry
+Change inventory count W / write
+MI07 Zaúčtovanie inventúrnych rozdielov
+Post inventory differences A / admin
+MI20 Zoznam rozdielov fyzickej inventúry
+List of physical inventory differences R / read
+MSC1N Založenie šarže materiálu
+Create material batch W / write
+MSC2N Zmena šarže materiálu
+Change material batch W / write
+MSC3N Zobrazenie šarže materiálu
+Display material batch R / read
+OMJJ Konfigurácia druhov skladových pohybov
+Movement type configuration A / admin
+MB1A Historický výdaj materiálu; prednosť MIGO
+Legacy goods issue; prefer MIGO L / legacy
+MB1B Historický prevod materiálu; prednosť MIGO
+Legacy transfer posting; prefer MIGO L / legacy
+MB1C Historický ostatný príjem; prednosť MIGO
+Legacy other goods receipt; prefer MIGO L / legacy
+MB01 Historický príjem k objednávke; prednosť MIGO
+Legacy purchase order goods receipt; prefer MIGO L / legacy
+Referenčný katalóg · over platnosť v cieľovom systéme 17
+===== PAGE 18 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+09 SD: Predaj a distribúcia
+SD: Sales and distribution · 30 T-codes
+Order-to-cash sleduj cez objednávku, dodávku, goods issue, fakturáciu a FI doklady. Vo väčšine incidentov rieš
+prepojenia, nie izolovaný doklad.
+Trace order-to-cash from sales order through delivery, goods issue, billing and FI documents. Most incidents involve document flow,
+not isolated records.
+T-CODE ÚČEL / PURPOSE TYP
+VA01 Založenie odberateľskej objednávky
+Create sales order W / write
+VA02 Zmena odberateľskej objednávky
+Change sales order W / write
+VA03 Zobrazenie odberateľskej objednávky
+Display sales order R / read
+VA05 Zoznam odberateľských objednávok
+Sales order list R / read
+VA11 Založenie predajného dopytu
+Create sales inquiry W / write
+VA12 Zmena predajného dopytu
+Change sales inquiry W / write
+VA13 Zobrazenie predajného dopytu
+Display sales inquiry R / read
+VA21 Založenie cenovej ponuky
+Create sales quotation W / write
+VA22 Zmena cenovej ponuky
+Change sales quotation W / write
+VA23 Zobrazenie cenovej ponuky
+Display sales quotation R / read
+VA41 Založenie predajnej zmluvy
+Create sales contract W / write
+VA42 Zmena predajnej zmluvy
+Change sales contract W / write
+VA43 Zobrazenie predajnej zmluvy
+Display sales contract R / read
+VL01N Vytvorenie výstupnej dodávky
+Create outbound delivery W / write
+VL02N Zmena a spracovanie výstupnej dodávky
+Change and process outbound delivery W / write
+VL03N Zobrazenie výstupnej dodávky
+Display outbound delivery R / read
+VL06O Monitoring výstupných dodávok
+Outbound delivery monitor R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 18
+===== PAGE 19 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+VL31N Vytvorenie príjemky / inbound delivery
+Create inbound delivery W / write
+VL32N Zmena príjemky / inbound delivery
+Change inbound delivery W / write
+VL33N Zobrazenie príjemky / inbound delivery
+Display inbound delivery R / read
+VF01 Vytvorenie fakturačného dokladu
+Create billing document W / write
+VF02 Zmena fakturačného dokladu
+Change billing document W / write
+VF03 Zobrazenie fakturačného dokladu
+Display billing document R / read
+VF04 Zoznam položiek pripravených na fakturáciu
+Billing due list A / admin
+VF05 Zoznam fakturačných dokladov
+Billing document list R / read
+VF11 Storno fakturačného dokladu
+Cancel billing document A / admin
+VK11 Založenie cenovej podmienky
+Create pricing condition record W / write
+VK12 Zmena cenovej podmienky
+Change pricing condition record W / write
+VK13 Zobrazenie cenovej podmienky
+Display pricing condition record R / read
+VOV8 Konfigurácia typov predajných dokladov
+Sales document type configuration A / admin
+Referenčný katalóg · over platnosť v cieľovom systéme 19
+===== PAGE 20 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+10 FI: Účtovníctvo a majetok
+FI: Financial accounting and assets · 36 T-codes
+V S/4HANA zohľadni Universal Journal (ACDOCA), Fiori aplikácie a rozdiely oproti starému New G/L. Obchodné
+pravidlá a autorizácie sú rozhodujúce.
+In S/4HANA account for Universal Journal (ACDOCA), Fiori apps and differences from classic New G/L. Business rules and
+authorizations matter.
+T-CODE ÚČEL / PURPOSE TYP
+FB01 Zaúčtovanie účtovného dokladu (klasické)
+Post accounting document (classic) W / write
+FB02 Zmena povolených údajov účtovného dokladu
+Change allowed fields in accounting document W / write
+FB03 Zobrazenie účtovného dokladu
+Display accounting document R / read
+FB50 Účtovanie priamo do hlavnej knihy
+G/L account posting W / write
+FB60 Dodávateľská faktúra vo FI
+Enter supplier invoice in FI W / write
+FB70 Odberateľská faktúra vo FI
+Enter customer invoice in FI W / write
+FB08 Storno účtovného dokladu
+Reverse accounting document A / admin
+FBRA Reset vyrovnania / clearingu
+Reset cleared items A / admin
+F-02 Klasické všeobecné zaúčtovanie
+Classic general posting W / write
+F-28 Zaúčtovanie prijatej platby
+Post incoming customer payment W / write
+F-32 Vyrovnanie otvorených položiek odberateľa
+Clear customer open items W / write
+F-44 Vyrovnanie otvorených položiek dodávateľa
+Clear supplier open items W / write
+F-53 Zaúčtovanie odchádzajúcej platby
+Post outgoing supplier payment W / write
+F-03 Vyrovnanie položiek hlavnej knihy
+Clear G/L open items W / write
+F110 Automatický platobný program
+Automatic payment program A / admin
+FBL1N Položky dodávateľských účtov
+Supplier line items R / read
+FBL3N Položky účtov hlavnej knihy
+G/L account line items R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 20
+===== PAGE 21 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+FBL5N Položky odberateľských účtov
+Customer line items R / read
+FAGLL03 Položky hlavnej knihy (New G/L)
+G/L line-item browser (New G/L) R / read
+FS00 Centrálna správa G/L účtov
+Central G/L master data maintenance A / admin
+FSP0 Základné údaje G/L účtu v účtovej osnove
+G/L master data at chart-of-accounts level A / admin
+FSS0 Údaje G/L účtu pre účtovný okruh
+G/L master data at company-code level A / admin
+OB52 Otvorenie a uzavretie účtovných období
+Open and close posting periods A / admin
+OB08 Údržba výmenných kurzov
+Exchange-rate maintenance A / admin
+OBA7 Nastavenie typov FI dokladov
+Accounting document type configuration A / admin
+F.01 Klasická finančná výkazová zostava
+Classic financial statement report R / read
+AS01 Založenie kmeňového záznamu majetku
+Create fixed asset master W / write
+AS02 Zmena kmeňového záznamu majetku
+Change fixed asset master W / write
+AS03 Zobrazenie kmeňového záznamu majetku
+Display fixed asset master R / read
+AW01N Prehliadač hodnôt majetku
+Asset Explorer R / read
+ABZON Nadobudnutie majetku bez nákupu
+Asset acquisition with automatic offsetting entry W / write
+AFAB Spustenie účtovania odpisov
+Depreciation posting run A / admin
+F-47 Žiadosť o preddavok dodávateľovi
+Supplier down payment request W / write
+F-48 Zaúčtovanie preddavku dodávateľovi
+Post supplier down payment W / write
+F-54 Vyrovnanie preddavku dodávateľa
+Clear supplier down payment W / write
+F-29 Zaúčtovanie preddavku od odberateľa
+Post customer down payment W / write
+Referenčný katalóg · over platnosť v cieľovom systéme 21
+===== PAGE 22 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+11 CO: Controlling a kalkulácie
+CO: Controlling and costing · 20 T-codes
+Controlling pracuje s nákladovými objektmi, alokáciami a kalkuláciami. KSU5, KO88 či CK24 môžu mať veľký
+finančný dopad.
+Controlling revolves around cost objects, allocations and cost estimates. KSU5, KO88 and CK24 may have major financial impact.
+T-CODE ÚČEL / PURPOSE TYP
+KS01 Založenie nákladového strediska
+Create cost center W / write
+KS02 Zmena nákladového strediska
+Change cost center W / write
+KS03 Zobrazenie nákladového strediska
+Display cost center R / read
+KSB1 Skutočné náklady na nákladových strediskách
+Cost center actual line items R / read
+KO01 Založenie interného príkazu
+Create internal order W / write
+KO02 Zmena interného príkazu
+Change internal order W / write
+KO03 Zobrazenie interného príkazu
+Display internal order R / read
+KOB1 Skutočné položky interného príkazu
+Internal order actual line items R / read
+KO88 Vysporiadanie interného príkazu
+Individual internal order settlement A / admin
+KSU5 Spustenie cyklu assessment
+Execute assessment cycle A / admin
+KSV5 Spustenie cyklu distribution
+Execute distribution cycle A / admin
+KP06 Plánovanie nákladov na nákladové strediská
+Cost center cost planning W / write
+KB11N Manuálne preúčtovanie nákladov
+Manual cost reposting W / write
+OKB9 Automatické priradenie CO objektu
+Automatic CO account assignment A / admin
+KE30 Reporty profitability analysis (CO-PA)
+Profitability analysis reports R / read
+KE24 Skutočné položky v CO-PA (podľa modelu)
+CO-PA actual line items (model-dependent) R / read
+CK11N Kalkulácia ceny materiálu
+Create material cost estimate W / write
+CK13N Zobrazenie kalkulácie ceny materiálu
+Display material cost estimate R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 22
+===== PAGE 23 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+CK40N Hromadné kalkulácie cien
+Costing run A / admin
+CK24 Označenie a uvoľnenie štandardnej ceny
+Mark and release standard cost estimate A / admin
+12 PP: Výroba, MRP a kusovníky
+PP: Production, MRP and BOMs · 30 T-codes
+Kusovník + routing + work center + MRP + výrobné potvrdenia tvoria integrovaný proces. MD04 je častý prvý
+diagnostický bod.
+BOM + routing + work center + MRP + confirmations form one integrated process. MD04 is often the first diagnostic stop.
+T-CODE ÚČEL / PURPOSE TYP
+MD01N MRP Live plánovanie materiálov
+MRP Live material planning A / admin
+MD02 Jednopoložkové viacúrovňové MRP
+Single-item, multi-level MRP run W / write
+MD03 Jednopoložkové jednoúrovňové MRP
+Single-item, single-level MRP run W / write
+MD04 Aktuálny zoznam zásob a potrieb
+Current stock/requirements list R / read
+MD05 Zoznam výsledkov posledného MRP
+MRP list (snapshot) R / read
+MD06 Hromadné spracovanie MRP zoznamov
+Collective MRP list display R / read
+MD07 Kolektívny aktuálny prehľad potrieb
+Collective stock/requirements overview R / read
+MD61 Založenie nezávislých plánovaných potrieb
+Create planned independent requirements W / write
+MD62 Zmena plánovaných nezávislých potrieb
+Change planned independent requirements W / write
+MD63 Zobrazenie plánovaných nezávislých potrieb
+Display planned independent requirements R / read
+MD11 Založenie plánovanej objednávky
+Create planned order W / write
+MD12 Zmena plánovanej objednávky
+Change planned order W / write
+MD13 Zobrazenie plánovanej objednávky
+Display planned order R / read
+CS01 Založenie kusovníka materiálu
+Create material BOM W / write
+CS02 Zmena kusovníka materiálu
+Change material BOM W / write
+Referenčný katalóg · over platnosť v cieľovom systéme 23
+===== PAGE 24 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+T-CODE ÚČEL / PURPOSE TYP
+CS03 Zobrazenie kusovníka materiálu
+Display material BOM R / read
+CS11 Jednoúrovňový rozpad kusovníka
+Single-level BOM explosion R / read
+CA01 Založenie pracovného postupu / routing
+Create production routing W / write
+CA02 Zmena pracovného postupu / routing
+Change production routing W / write
+CA03 Zobrazenie pracovného postupu / routing
+Display production routing R / read
+CR01 Založenie pracoviska
+Create work center W / write
+CR02 Zmena pracoviska
+Change work center W / write
+CR03 Zobrazenie pracoviska
+Display work center R / read
+CO01 Založenie výrobného príkazu
+Create production order W / write
+CO02 Zmena výrobného príkazu
+Change production order W / write
+CO03 Zobrazenie výrobného príkazu
+Display production order R / read
+CO11N Potvrdenie výrobnej operácie
+Confirm production order operation W / write
+COOIS Informačný systém výrobných príkazov
+Production order information system R / read
+COHV Hromadné spracovanie výrobných príkazov
+Mass processing of production orders A / admin
+MFBF Spätné vykazovanie v repetitívnej výrobe
+Repetitive manufacturing backflush W / write
+Referenčný katalóg · over platnosť v cieľovom systéme 24
+===== PAGE 25 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+13 Sklad: klasický LE-WM
+Warehouse: classic LE-WM · 16 T-codes
+LE-WM je klasické skladové riešenie. Dostupnosť a budúcnosť závisia od cieľového release a migrácie na EWM
+alebo iný skladový model.
+LE-WM is a classic warehousing solution. Availability and lifecycle depend on target release and migration to EWM or other warehouse
+models.
+T-CODE ÚČEL / PURPOSE TYP
+LS01N Založenie skladovej pozície (bin)
+Create storage bin W / write
+LS02N Zmena skladovej pozície
+Change storage bin W / write
+LS03N Zobrazenie skladovej pozície
+Display storage bin R / read
+LS24 Zásoba podľa materiálu a pozície
+Stock by material and bin R / read
+LS26 Prehľad zásob materiálu vo WM
+Warehouse stock overview by material R / read
+LT01 Manuálne založenie transfer order
+Create transfer order manually W / write
+LT03 Transfer order z dodávky
+Create transfer order for delivery W / write
+LT10 Transfer order zo zoznamu zásob
+Create transfer order from stock list W / write
+LT12 Potvrdenie transfer order
+Confirm transfer order W / write
+LT15 Storno nepotvrdeného transfer order
+Cancel unconfirmed transfer order A / admin
+LT21 Zobrazenie transfer order
+Display transfer order R / read
+LX02 Prehľad skladovej zásoby
+Warehouse stock list R / read
+LI01N Vytvorenie WM inventúrneho dokladu
+Create WM physical inventory document W / write
+LI11N Zápis výsledkov WM inventúry
+Enter WM inventory count W / write
+LI20 Zaúčtovanie inventúrnych rozdielov vo WM
+Clear WM inventory differences A / admin
+LI21 Prenos/zaúčtovanie rozdielov do IM
+Clear inventory differences in IM A / admin
+Referenčný katalóg · over platnosť v cieľovom systéme 25
+===== PAGE 26 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+14 Sklad: Extended Warehouse Management
+Warehouse: Extended Warehouse Management · 10 T-codes
+EWM je samostatný funkčný svet s warehouse task, warehouse order, bin, HU a svojimi frontami. Nie každý S/4
+systém ho má aktívny.
+EWM is a separate operational model: warehouse task, warehouse order, bin, HU and queues. Not every S/4 system has it active.
+T-CODE ÚČEL / PURPOSE TYP
+/SCWM/MON Centrálny monitor EWM skladu
+EWM warehouse monitor O / opt.
+/SCWM/PRDI Správa prichádzajúcej dodávky EWM
+Maintain EWM inbound delivery O / opt.
+/SCWM/PRDO Správa odchádzajúcej dodávky EWM
+Maintain EWM outbound delivery order O / opt.
+/SCWM/IDN Oznámenie prichádzajúcej dodávky
+Inbound delivery notification O / opt.
+/SCWM/ODR Požiadavka na odchádzajúcu dodávku
+Outbound delivery request O / opt.
+/SCWM/TO_DISP Zobrazenie warehouse task
+Display warehouse task O / opt.
+/SCWM/TO_CONF Potvrdenie warehouse task
+Confirm warehouse task O / opt.
+/SCWM/RFUI Mobilné RF spracovanie v sklade
+Radio-frequency warehouse processing O / opt.
+/SCWM/ERP_STOCKCHECK
+Kontrola rozdielov zásob ERP a EWM
+Compare ERP and EWM stock levels O / opt.
+/SCWM/TU Správa dopravných jednotiek
+Transportation unit maintenance O / opt.
+Referenčný katalóg · over platnosť v cieľovom systéme 26
+===== PAGE 27 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+15 QM: Manažment kvality
+QM: Quality management · 14 T-codes
+QM prepája kontrolné plány, kontrolné dávky, výsledky a rozhodnutia. Usage decision môže vytvoriť ďalšie
+logistické kroky.
+QM links inspection plans, lots, results and usage decisions. A usage decision may trigger downstream logistics.
+T-CODE ÚČEL / PURPOSE TYP
+QA32 Pracovný zoznam kontrolných dávok
+Inspection lot worklist R / read
+QA33 Zobrazenie kontrolných dávok
+Display inspection lots R / read
+QA11 Rozhodnutie o použití kontrolnej dávky
+Record usage decision for inspection lot W / write
+QA12 Zmena rozhodnutia o použití (podľa stavu)
+Change usage decision where permitted A / admin
+QE51N Zadanie výsledkov kontroly
+Record inspection results W / write
+QP01 Založenie kontrolného plánu
+Create inspection plan W / write
+QP02 Zmena kontrolného plánu
+Change inspection plan W / write
+QP03 Zobrazenie kontrolného plánu
+Display inspection plan R / read
+QS21 Založenie kmeňového znaku kvality
+Create master inspection characteristic W / write
+QS22 Zmena kmeňového znaku kvality
+Change master inspection characteristic W / write
+QS23 Zobrazenie kmeňového znaku kvality
+Display master inspection characteristic R / read
+QM01 Založenie hlásenia kvality
+Create quality notification W / write
+QM02 Zmena hlásenia kvality
+Change quality notification W / write
+QM03 Zobrazenie hlásenia kvality
+Display quality notification R / read
+Referenčný katalóg · over platnosť v cieľovom systéme 27
+===== PAGE 28 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+16 PM: Údržba technických zariadení
+PM: Plant maintenance · 15 T-codes
+PM zahŕňa zariadenie, funkčné miesto, hlásenie, údržbový príkaz a preventívny plán. Sleduj prepojenie na
+MM/CO.
+PM involves equipment, functional location, notification, maintenance order and preventive plan. Trace links to MM/CO.
+T-CODE ÚČEL / PURPOSE TYP
+IW21 Založenie hlásenia údržby
+Create maintenance notification W / write
+IW22 Zmena hlásenia údržby
+Change maintenance notification W / write
+IW23 Zobrazenie hlásenia údržby
+Display maintenance notification R / read
+IW31 Založenie príkazu údržby
+Create maintenance order W / write
+IW32 Zmena príkazu údržby
+Change maintenance order W / write
+IW33 Zobrazenie príkazu údržby
+Display maintenance order R / read
+IW38 Zoznam a spracovanie príkazov údržby
+Change maintenance orders in list W / write
+IW39 Zoznam príkazov údržby - zobrazenie
+Display maintenance order list R / read
+IE01 Založenie zariadenia (equipment)
+Create equipment master W / write
+IE02 Zmena zariadenia (equipment)
+Change equipment master W / write
+IE03 Zobrazenie zariadenia (equipment)
+Display equipment master R / read
+IL01 Založenie funkčného miesta
+Create functional location W / write
+IL02 Zmena funkčného miesta
+Change functional location W / write
+IL03 Zobrazenie funkčného miesta
+Display functional location R / read
+IP10 Plánovanie termínov plánov údržby
+Schedule maintenance plans A / admin
+Referenčný katalóg · over platnosť v cieľovom systéme 28
+===== PAGE 29 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+17 BW, extrakcia a dátové toky
+BW, extraction and data flows · 16 T-codes
+V BW rozlišuj klasické extraktory/queuy od moderných ODP, BW/4HANA či Datasphere. Nie všetky T-kódy patria
+do každého dátového stacku.
+Differentiate classic BW extractors and queues from ODP, BW/4HANA and Datasphere. These codes are product-dependent.
+T-CODE ÚČEL / PURPOSE TYP
+RSA1 BW Administrator Workbench (klasický)
+Classic BW Administrator Workbench O / opt.
+RSA2 Definícia a detail extraktorov
+Display DataSource metadata O / opt.
+RSA3 Test extrakcie DataSource
+DataSource extraction test O / opt.
+RSA5 Aktivácia dodaných DataSource (klasická)
+Activate delivered DataSources (classic) O / opt.
+RSA6 Údržba aktívnych DataSource (klasická)
+Maintain active DataSources (classic) O / opt.
+RSA7 Klasický delta queue monitor
+Classic delta queue monitor L / legacy
+RSDS Správa DataSource v BW
+Maintain BW DataSources O / opt.
+RSO2 Generické DataSource
+Generic DataSource maintenance O / opt.
+RSPC Procesné reťazce BW
+BW process chain maintenance O / opt.
+RSPCM Monitorovanie procesných reťazcov
+BW process chain monitor O / opt.
+RSRT Analýza a testovanie BW query
+BW query monitor O / opt.
+RSRV Konzistenčné kontroly BW objektov
+BW object consistency checks O / opt.
+ODQMON Monitor Operational Delta Queue
+Operational Delta Queue monitor O / opt.
+LTRC SLT replikácia - monitor (ak nainštalovaná)
+SLT replication monitor, if installed O / opt.
+RSECADMIN Správa analytických oprávnení BW
+BW analysis authorization maintenance O / opt.
+LISTCUBE Technické zobrazenie dát InfoProvidera
+Display InfoProvider data O / opt.
+Referenčný katalóg · over platnosť v cieľovom systéme 29
+===== PAGE 30 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+18 Konverzia a migrácia S/4HANA
+S/4HANA conversion and migration · 15 T-codes
+Pri migráciách treba odlíšiť ECC zdroj, S/4 cieľ a zvolený spôsob prechodu. BP je moderný master-data vstup;
+LTMC je deprecated a LSMW nie je odporúčaný nástroj na S/4 migráciu.
+Distinguish ECC source, S/4 target and transition approach. BP is the modern master-data entry; LTMC is deprecated and LSMW is not
+the recommended S/4 migration tool.
+T-CODE ÚČEL / PURPOSE TYP
+BP Kmeňové údaje Business Partner
+Business Partner master data W / write
+CVI_COCKPIT Príprava integrácie zákazník/dodávateľ (ECC)
+Customer/Vendor Integration cockpit (ECC prep) O / opt.
+MDS_LOAD_COCKPIT Synchronizácia BP a customer/vendor (podľa verzie)
+BP to customer/vendor synchronization cockpit O / opt.
+LTMOM Migration Object Modeler pre S/4HANA
+S/4HANA Migration Object Modeler W / write
+LTMC Starý Migration Cockpit - deprecated
+Old Migration Cockpit - deprecated L / legacy
+LSMW Starý Legacy System Migration Workbench
+Legacy System Migration Workbench L / legacy
+XD01 Klasické založenie zákazníka (ECC)
+Classic customer creation (ECC) L / legacy
+XD02 Klasická zmena zákazníka (ECC)
+Classic customer change (ECC) L / legacy
+XD03 Klasické zobrazenie zákazníka (ECC)
+Classic customer display (ECC) L / legacy
+XK01 Klasické založenie dodávateľa (ECC)
+Classic supplier creation (ECC) L / legacy
+XK02 Klasická zmena dodávateľa (ECC)
+Classic supplier change (ECC) L / legacy
+XK03 Klasické zobrazenie dodávateľa (ECC)
+Classic supplier display (ECC) L / legacy
+FD01 Klasické založenie FI zákazníka (ECC)
+Classic FI customer creation (ECC) L / legacy
+FK01 Klasické založenie FI dodávateľa (ECC)
+Classic FI vendor creation (ECC) L / legacy
+CNV_NA_MC Kontrola SAP Notes pre Migration Cockpit
+SAP Note Analyzer for Migration Cockpit O / opt.
+Referenčný katalóg · over platnosť v cieľovom systéme 30
+===== PAGE 31 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+10 diagnostických scenárov
+Ten practical troubleshooting playbooks
+Nasledujúce sekvencie sú typické štartovacie body, nie povinný ani univerzálny technický runbook. Každý
+incident potrebuje vlastníka procesu, systémový kontext a kontrolu následkov.
+These flows are entry points, not universal operational runbooks. Validate ownership, system and side effects before action.
+01 IDoc ostal v chybe / Failed IDoc
+Odporúčaná stopa / Suggested trace
+WE02 → SLG1 → SMQ1/SMQ2 → SM59 → BD87 (iba so schválením)
+Zachyť IDoc ID, message type, sender/receiver a čas. Vo WE02/WE05 over posledný status a aplikačný error.
+WE20/WE21 kontroluj až pri konfigurácii partnera/portu; pri qRFC sleduj SMQ1/SMQ2 a RFC spojenie SM59.
+BD87 spúšťaj len po odstránení príčiny a kontrole idempotencie.
+Identify IDoc number, type, sender/receiver and time. Inspect status in WE02/WE05; examine WE20/WE21, SMQ1/SMQ2 and SM59 as
+relevant. Reprocess with BD87 only after fixing the root cause and checking idempotency.
+02 ABAP program padá / ABAP short dump
+Odporúčaná stopa / Suggested trace
+ST22 → SLG1 → SM37 → SAT/ST05
+Začni ST22: exception, runtime, používateľ, program, systém a čas. Pridaj SLG1 (biznis kontext), SM37 ak job
+bežal na pozadí; pri výkonových incidentoch použi SAT, ST05 alebo ST12. Pred opravou reprodukuj bezpečne v
+neprodukčnom systéme.
+Start with ST22: exception, program, user, system and timestamp. Correlate with SLG1 and SM37; for performance use SAT, ST05 or
+ST12. Reproduce safely before changing code.
+03 Používateľ nemá prístup / Missing authorization
+Odporúčaná stopa / Suggested trace
+SU53 → STAUTHTRACE → SUIM/PFCG
+Presne zisti rolu, klienta a okamih zlyhania. SU53 poskytne prvú indíciu, STAUTHTRACE presnejší záznam,
+PFCG/SUIM kontext rolí a SU24 návrhy. Nikdy nevyrieš incident plošným SAP_ALL.
+Capture failed activity, client and time. SU53 gives a hint; STAUTHTRACE provides deeper evidence; PFCG/SUIM and SU24 explain
+role design. Avoid broad SAP_ALL grants.
+04 Nákup: faktúra neprešla / Blocked purchasing invoice
+Odporúčaná stopa / Suggested trace
+ME23N → MIGO/MB51 → MIR4 → MRBR
+V ME23N over PO, množstvá a ceny. MIGO/MB51 skontrolujú skutočný goods receipt. MIR4/MIRO a MRBR
+odhalia faktúru, rozdiely alebo blokovanie. Otázka nie je iba „ako ju odblokovať“, ale čo by to urobilo s
+trojstranným párovaním.
+Inspect purchase order in ME23N and goods receipt in MIGO/MB51. Use MIR4/MIRO and MRBR to examine invoice and blocked status.
+Focus on the three-way match and business impact.
+05 Objednávka nejde expedovať / Sales order blocked for shipping
+Odporúčaná stopa / Suggested trace
+VA03 → VL03N/VL06O → MMBE → /SCWM/MON
+Referenčný katalóg · over platnosť v cieľovom systéme 31
+===== PAGE 32 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+VA03 ukáže stav zákazníckej objednávky. VL03N/VL06O pomôžu zistiť stav dodávky a picking, MMBE stav
+zásob, /SCWM/MON EWM úlohy. Následne rieš ATP, blokáciu, kreditný limit alebo integráciu.
+Check sales order status in VA03, delivery and picking in VL03N/VL06O, stock in MMBE, and EWM tasks in /SCWM/MON if active. Then
+examine ATP, block, credit or integration causes.
+06 Dáta po migrácii nesedia / Post-migration reconciliation
+Odporúčaná stopa / Suggested trace
+F3473 (Fiori) + LTMOM + procesné kontroly FI/MM/SD
+Stanov rozsah dát, business keys, časový rez a pravidlá mapovania. Pri S/4 migračnom kokpite kontroluj Fiori
+Migrate Your Data (F3473), prípadne LTMOM. Reconciliuj počty, súčty, statusy, referencie a hraničné prípady;
+oddel technickú a biznis akceptáciu.
+Define population, business keys, cut-off and mapping rules. Inspect Fiori Migrate Your Data (F3473), plus LTMOM where relevant.
+Reconcile counts, totals, statuses, references and exceptions; separate technical from business sign-off.
+07 Import transportu zlyhal / Failed transport import
+Odporúčaná stopa / Suggested trace
+STMS → SE09/SE10 → ST22/SM21 → vlastníci zmien
+V STMS zisti presnú fázu a návratový kód. ST22/SM21/SLOG pomáhajú s technickým kontextom; SE09/SE10 s
+obsahom requestu. Over závislosti, klient, importné poradie a potrebu SPDD/SPAU počas upgrade.
+Inspect transport phase and return code in STMS. Correlate ST22/SM21, and request content in SE09/SE10. Check dependencies,
+target client, import order and upgrade adjustments.
+08 Výroba nemá materiál / Production shortage
+Odporúčaná stopa / Suggested trace
+MD04 → CS03 → MMBE → CO03
+Začni MD04 pre dostupnosť a časovanie, CS03 pre BOM, MM03 pre materiál a MMBE pre zásoby. CO03 zistí
+stav výrobného príkazu; CO11N potvrdenia. Rozlišuj nesprávne master data, fyzický nedostatok a chybu MRP.
+Start with MD04 for timing and requirements, CS03 for BOM, MM03 and MMBE for master and stock data. Check CO03 and CO11N for
+production execution. Separate data errors, genuine shortages and MRP issues.
+09 Pomalé spracovanie / Slow transaction or batch job
+Odporúčaná stopa / Suggested trace
+ST03N → STAD → ST05/SAT/ST12 → SM12/SM50
+Najskôr urob časový profil incidentu a rozsah dopadu. ST03N/STAD pre štatistiku; ST05 pre SQL, SAT pre ABAP
+a ST12 pre kombinovanú analýzu, ak je k dispozícii. Nepovažuj každú pomalosť za DB problém: môže ísť o lock,
+RFC, job contention alebo sieť.
+Profile duration and blast radius first. Use ST03N/STAD for workload, ST05 for SQL, SAT for ABAP, ST12 for combined trace. Also check
+locks, RFC, background-job contention and networks.
+10 Rozdiel stavu zásob ERP a EWM / ERP vs EWM stock mismatch
+Odporúčaná stopa / Suggested trace
+MMBE/MB52 → /SCWM/MON → SMQ1/SMQ2 → /SCWM/ERP_STOCKCHECK
+V MMBE/MB52 a /SCWM/MON porovnaj systém, závod, sklad, jednotku a stock type. Skontroluj fronty
+SMQ1/SMQ2, EWM delivery /SCWM/PRDI alebo /SCWM/PRDO a /SCWM/ERP_STOCKCHECK podľa povolení.
+Vyvaruj sa ručného „dorovnania“ bez root cause.
+Referenčný katalóg · over platnosť v cieľovom systéme 32
+===== PAGE 33 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+Compare ERP and EWM quantities at aligned plant, storage location, stock type and unit. Inspect qRFC queues, EWM deliveries and
+stock-check tools as authorized. Avoid manual adjustments without root cause.
+Procesy end-to-end
+Business process maps
+Procure-to-pay / P2P
+Dodávateľ a materiál → Purchase requisition → PO → Goods receipt → Invoice verification → Payment
+Supplier/material → PR → PO → goods receipt → invoice verification → payment
+Kódy / Touchpoints
+BP / MM03 → ME51N → ME21N → MIGO → MIRO → F110
+Order-to-cash / O2C
+Business Partner → Sales order → Delivery → Goods issue → Billing → Incoming payment
+BP → sales order → delivery → goods issue → billing → incoming payment
+Kódy / Touchpoints
+BP → VA01 → VL01N/VL02N → MIGO alebo PGI v dodávke → VF01 → F-28
+Plan-to-produce / P2P výrobné
+Materiál a BOM → PIR/MRP → Planned order → Production order → Confirmation → Goods movement
+Material/BOM → demand/MRP → planned order → production order → confirmation → stock posting
+Kódy / Touchpoints
+MM03 / CS03 → MD61/MD01N/MD04 → MD11 → CO01 → CO11N → MIGO
+Record-to-report / R2R
+Hlavná kniha → Podklady FI/CO → Uzávierka → Reconciliation → Reportovanie
+G/L and subledgers → close → reconciliation → reporting
+Kódy / Touchpoints
+FS00 / FB03 → FBL1N / FBL5N / FAGLL03 → F.01 / Fiori
+Migration readiness
+Scope a data quality → Mapping → Mock migration → Reconciliation → Cutover → Hypercare
+Scope/data quality → mapping → mock load → reconciliation → cutover → hypercare
+Kódy / Touchpoints
+CVI_COCKPIT (ECC prep) → Fiori F3473 → LTMOM → procesné validácie
+Referenčný katalóg · over platnosť v cieľovom systéme 33
+===== PAGE 34 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+DÔLEŽITÉ / NOTE
+Pri O2C sa goods issue typicky účtuje z dodávky cez VL02N; MIGO nie je univerzálna alternatíva PGI. Pri migračnom
+prístupe odliš greenfield migráciu od system conversion alebo selective data transition.
+In O2C, posting goods issue is commonly executed from delivery processing (VL02N); MIGO is not a universal
+replacement. Distinguish greenfield migration, system conversion and selective data transition.
+SAP dátové kľúče a tabuľky
+Useful fields, keys and tables
+Pri incidentoch a migráciách maj najprv identifikátory. Tabuľky uvedené nižšie sú orientačné dátové koncepty; v
+S/4HANA sa model a kompatibilita mení a pre integrácie preferuj released CDS views a API.
+Use business identifiers first. These table names are conceptual references; S/4HANA data models differ, so prefer released CDS
+views and APIs for integration.
+KĽÚČ / KEY SLOVENSKY ENGLISH
+BUKRS Účtovný okruh Company code
+WERKS Závod Plant
+LGORT Skladové miesto Storage location
+MATNR Materiál Material number
+EBELN Nákupná objednávka Purchasing document / PO
+EBELP Položka nákupnej objednávky Purchase order item
+VBELN Predajný/dodávkový doklad v SD SD document number
+KUNNR Odberateľ (klasický identifikátor) Customer number (classic)
+LIFNR Dodávateľ (klasický identifikátor) Vendor number (classic)
+BELNR Číslo účtovného dokladu Accounting document number
+GJAHR Fiškálny rok Fiscal year
+BUDAT Dátum účtovania Posting date
+BWART Druh skladového pohybu Movement type
+AUFNR Číslo príkazu Order number
+KOSTL Nákladové stredisko Cost center
+CHARG Šarža Batch
+TSTC Tabuľka T-kódov Transaction code table
+TSTCT Tabuľka popisov T-kódov Transaction text table
+MARA/MARC Kmeňové údaje materiálu Material master/general and plant data
+EKKO/EKPO Hlavička a položky PO PO header and items
+VBAK/VBAP Hlavička a položky SD objednávky Sales order header and items
+Referenčný katalóg · over platnosť v cieľovom systéme 34
+===== PAGE 35 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+KĽÚČ / KEY SLOVENSKY ENGLISH
+BKPF/BSEG FI hlavička a pohľad položiek FI document header and entry-view items
+ACDOCA Univerzálny denník v S/4HANA S/4HANA Universal Journal line items
+MATDOC Dôležitý základ dát pohybov zásob v S/4HANA Core inventory-document data in S/4HANA
+Typy pohybov ≠ T-kódy
+Movement types are not transaction codes
+BWART (movement type) určuje obchodný význam materiálového pohybu; MIGO/VL02N sú nástroje, ktorými sa
+pohyby môžu vytvárať. Nižšie uvedené príklady sú časté, ale ich spracovanie závisí od konfigurácie.
+BWART determines movement semantics, whereas MIGO and delivery processing are transaction entry points. Always check
+customizing.
+101 — Príjem materiálu k nákupnej objednávke Goods receipt for purchase order
+102 — Storno pohybu 101 Reversal of 101
+201 — Výdaj materiálu na nákladové stredisko Goods issue to cost center
+261 — Výdaj materiálu na príkaz Goods issue for an order
+311 — Prevod medzi skladovými miestami v závode Transfer between storage locations
+601 — Výdaj k výstupnej dodávke Goods issue for outbound delivery
+602 — Storno výdaja 601 Reversal of 601
+Ako čítať transakčný tok / Read the document flow
+Pozri doklad, jeho referenciu, typ, stav, organizačné údaje a následný doklad. Napr. PO (EBELN) ↔ materiálový
+doklad (MIGO/MB51) ↔ logistická faktúra (MIRO) ↔ FI document (FB03). Nedávaj dokopy identifikátory z rôznych
+klientov alebo časových rezov.
+Trace the original document, reference, type, state, organization and follow-on record. For example PO → material document →
+logistics invoice → FI posting. Do not combine IDs across clients or cut-off windows.
+DÔLEŽITÉ / NOTE
+Typy 101, 102, 201, 261, 311, 601 a 602 nie sú univerzálne povolené pre každý proces. Pri storne vždy posúď
+následné doklady a účtovný dopad.
+These movement types are common examples, not blanket permission for a process. Reversal requires checking
+follow-on documents and financial consequences.
+Referenčný katalóg · over platnosť v cieľovom systéme 35
+===== PAGE 36 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+S/4HANA: čo sa mení
+What changes in S/4HANA
+Business Partner ECC master-data transakcie XD01/XK01/FD01/FK01 → primárne BP v S/4HANA.
+Niektoré staré kódy sú nedostupné alebo nevhodné; záleží na konkrétnom release
+[S08, S17].
+Use BP as the strategic entry point for customer/supplier master data.
+Inventory movement MB01/MB1A/MB1B/MB1C sú legacy; MIGO a Fiori sú preferované moderné vstupy
+[S11, S17].
+Use MIGO/Fiori instead of legacy MB* transactions.
+Migration LTMC je deprecated. Používaj Migrate Your Data – Migration Cockpit, Fiori app ID
+F3473, a podľa potreby LTMOM [S05–S07].
+LTMC is deprecated; use the Fiori migration cockpit.
+LSMW LSMW poznaj kvôli ECC a historickým projektom. Na nové migrácie do S/4HANA ho
+SAP neodporúča [S17].
+LSMW is not the recommended S/4HANA migration approach.
+Data model ACDOCA zjednocuje veľkú časť FI/CO údajov. Pri sklade je dôležité MATDOC; priamy
+prístup do starých tabuliek môže viesť k chybným predpokladom.
+Prefer released CDS/API contracts over hard-coded legacy table assumptions.
+ABAP Cloud SAP BTP ABAP Environment nepodporuje SAP GUI. Vývoj v ADT (Eclipse); relevantné
+sú RAP, CDS a released API [S03, S04].
+ADT replaces the classic SAP GUI development entry points.
+Kontrolný zoznam pred projektom / Pre-project checklist
+1. Presne definovať zdrojové a cieľové systémy, release, moduly a zákaznícke rozšírenia.
+2. Rozlíšiť greenfield, brownfield system conversion a selective data transition.
+3. Určiť master-data ownership, kritické business procesy, interface inventory a cutover okno.
+4. Zmapovať historické T-kódy na budúci Fiori/API proces a zabezpečiť autorizačný koncept.
+5. Odmerať completeness, correctness, reconciliation a následný procesný testing.
+Referenčný katalóg · over platnosť v cieľovom systéme 36
+===== PAGE 37 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+Otázky na precvičenie
+Self-test questions
+Odpovedaj najlepšie nahlas a vždy vysvetli aj obchodný dôvod, nielen definíciu transakcie. Nejde o skúšku
+pamäti: cieľom je vedieť bezpečne riadiť proces a diagnózu.
+Answer aloud and explain business impact, not just transaction meaning. This is a process and diagnostic exercise, not a memory
+test.
+01. Na čo slúži SE93 a ako zistíš, či transakcia existuje?
+What does SE93 do and how do you verify a transaction?
+02. Ako rozlíšiš zlyhaný job od ABAP dumpu?
+How do you distinguish a failed job from a dump?
+03. Kedy použiješ ST05, SAT a ST12?
+When do you use ST05, SAT and ST12?
+04. Čo znamená S_TCODE a prečo nestačí samotný T-kód?
+What is S_TCODE and why is T-code access insufficient?
+05. Ktorá postupnosť tvorí procure-to-pay?
+What is the end-to-end procure-to-pay flow?
+06. Aký je rozdiel MIGO vs MIRO?
+What is the difference between MIGO and MIRO?
+07. Aké sú hlavné stavy SD order-to-cash?
+What are the main order-to-cash stages?
+08. Prečo sa po migrácii z ECC preferuje BP?
+Why is BP preferred after moving from ECC?
+09. Čo je nástupcom LTMC?
+What replaced LTMC?
+10. Ako by si diagnostikoval zaseknutý IDoc?
+How would you troubleshoot a stuck IDoc?
+11. Aký je rozdiel medzi SM58, SMQ1 a SMQ2?
+How do SM58, SMQ1 and SMQ2 differ?
+12. Na čo slúžia SPDD a SPAU pri upgrade?
+What are SPDD and SPAU used for during upgrades?
+13. Prečo je transport do PRD proces zmenového riadenia?
+Why is production transport part of change control?
+14. Aké dáta potrebuješ na reconciliation po migrácii?
+What information is required for post-migration reconciliation?
+15. Aká je úloha ACDOCA pri S/4HANA?
+What role does ACDOCA play in S/4HANA?
+16. Čo použiješ namiesto T-kódov v SAP BTP ABAP?
+What replaces classic T-codes in SAP BTP ABAP?
+17. Aký je rozdiel medzi LT01 a /SCWM/TO_CONF?
+How do classic WM transfer orders differ from EWM warehouse tasks?
+18. Aké riziká má opätovné spracovanie integrovanej správy?
+What are the risks of reprocessing an integration message?
+Referenčný katalóg · over platnosť v cieľovom systéme 37
+===== PAGE 38 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+19. Ako by si prezentoval regresné testy pred cutover?
+How would you present regression-test readiness before cutover?
+20. Ako overíš dostupnosť kódu v konkrétnom release?
+How would you verify a T-code in a specific release?
+Abecedný index T-kódov
+Alphabetical T-code index
+Kliknutím na kód sa dostaneš do kapitoly, v ktorej je podrobnejší SK/EN opis. Index zobrazuje číslo kapitoly, nie
+číslo strany.
+Select a code to jump to its chapter. Numbers refer to chapters, not pages.
+/IWBEP/ERROR_LOG [06] KE24 [11] MM03 [07] SM37 [03]
+/IWFND/ERROR_LOG [06] KE30 [11] MM17 [07] SM50 [03]
+/IWFND/MAINT_SERVICE [06] KO01 [11] MM50 [07] SM51 [03]
+/SCWM/ERP_STOCKCHECK [14] KO02 [11] MM60 [07] SM58 [06]
+/SCWM/IDN [14] KO03 [11] MMBE [08] SM59 [06]
+/SCWM/MON [14] KO88 [11] MR8M [08] SM66 [03]
+/SCWM/ODR [14] KOB1 [11] MRBR [07] SMARTFORMS [02]
+/SCWM/PRDI [14] KP06 [11] MSC1N [08] SMGW [03]
+/SCWM/PRDO [14] KS01 [11] MSC2N [08] SMICM [03]
+/SCWM/RFUI [14] KS02 [11] MSC3N [08] SMLG [03]
+/SCWM/TO_CONF [14] KS03 [11] OB08 [10] SMQ1 [06]
+/SCWM/TO_DISP [14] KSB1 [11] OB52 [10] SMQ2 [06]
+/SCWM/TU [14] KSU5 [11] OBA7 [10] SMQ3 [06]
+ABAPDOCU [01] KSV5 [11] ODQMON [17] SMQR [06]
+ABAPHELP [01] LI01N [13] OKB9 [11] SMQS [06]
+ABZON [10] LI11N [13] OMJJ [08] SNOTE [05]
+AFAB [10] LI20 [13] PFCG [04] SOAMANAGER [06]
+AL08 [03] LI21 [13] QA11 [15] SP01 [03]
+AL11 [01] LISTCUBE [17] QA12 [15] SPAD [03]
+AS01 [10] LS01N [13] QA32 [15] SPAM [05]
+AS02 [10] LS02N [13] QA33 [15] SPAU [05]
+AS03 [10] LS03N [13] QE51N [15] SPDD [05]
+ATC [02] LS24 [13] QM01 [15] SPRO [01]
+AW01N [10] LS26 [13] QM02 [15] SPROXY [06]
+BD54 [06] LSMW [18] QM03 [15] SRT_MONI [06]
+BD64 [06] LT01 [13] QP01 [15] SRT_UTIL [06]
+BD87 [06] LT03 [13] QP02 [15] ST02 [03]
+BP [18] LT10 [13] QP03 [15] ST03N [03]
+CA01 [12] LT12 [13] QS21 [15] ST04 [03]
+CA02 [12] LT15 [13] QS22 [15] ST05 [02]
+CA03 [12] LT21 [13] QS23 [15] ST06 [03]
+CK11N [11] LTMC [18] RSA1 [17] ST11 [03]
+CK13N [11] LTMOM [18] RSA2 [17] ST12 [02]
+CK24 [11] LTRC [17] RSA3 [17] ST22 [03]
+CK40N [11] LX02 [13] RSA5 [17] STAD [03]
+CNV_NA_MC [18] MB01 [08] RSA6 [17] STAUTHTRACE [04]
+CO01 [12] MB1A [08] RSA7 [17] STMS [05]
+CO02 [12] MB1B [08] RSDS [17] STMS_IMPORT [05]
+CO03 [12] MB1C [08] RSECADMIN [17] SU01 [04]
+CO11N [12] MB21 [08] RSO2 [17] SU10 [04]
+COHV [12] MB22 [08] RSPC [17] SU21 [04]
+COOIS [12] MB23 [08] RSPCM [17] SU24 [04]
+CR01 [12] MB24 [08] RSRT [17] SU25 [04]
+CR02 [12] MB26 [08] RSRV [17] SU3 [01]
+CR03 [12] MB51 [08] RZ10 [03] SU50 [04]
+CS01 [12] MB52 [08] RZ11 [03] SU53 [04]
+CS02 [12] MB5B [08] RZ20 [03] SU56 [04]
+CS03 [12] MB5L [08] RZ21 [03] SUIM [04]
+CS11 [12] MD01N [12] SA38 [02] SXMB_MONI [06]
+CVI_COCKPIT [18] MD02 [12] SAINT [05] VA01 [09]
+DB02 [03] MD03 [12] SAT [02] VA02 [09]
+Referenčný katalóg · over platnosť v cieľovom systéme 38
+===== PAGE 39 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+DB12 [03] MD04 [12] SCAT [02] VA03 [09]
+DBACOCKPIT [03] MD05 [12] SCC1 [05] VA05 [09]
+F-02 [10] MD06 [12] SCC3 [05] VA11 [09]
+F-03 [10] MD07 [12] SCC4 [05] VA12 [09]
+F-28 [10] MD11 [12] SCC9 [05] VA13 [09]
+F-29 [10] MD12 [12] SCCL [05] VA21 [09]
+F-32 [10] MD13 [12] SCI [02] VA22 [09]
+F-44 [10] MD61 [12] SE01 [05] VA23 [09]
+F-47 [10] MD62 [12] SE03 [05] VA41 [09]
+F-48 [10] MD63 [12] SE06 [05] VA42 [09]
+F-53 [10] MDS_LOAD_COCKPIT [18] SE09 [05] VA43 [09]
+F-54 [10] ME11 [07] SE10 [05] VF01 [09]
+F.01 [10] ME12 [07] SE11 [01] VF02 [09]
+F110 [10] ME13 [07] SE14 [01] VF03 [09]
+FAGLL03 [10] ME21N [07] SE16 [01] VF04 [09]
+FB01 [10] ME22N [07] SE16H [01] VF05 [09]
+FB02 [10] ME23N [07] SE16N [01] VF11 [09]
+FB03 [10] ME2L [07] SE18 [02] VK11 [09]
+FB08 [10] ME2M [07] SE19 [02] VK12 [09]
+FB50 [10] ME2N [07] SE21 [02] VK13 [09]
+FB60 [10] ME31K [07] SE24 [02] VL01N [09]
+FB70 [10] ME31L [07] SE37 [02] VL02N [09]
+FBL1N [10] ME32K [07] SE38 [02] VL03N [09]
+FBL3N [10] ME32L [07] SE41 [02] VL06O [09]
+FBL5N [10] ME33K [07] SE51 [02] VL31N [09]
+FBRA [10] ME33L [07] SE71 [02] VL32N [09]
+FD01 [18] ME38 [07] SE80 [02] VL33N [09]
+FILE [01] ME51N [07] SE84 [01] VOV8 [09]
+FK01 [18] ME52N [07] SE91 [02] WE02 [06]
+FS00 [10] ME53N [07] SE93 [01] WE05 [06]
+FSP0 [10] ME54N [07] SEARCH_SAP_MENU [01] WE09 [06]
+FSS0 [10] ME57 [07] SEGW [02] WE19 [06]
+IE01 [16] ME59N [07] SFP [02] WE20 [06]
+IE02 [16] ME5A [07] SGEN [05] WE21 [06]
+IE03 [16] MFBF [12] SHDB [02] WE30 [06]
+IL01 [16] MI01 [08] SICF [06] WE31 [06]
+IL02 [16] MI02 [08] SICK [03] WE60 [06]
+IL03 [16] MI03 [08] SLG1 [03] WE81 [06]
+IP10 [16] MI04 [08] SLIN [02] WE82 [06]
+IW21 [16] MI05 [08] SM02 [03] XD01 [18]
+IW22 [16] MI07 [08] SM04 [03] XD02 [18]
+IW23 [16] MI20 [08] SM12 [03] XD03 [18]
+IW31 [16] MIGO [08] SM13 [03] XK01 [18]
+IW32 [16] MIR4 [08] SM19 [04] XK02 [18]
+IW33 [16] MIR7 [08] SM20 [04] XK03 [18]
+IW38 [16] MIRO [08] SM21 [03]
+IW39 [16] MM01 [07] SM30 [01]
+KB11N [11] MM02 [07] SM36 [03]
+Referenčný katalóg · over platnosť v cieľovom systéme 39
+===== PAGE 40 =====
+SAP / T-CODE ALMANACH SK + EN · Október 2026
+Zdroje a metodika
+Sources and methodology
+Zdroje sú prevažne oficiálna dokumentácia SAP Help Portal, kontrolovaná k 23. 10. 2026. Katalóg je redakčne
+zostavený a tematicky rozdelený; nejde o oficiálnu SAP certifikovanú dokumentáciu ani o automatický export
+konkrétneho systému.
+Sources primarily comprise SAP Help Portal documentation reviewed on 23 Oct 2026. This guide is an independently curated
+reference, not an SAP-certified catalog or an export from a specific system.
+S01 SAP Help – ABAP Transaction Codes S02 SAP Help – Transaction start and authorization S_TCODE
+S03 SAP Help – Getting started in SAP BTP ABAP Environment S04 SAP Help – ABAP Cloud model and ADT
+S05 SAP Help – LTMC deprecated (S/4HANA) S06 SAP Help – Migrate Your Data, Fiori app F3473
+S07 SAP Help – LTMOM Migration Object Modeler S08 SAP Help – BP and customer/vendor master restrictions
+S09 SAP Help – Classic SD / MM document transactions S10 SAP Help – IDoc / RFC / qRFC transaction codes
+S11 SAP Help – EWM transactions S12 SAP Help – ABAP performance monitors
+S13 SAP Help – SPDD / SPAU during upgrade S14 SAP Help – Fiori Launchpad search / transaction
+navigation
+S15 SAP Help – SAP S/4HANA migration process S16 SAP Help – TSTC, transaction and table authorization
+S17 SAP Help – SAP S/4HANA Simplification List (LSMW, MB1A) S18 SAP Help – User and role management (SU01, PFCG)
+S19 SAP Help – CVI Cockpit S20 SAP Help – Business process and SD purchase
+transactions
+Rozsah a obmedzenia / Scope and limitations
+Vysvetlivky sú stručné a zámerne neobsahujú krokové návody na zásahy do produkcie. Každý kód musíš overiť
+podľa systému, role, edície, komponentu a schváleného change procesu. „O“ označuje voliteľnú závislosť;
+mnohé iné transakcie môžu byť tiež nedostupné. Dátové modely a dostupnosť appiek sa priebežne menia.
+Descriptions are intentionally concise and are not production-change procedures. Always check edition, product component,
+authorization and governance. Optional labels are indicative; other codes may also be unavailable in your deployment.
+Počet unikátnych kódov: 393 · Sekcie: 18 · R: 123 W: 134 A: 89 O: 30 L: 17
+Referenčný katalóg · over platnosť v cieľovom systéme 40

@@ -1,0 +1,97 @@
+/*
+ * T-Coder design tokens: a late-90s enterprise desktop (SAP GUI "Enjoy"
+ * era) rebuilt from scratch. Grey-blue surfaces, beveled controls, a dark
+ * blue title bar. Text/background pairs are checked against WCAG AA in
+ * tests/contrast.test.ts.
+ */
+:root {
+  /* Surfaces */
+  --desk: #b9c6d6;
+  --surface: #dce4ee;
+  --face: #eef2f7;
+  --face-hi: #ffffff;
+  --field: #ffffff;
+  --shade: #8a9bb0;
+  --shade-deep: #5c6e86;
+  --line: #9fb0c5;
+
+  /* Ink */
+  --ink: #1b2533;
+  --ink-muted: #46546a;
+  --link: #0a4c9a;
+  --link-visited: #523c8f;
+
+  /* Title bar */
+  --title-a: #0b3a6e;
+  --title-b: #2f67a6;
+  --title-ink: #ffffff;
+
+  /* Lists (ALV) */
+  --alv-head: #b8c8dc;
+  --alv-key: #cfe3f7;
+  --alv-row: #ffffff;
+  --alv-zebra: #f0f4f9;
+  --alv-total: #fff1b0;
+  --alv-hover: #e3eefb;
+
+  /* Selection and focus */
+  --sel: #2f67a6;
+  --sel-ink: #ffffff;
+  --focus: #e8a317;
+
+  /* Type badges */
+  --type-R: #2457a6;
+  --type-W: #2e7d32;
+  --type-A: #b35500;
+  --type-O: #5f6b7a;
+  --type-L: #b3261e;
+  --badge-ink: #ffffff;
+
+  /* Status-bar message colours */
+  --msg-S: #1f6b2a;
+  --msg-W: #6e4d00;
+  --msg-E: #b3261e;
+  --msg-I: #1d4f91;
+  --banner-warn: #fff6d6;
+  --banner-info: #e6f0fb;
+
+  /* Confidence lamps */
+  --lamp-high: #2e9a3c;
+  --lamp-medium: #e0a800;
+  --lamp-low: #c9473d;
+
+  /* Type */
+  --font-ui: 'Arimo', Arial, Helvetica, sans-serif;
+  --font-code: 'Cousine', 'Courier New', Courier, monospace;
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 15px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 21px;
+  --lh: 1.45;
+
+  /* Geometry */
+  --tap: 44px;
+  --gap: 12px;
+  --radius: 2px;
+
+  /* Bevels: light top-left, dark bottom-right (raised) and the inverse (sunken). */
+  --bevel-out: inset 1px 1px 0 var(--face-hi), inset -1px -1px 0 var(--shade);
+  --bevel-in: inset 1px 1px 0 var(--shade), inset -1px -1px 0 var(--face-hi);
+  --bevel-press: inset 1px 1px 0 var(--shade-deep), inset -1px -1px 0 var(--face);
+}
+
+/* Mouse-driven desktops get the denser classic metrics. */
+@media (min-width: 900px) and (pointer: fine) {
+  :root {
+    --fs-xs: 11px;
+    --fs-sm: 12px;
+    --fs-base: 13px;
+    --fs-md: 14px;
+    --fs-lg: 17px;
+    --fs-xl: 19px;
+    --tap: 28px;
+    --gap: 10px;
+  }
+}

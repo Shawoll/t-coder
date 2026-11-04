@@ -1,0 +1,74 @@
+import { describe, expect, it } from 'vitest';
+import { parseCommand } from '../src/engine/command.ts';
+import { searchCodes, suggestCodes } from '../src/engine/search.ts';
+
+const codes = (q: string, n = 10) => searchCodes(q).slice(0, n).map((h) => h.code.code);
+
+describe('searchCodes', () => {
+  it('ranks exact code, then prefixes', () => {
+    expect(codes('se16', 3)).toEqual(['SE16', 'SE16N', 'SE16H']);
+  });
+  it('finds namespaced codes by segment', () => {
+    expect(codes('mon')).toContain('/SCWM/MON');
+  });
+  it('ignores diacritics and searches both languages', () => {
+    expect(codes('faktura')).toEqual(expect.arrayContaining(['MIRO', 'MRBR']));
+    expect(codes('faktúra')).toEqual(codes('faktura'));
+    expect(codes('billing document')).toContain('VF03');
+  });
+  it('tolerates a typo in a code', () => {
+    expect(codes('SE16X', 3)).toContain('SE16');
+  });
+  it('filters by type and area', () => {
+    const hits = searchCodes('invoice', { types: ['R'] });
+    expect(hits.length).toBeGreaterThan(0);
+    expect(hits.every((h) => h.code.type === 'R')).toBe(true);
+    expect(searchCodes('se', { areas: ['03'] }).every((h) => h.code.area === '03')).toBe(true);
+  });
+  it('returns nothing for an empty query', () => {
+    expect(searchCodes('   ')).toEqual([]);
+  });
+});
+
+describe('parseCommand', () => {
+  it('opens a code in any SAP form', () => {
+    for (const input of ['SE16N', 'se16n', '/nSE16N', '/NSE16N', '  /nse16n ']) {
+      expect(parseCommand(input)).toEqual({ kind: 'open', code: 'SE16N', newSession: false });
+    }
+  });
+  it('/n goes home, /o opens a new session', () => {
+    expect(parseCommand('/n')).toEqual({ kind: 'home' });
+    expect(parseCommand('/o')).toEqual({ kind: 'newSession' });
+    expect(parseCommand('/oVA03')).toEqual({ kind: 'open', code: 'VA03', newSession: true });
+  });
+  it('handles namespaced codes after /n', () => {
+    expect(parseCommand('/n/SCWM/MON')).toEqual({ kind: 'open', code: '/SCWM/MON', newSession: false });
+    expect(parseCommand('/scwm/mon')).toEqual({ kind: 'open', code: '/SCWM/MON', newSession: false });
+  });
+  it('reports unknown codes with suggestions', () => {
+    const cmd = parseCommand('/nSE16X');
+    expect(cmd.kind).toBe('unknown');
+    if (cmd.kind === 'unknown') {
+      expect(cmd.code).toBe('SE16X');
+      expect(cmd.suggestions).toContain('SE16');
+    }
+    expect(parseCommand('XYZ').kind).toBe('unknown');
+    expect(parseCommand('ZZ99').kind).toBe('unknown');
+  });
+  it('sends free text to search', () => {
+    expect(parseCommand('idoc status 51')).toEqual({ kind: 'search', query: 'idoc status 51' });
+    expect(parseCommand('banana')).toEqual({ kind: 'search', query: 'banana' });
+  });
+  it('knows the classic extras', () => {
+    expect(parseCommand('')).toEqual({ kind: 'empty' });
+    expect(parseCommand('/nex')).toEqual({ kind: 'logoff' });
+    expect(parseCommand('/h')).toEqual({ kind: 'debug' });
+  });
+});
+
+describe('suggestCodes', () => {
+  it('suggests near misses first', () => {
+    expect(suggestCodes('ST2')[0]).toBe('ST22');
+    expect(suggestCodes('MIG0')).toContain('MIGO');
+  });
+});
