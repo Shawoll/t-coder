@@ -119,12 +119,28 @@ npm run dev          # http://localhost:5173
 npm test             # Vitest
 npm run typecheck    # tsc --noEmit
 npm run build        # type-check + production build into dist/
-npm run preview      # serve dist/ locally
+npm run preview      # serve dist/ at http://localhost:4173
 
 npm run data:extract # re-extract the PDF (macOS; path via argument or ALMANAC_PDF)
 npm run data:build   # re-parse and verify the catalog
 npm run icons        # regenerate the PWA icons
 ```
+
+### Show it locally
+
+To demo the production build on this machine:
+
+```bash
+npm run build && npm run preview   # http://localhost:4173
+```
+
+To open it on a phone or another computer on the same Wi-Fi, expose the preview server on the network:
+
+```bash
+npm run build && npm run preview -- --host
+```
+
+Vite prints a network address such as `http://192.168.1.20:4173`. Open it on the other device. Over that address the app works fully, but offline mode (the service worker) stays off, because browsers only allow it on `localhost` or HTTPS.
 
 ## Deploy
 
