@@ -6,7 +6,7 @@ export interface Note {
   tips: L10n[];
   pitfalls: L10n[];
   s4?: L10n;
-  /** Flip to true once the author has reviewed the note. */
+  /** Always false here; notes.ts sets it from the author's sign-off list (reviewed.ts). */
   reviewed: boolean;
 }
 

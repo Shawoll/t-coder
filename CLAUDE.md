@@ -11,7 +11,8 @@ relevant section there instead of re-deriving it from code.
   (favorites, recent, history, lang, landscape) lives only in localStorage (`tcoder:v1`).
 - Every user-facing string exists in both Slovak and English. Never ship one language only.
 - Content is conservative: say *where to look*, never how to intervene in production.
-- Curated notes carry `reviewed: false`. Never flip it to `true` — only the author does that.
+- Author sign-off lives in `src/data/reviewed.ts` (note codes, scenario ids, quiz numbers). Never add
+  ids there — only the author does that, after checking the item.
 - No SAP assets, logos or fonts. Icons are original inline SVGs (`src/ui/icons.ts`).
 - Ask before every commit/push; approval does not carry over to the next one.
 
@@ -25,6 +26,7 @@ npm run preview      # serve dist/ :4173 (add `-- --host` for LAN demo)
 npm run data:build   # re-parse data/raw/almanach.txt → src/data/generated/catalog.json (self-checking)
 npm run data:extract # macOS only: PDF → data/raw/almanach.txt (PDF path: arg or ALMANAC_PDF)
 npm run icons        # regenerate PWA PNG icons
+npm run review       # write review/checklist.md (gitignored) and print the sign-off counts
 ```
 Done = `npm run typecheck && npm test` green (plus `npm run data:build && git diff --exit-code
 src/data/generated/catalog.json` if anything in the data pipeline was touched — CI runs exactly this).
@@ -41,6 +43,7 @@ src/data/         Content only, no logic beyond lookups
   catalog.ts      CODES, AREAS, getCode/hasCode/lookupCode/codesInArea
   archetypes.ts   ~61 whisper scenarios (10 almanac playbooks + curated); sig()/pat()/step() helpers
   notes-tech.ts / notes-business.ts → notes.ts   ~81 curated notes, built with note() from note.ts
+  reviewed.ts     author-owned sign-off list; notes.ts derives Note.reviewed from it
   areas.ts, processes.ts, reference.ts, replacements.ts (legacy→S/4), quiz.ts   hand-transcribed
 src/engine/       PURE functions, no DOM, unit-tested: normalize, fuzzy, search, command, related,
                   explain, whisper, daily. Whisper tuning constants sit at the top of whisper.ts.
@@ -57,7 +60,8 @@ src/ui/
   views/          One file per route, `xxxView(...args): Screen`
 src/styles/       tokens.css (all colours/metrics as CSS vars) · chrome · components · views.
                   BEM-ish classes (`screen__body`). Cards below 640px; 44px touch targets.
-scripts/          build-catalog.ts (runs on plain Node type-stripping), extract-pdf.mjs, make-icons.mjs
+scripts/          build-catalog.ts, review-export.ts (both run on plain Node type-stripping, so the
+                  data files they import must stay JSON-free), extract-pdf.mjs, make-icons.mjs
 tests/            content integrity, whisper golden queries, normalize, search/command,
                   related/explain, router/state, WCAG contrast
 ```
@@ -79,7 +83,9 @@ tests/            content integrity, whisper golden queries, normalize, search/c
   diacritics are fine), optional regex patterns, and steps using catalog codes only. Add a
   golden query to tests/whisper.test.ts and confirm existing golden queries still pass.
 - **New curated note:** add to notes-tech.ts or notes-business.ts with note([sk,en], tips,
-  pitfalls, s4?) — 2–4 tips, 1–3 pitfalls; it starts as reviewed:false.
+  pitfalls, s4?) — 2–4 tips, 1–3 pitfalls; it counts as unreviewed until the author lists it.
+- **Content review:** `npm run review` → the author reads review/checklist.md and adds checked ids to
+  `src/data/reviewed.ts`; content fixes go into src/data/ first. Unknown ids fail the script and tests.
 - **Colour change:** edit tokens.css only; new text/background pairs go into tests/contrast.test.ts.
 
 ## Invariants enforced by tests/CI (don't break, don't "fix" the tests)
@@ -91,11 +97,14 @@ tests/            content integrity, whisper golden queries, normalize, search/c
 - Exactly 10 almanac playbooks (playbook 1–10), ≥40 curated scenarios, unique ids.
 - Every fast-start, playbook and process code has a note (except FBL3N, VA05); ≥80 notes.
 - 20 quiz items. Every {sk,en} object in the content is non-empty in both languages.
+- REVIEWED ids all exist, each listed once; `NOTES[code].reviewed` is true exactly for listed codes.
 - Whisper: digit-bearing tokens match exactly only (ME21N ≠ ME22N); no match → toolbox fallback.
 
 ## Project state (as of 2026-11-04)
 - Not deployed by choice; demoed locally via `npm run build && npm run preview`.
-  GitHub Pages is not enabled, so the CI `deploy` job fails on push to main — expected for now.
+  GitHub Pages is not enabled; the CI `deploy` job is skipped until the repository variable
+  `DEPLOY_PAGES` is `true`.
 - Placeholders before any public showing: AUTHOR in src/config.ts, copyright line in LICENSE.
-- Curated content (notes, curated scenarios, quiz model answers) still awaits author review.
+- Curated content (notes, curated scenarios, quiz model answers) still awaits author review;
+  progress is in `src/data/reviewed.ts` (`npm run review`).
 - Source PDF is the author's own almanac; data/raw/almanach.txt is committed so builds need no macOS.

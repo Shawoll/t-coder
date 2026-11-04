@@ -17,6 +17,7 @@
     "test:watch": "vitest",
     "data:extract": "node scripts/extract-pdf.mjs",
     "data:build": "node scripts/build-catalog.ts",
+    "review": "node scripts/review-export.ts",
     "icons": "node scripts/make-icons.mjs"
   },
   "devDependencies": {

@@ -71,7 +71,9 @@ almanach.txt ──(parser + self-checks)──▶ src/data/generated/catalog.js
 
 CI re-runs the parser and fails if the committed catalog drifts. The smaller, irregular pages are transcribed by hand into `src/data/`: area intros, fast start, playbooks, processes, keys, movement types, S/4 changes and quiz questions.
 
-**Curated content** comprises 81 notes, 51 scenarios and 20 quiz model answers. It was written for T-Coder and is labelled as such in the UI. It is deliberately conservative: it says where to look, never how to intervene in production. Every note carries `reviewed: false` until the author has checked it. **Review the curated content before showing the app publicly.**
+**Curated content** comprises 81 notes, 51 scenarios and 20 quiz model answers. It was written for T-Coder and is labelled as such in the UI. It is deliberately conservative: it says where to look, never how to intervene in production. Nothing counts as reviewed until the author signs it off.
+
+**Content review.** `npm run review` writes `review/checklist.md` (not committed): every note, playbook, scenario and quiz item with Slovak and English side by side, ticked once signed off, plus the counts (`Reviewed: notes 0/81 · scenarios 0/61 · quiz 0/20`). The author signs an item off by adding its id to `src/data/reviewed.ts`; the tests reject unknown or duplicate ids. **Review the curated content before showing the app publicly.**
 
 ## Architecture
 
@@ -124,6 +126,7 @@ npm run preview      # serve dist/ at http://localhost:4173
 npm run data:extract # re-extract the PDF (macOS; path via argument or ALMANAC_PDF)
 npm run data:build   # re-parse and verify the catalog
 npm run icons        # regenerate the PWA icons
+npm run review       # write the content review checklist to review/checklist.md
 ```
 
 ### Show it locally
@@ -144,10 +147,11 @@ Vite prints a network address such as `http://192.168.1.20:4173`. Open it on the
 
 ## Deploy
 
-`.github/workflows/deploy.yml` re-checks the catalog, runs the tests, builds, and publishes `dist/` to GitHub Pages on every push to `main`. To deploy:
+`.github/workflows/deploy.yml` re-checks the catalog, runs the tests, builds and, once enabled (step 3), publishes `dist/` to GitHub Pages on every push to `main`. To deploy:
 
 1. Create a GitHub repository and push this project.
 2. In the repository settings, under **Pages**, set the source to **GitHub Actions**.
+3. Under **Secrets and variables › Actions › Variables**, add `DEPLOY_PAGES` = `true`. Until then the deploy job is skipped, so CI stays green.
 
 The build uses relative paths (`base: './'`), so it also runs unchanged on Netlify, Cloudflare Pages or any static file server.
 

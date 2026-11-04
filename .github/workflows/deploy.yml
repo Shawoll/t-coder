@@ -25,12 +25,14 @@ jobs:
       - run: npm test
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
-        if: github.event_name != 'pull_request'
+        if: vars.DEPLOY_PAGES == 'true' && github.event_name != 'pull_request'
         with:
           path: dist
 
+  # Skipped until Pages is enabled: set the repository variable DEPLOY_PAGES=true
+  # (Settings › Secrets and variables › Actions › Variables).
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: vars.DEPLOY_PAGES == 'true' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: test
     runs-on: ubuntu-latest
     permissions:

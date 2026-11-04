@@ -7,6 +7,7 @@ import { PROCESSES } from '../src/data/processes.ts';
 import { QUIZ } from '../src/data/quiz.ts';
 import * as reference from '../src/data/reference.ts';
 import { REPLACEMENTS } from '../src/data/replacements.ts';
+import { REVIEWED } from '../src/data/reviewed.ts';
 import { isFioriStep, type L10n, type Step } from '../src/types.ts';
 
 const stepCodes = (steps: readonly Step[]) => steps.flatMap((s) => (isFioriStep(s) ? [] : s.codes));
@@ -93,6 +94,20 @@ describe('curated content', () => {
   });
   it('has the 20 almanac self-test questions', () => {
     expect(QUIZ).toHaveLength(20);
+  });
+});
+
+describe('author sign-off list (reviewed.ts)', () => {
+  const dupes = <T,>(ids: readonly T[]) => ids.filter((id, i) => ids.indexOf(id) !== i);
+  it('lists only existing items, each once', () => {
+    expect(REVIEWED.notes.filter((c) => !NOTES[c])).toEqual([]);
+    expect(REVIEWED.scenarios.filter((id) => !ARCHETYPES.some((a) => a.id === id))).toEqual([]);
+    expect(REVIEWED.quiz.filter((n) => !Number.isInteger(n) || n < 1 || n > QUIZ.length)).toEqual([]);
+    expect([...dupes(REVIEWED.notes), ...dupes(REVIEWED.scenarios), ...dupes(REVIEWED.quiz)]).toEqual([]);
+  });
+  it('marks a note reviewed exactly when its code is listed', () => {
+    const reviewed = Object.entries(NOTES).filter(([, n]) => n.reviewed).map(([c]) => c);
+    expect(reviewed.sort()).toEqual([...REVIEWED.notes].sort());
   });
 });
 
