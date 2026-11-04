@@ -1,9 +1,8 @@
 name: Test and deploy
 
+# Manual only (Actions › Test and deploy › Run workflow) to save Actions minutes.
+# Run it locally first: npm run data:build && npm test && npm run build
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -25,14 +24,14 @@ jobs:
       - run: npm test
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
-        if: vars.DEPLOY_PAGES == 'true' && github.event_name != 'pull_request'
+        if: vars.DEPLOY_PAGES == 'true'
         with:
           path: dist
 
   # Skipped until Pages is enabled: set the repository variable DEPLOY_PAGES=true
   # (Settings › Secrets and variables › Actions › Variables).
   deploy:
-    if: vars.DEPLOY_PAGES == 'true' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: vars.DEPLOY_PAGES == 'true' && github.ref == 'refs/heads/main'
     needs: test
     runs-on: ubuntu-latest
     permissions:

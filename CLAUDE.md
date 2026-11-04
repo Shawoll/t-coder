@@ -29,7 +29,8 @@ npm run icons        # regenerate PWA PNG icons
 npm run review       # write review/checklist.md (gitignored) and print the sign-off counts
 ```
 Done = `npm run typecheck && npm test` green (plus `npm run data:build && git diff --exit-code
-src/data/generated/catalog.json` if anything in the data pipeline was touched — CI runs exactly this).
+src/data/generated/catalog.json` if anything in the data pipeline was touched — CI runs exactly this,
+but only when triggered by hand, so the local run is the real gate).
 
 ## Architecture (dependency direction: data → engine → ui; nothing imports upward)
 ```
@@ -100,10 +101,11 @@ tests/            content integrity, whisper golden queries, normalize, search/c
 - REVIEWED ids all exist, each listed once; `NOTES[code].reviewed` is true exactly for listed codes.
 - Whisper: digit-bearing tokens match exactly only (ME21N ≠ ME22N); no match → toolbox fallback.
 
-## Project state (as of 2026-11-04)
+## Project state (as of 2026-11-05)
 - Not deployed by choice; demoed locally via `npm run build && npm run preview`.
-  GitHub Pages is not enabled; the CI `deploy` job is skipped until the repository variable
-  `DEPLOY_PAGES` is `true`.
+  The workflow runs only on manual trigger (workflow_dispatch) to save Actions minutes; never add
+  push/PR triggers back. GitHub Pages is not enabled; the `deploy` job is skipped until the
+  repository variable `DEPLOY_PAGES` is `true`.
 - Placeholders before any public showing: AUTHOR in src/config.ts, copyright line in LICENSE.
 - Curated content (notes, curated scenarios, quiz model answers) still awaits author review;
   progress is in `src/data/reviewed.ts` (`npm run review`).

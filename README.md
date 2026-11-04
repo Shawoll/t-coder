@@ -69,7 +69,7 @@ almanach.txt ──(parser + self-checks)──▶ src/data/generated/catalog.js
 - type totals R 123 / W 134 / A 89 / O 30 / L 17,
 - the alphabetical index: the same code set, each code in the same chapter.
 
-CI re-runs the parser and fails if the committed catalog drifts. The smaller, irregular pages are transcribed by hand into `src/data/`: area intros, fast start, playbooks, processes, keys, movement types, S/4 changes and quiz questions.
+The CI workflow re-runs the parser and fails if the committed catalog drifts. The smaller, irregular pages are transcribed by hand into `src/data/`: area intros, fast start, playbooks, processes, keys, movement types, S/4 changes and quiz questions.
 
 **Curated content** comprises 81 notes, 51 scenarios and 20 quiz model answers. It was written for T-Coder and is labelled as such in the UI. It is deliberately conservative: it says where to look, never how to intervene in production. Nothing counts as reviewed until the author signs it off.
 
@@ -147,11 +147,12 @@ Vite prints a network address such as `http://192.168.1.20:4173`. Open it on the
 
 ## Deploy
 
-`.github/workflows/deploy.yml` re-checks the catalog, runs the tests, builds and, once enabled (step 3), publishes `dist/` to GitHub Pages on every push to `main`. To deploy:
+`.github/workflows/deploy.yml` re-checks the catalog, runs the tests, builds and, once enabled (step 3), publishes `dist/` to GitHub Pages. It runs only when started by hand (**Actions › Test and deploy › Run workflow**), not on push, to save Actions minutes. To deploy:
 
 1. Create a GitHub repository and push this project.
 2. In the repository settings, under **Pages**, set the source to **GitHub Actions**.
-3. Under **Secrets and variables › Actions › Variables**, add `DEPLOY_PAGES` = `true`. Until then the deploy job is skipped, so CI stays green.
+3. Under **Secrets and variables › Actions › Variables**, add `DEPLOY_PAGES` = `true`. Until then the deploy job is skipped.
+4. Run the workflow from the **Actions** tab, on `main`.
 
 The build uses relative paths (`base: './'`), so it also runs unchanged on Netlify, Cloudflare Pages or any static file server.
 
