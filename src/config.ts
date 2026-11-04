@@ -3,7 +3,7 @@
  * Placeholders: fill them in before publishing.
  */
 export const AUTHOR = {
-  name: 'Richard',
+  name: 'Richard Kollar',
   /** e.g. 'https://www.linkedin.com/in/your-handle' (leave empty to hide). */
   linkedin: '',
   /** e.g. 'https://github.com/your-handle/t-coder' (leave empty to hide). */

@@ -106,7 +106,8 @@ tests/            content integrity, whisper golden queries, normalize, search/c
   The workflow runs only on manual trigger (workflow_dispatch) to save Actions minutes; never add
   push/PR triggers back. GitHub Pages is not enabled; the `deploy` job is skipped until the
   repository variable `DEPLOY_PAGES` is `true`.
-- Placeholders before any public showing: AUTHOR in src/config.ts, copyright line in LICENSE.
+- Author name is set (Richard Kollar, also in LICENSE). AUTHOR links (linkedin, repository, contact)
+  in src/config.ts are still empty, so the About page hides them.
 - Curated content (notes, curated scenarios, quiz model answers) still awaits author review;
   progress is in `src/data/reviewed.ts` (`npm run review`).
 - Source PDF is the author's own almanac; data/raw/almanach.txt is committed so builds need no macOS.
