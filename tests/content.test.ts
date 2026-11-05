@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { ARCHETYPES } from '../src/data/archetypes.ts';
 import { AREA_INFO } from '../src/data/areas.ts';
 import { AREAS, CODES, hasCode } from '../src/data/catalog.ts';
+import { WHISPER_EXAMPLES } from '../src/data/examples.ts';
 import { NOTES } from '../src/data/notes.ts';
 import { PROCESSES } from '../src/data/processes.ts';
 import { QUIZ } from '../src/data/quiz.ts';
@@ -92,6 +93,13 @@ describe('curated content', () => {
       expect(n.pitfalls.length, code).toBeLessThanOrEqual(3);
     }
   });
+  it('whisper examples point at existing scenarios, once each', () => {
+    expect(WHISPER_EXAMPLES.length).toBeGreaterThanOrEqual(4); // the home screen shows four
+    expect(WHISPER_EXAMPLES.filter((e) => !ARCHETYPES.some((a) => a.id === e.id))).toEqual([]);
+    const ids = WHISPER_EXAMPLES.map((e) => e.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
   it('has the 20 almanac self-test questions', () => {
     expect(QUIZ).toHaveLength(20);
   });
@@ -112,7 +120,7 @@ describe('author sign-off list (reviewed.ts)', () => {
 });
 
 describe('every bilingual text is filled in both languages', () => {
-  const sources = { ARCHETYPES, AREA_INFO, NOTES, PROCESSES, QUIZ, REPLACEMENTS, reference, catalog: CODES };
+  const sources = { ARCHETYPES, AREA_INFO, NOTES, PROCESSES, QUIZ, REPLACEMENTS, WHISPER_EXAMPLES, reference, catalog: CODES };
   const all = collectL10n(sources);
   it('found a meaningful amount of text', () => {
     expect(all.length).toBeGreaterThan(1200);

@@ -140,6 +140,21 @@ select.input {
   cursor: pointer;
 }
 
+/* Chips that are links (example and recent whisper queries) look like the buttons. */
+.chips--list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a.chip {
+  text-decoration: none;
+}
+
+a.chip:hover {
+  background: var(--alv-key);
+}
+
 .chip[aria-pressed='true'] {
   border-color: var(--title-a);
   background: var(--alv-key);
@@ -793,6 +808,10 @@ select.input {
 
 .whisper-line__label {
   font-weight: 700;
+}
+
+.whisper-line__copy {
+  margin-left: auto;
 }
 
 .whisper-line__codes {

@@ -1,5 +1,6 @@
 import { AREAS, codesInArea, getCode } from '../../data/catalog.ts';
 import { AREA_INFO } from '../../data/areas.ts';
+import { WHISPER_EXAMPLES } from '../../data/examples.ts';
 import { NOTES } from '../../data/notes.ts';
 import { FAST_START, TOOLBOX } from '../../data/reference.ts';
 import { pickOfTheDay } from '../../engine/daily.ts';
@@ -11,6 +12,7 @@ import { h, nextId } from '../dom.ts';
 import { button, codeLink, groupBox, stepCodes, typeBadge } from '../components/basics.ts';
 import { setAllFolders, tree, type TreeNode } from '../components/tree.ts';
 import type { Screen } from '../shell.ts';
+import { queryChips } from './whisperParts.ts';
 
 const leaf = (prefix: string, c: TCode): TreeNode => ({
   id: `${prefix}:${c.code}`,
@@ -89,7 +91,7 @@ const quickWhisper = (): HTMLElement => {
       input,
       h('button', { type: 'submit', class: 'btn btn--primary' }, t('whisper.button')),
     ),
-    h('p', { class: 'hint' }, t('home.quickWhisperHint')),
+    queryChips(t('whisper.try'), WHISPER_EXAMPLES.slice(0, 4).map((e) => tr(e.q))),
   ]);
 };
 

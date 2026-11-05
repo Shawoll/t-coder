@@ -1,5 +1,6 @@
 // App state that survives reloads: language, landscape lens, favorites,
-// recent codes and command-field history. Stored on the device only.
+// recent codes, command-field history and recent whisper queries. Stored on the
+// device only.
 
 import type { Landscape, Lang } from './types.ts';
 
@@ -9,11 +10,13 @@ export interface AppState {
   favorites: string[];
   recent: string[];
   history: string[];
+  whispers: string[];
 }
 
 const KEY = 'tcoder:v1';
 const MAX_RECENT = 12;
 const MAX_HISTORY = 15;
+const MAX_WHISPERS = 8;
 
 /** sk/cs browsers get Slovak, everyone else English. */
 export const detectLang = (languages: readonly string[]): Lang =>
@@ -25,6 +28,7 @@ const defaults = (): AppState => ({
   favorites: [],
   recent: [],
   history: [],
+  whispers: [],
 });
 
 const strings = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
@@ -40,6 +44,7 @@ export const parseState = (raw: string | null, base: AppState = defaults()): App
       favorites: strings(v['favorites']),
       recent: strings(v['recent']).slice(0, MAX_RECENT),
       history: strings(v['history']).slice(0, MAX_HISTORY),
+      whispers: strings(v['whispers']).filter((w) => w.trim()).slice(0, MAX_WHISPERS),
     };
   } catch {
     return base;
@@ -108,7 +113,13 @@ class Store {
     this.#set('history', [e, ...this.#state.history.filter((h) => h !== e)].slice(0, MAX_HISTORY));
   }
 
-  clear(key: 'favorites' | 'recent' | 'history'): void {
+  addWhisper(query: string): void {
+    const q = query.trim();
+    if (!q || this.#state.whispers[0] === q) return;
+    this.#set('whispers', [q, ...this.#state.whispers.filter((w) => w !== q)].slice(0, MAX_WHISPERS));
+  }
+
+  clear(key: 'favorites' | 'recent' | 'history' | 'whispers'): void {
     this.#set(key, []);
   }
 }

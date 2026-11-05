@@ -1,6 +1,6 @@
 import { getCode } from '../../data/catalog.ts';
 import { t } from '../../i18n/index.ts';
-import { navigate } from '../../router.ts';
+import { href, navigate } from '../../router.ts';
 import { store } from '../../state.ts';
 import type { TCode } from '../../types.ts';
 import { h } from '../dom.ts';
@@ -15,7 +15,8 @@ const resolve = (codes: readonly string[]): TCode[] => codes.flatMap((c) => getC
 export const favoritesView = (): Screen => {
   const favorites = resolve(store.state.favorites);
   const recent = store.state.recent;
-  const clear = (key: 'favorites' | 'recent') => () => {
+  const whispers = store.state.whispers;
+  const clear = (key: 'favorites' | 'recent' | 'whispers') => () => {
     store.clear(key);
     status('S', t('status.cleared'));
     navigate({ name: 'favorites' }, { replace: true });
@@ -26,6 +27,7 @@ export const favoritesView = (): Screen => {
     appToolbar: [
       button(t('fav.clearFavorites'), clear('favorites'), { iconName: 'cancel' }),
       button(t('fav.clearRecent'), clear('recent'), { iconName: 'cancel' }),
+      button(t('fav.clearWhispers'), clear('whispers'), { iconName: 'cancel' }),
     ],
     content: h(
       'div',
@@ -36,6 +38,12 @@ export const favoritesView = (): Screen => {
         favorites.length ? alvGrid(favorites, { caption: t('fav.title'), showArea: true, filters: false }) : h('p', { class: 'hint' }, t('fav.empty')),
       ),
       groupBox(t('fav.recent'), recent.length ? codeList(recent) : h('p', { class: 'hint' }, t('fav.recentEmpty'))),
+      groupBox(
+        t('fav.whispers'),
+        whispers.length
+          ? h('ul', { class: 'link-list' }, whispers.map((q) => h('li', null, h('a', { href: href({ name: 'whisper', q }) }, q))))
+          : h('p', { class: 'hint' }, t('fav.whispersEmpty')),
+      ),
     ),
   };
 };

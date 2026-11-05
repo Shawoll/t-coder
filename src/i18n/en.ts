@@ -40,6 +40,7 @@ export const en = {
   'cmd.label': 'Command field',
   'cmd.placeholder': 'T-code, /nST22 or a problem',
   'cmd.historyEmpty': 'No commands yet',
+  'cmd.suggestions': 'Matching T-codes',
 
   'status.ready': 'Ready',
   'status.unknown': 'Transaction {code} does not exist',
@@ -77,7 +78,6 @@ export const en = {
   'home.recentEmpty': 'Codes you open appear here',
   'home.daily': 'T-code of the day',
   'home.quickWhisper': 'What is going wrong?',
-  'home.quickWhisperHint': 'For example “IDoc status 51” or “faktúra je blokovaná”.',
   'home.toolbox': 'First-response toolbox',
   'home.toolboxText': 'The almanac’s first stops for any incident.',
   'home.expandAll': 'Expand all',
@@ -158,6 +158,7 @@ export const en = {
   'whisper.landscape': 'Landscape',
   'whisper.line': 'Whisper',
   'whisper.lineLabel': 'Suggested order of T-codes',
+  'whisper.copyChain': 'Copy chain',
   'whisper.matched': 'Matched',
   'whisper.signals': 'Recognised from these words',
   'whisper.trail': 'Trail',
@@ -182,6 +183,8 @@ export const en = {
   'whisper.source.curated': 'Curated scenario',
   'whisper.notFound': 'Scenario {id} does not exist',
   'whisper.allScenarios': 'All scenarios',
+  'whisper.try': 'Try an example',
+  'whisper.recent': 'Recently asked',
 
   'symptom.error': 'Error or dump',
   'symptom.stuck': 'Stuck or queued',
@@ -245,6 +248,9 @@ export const en = {
   'fav.recentEmpty': 'Codes you open appear here.',
   'fav.clearFavorites': 'Clear favorites',
   'fav.clearRecent': 'Clear recent',
+  'fav.clearWhispers': 'Clear recent whispers',
+  'fav.whispers': 'Recently asked in the whisper',
+  'fav.whispersEmpty': 'Problems you describe in the whisper appear here.',
   'fav.local': 'Stored on this device only. No account, nothing is uploaded.',
 
   'about.title': 'About T-Coder',

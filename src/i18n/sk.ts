@@ -42,6 +42,7 @@ export const sk: Record<MessageKey, string> = {
   'cmd.label': 'Príkazové pole',
   'cmd.placeholder': 'T-kód, /nST22 alebo problém',
   'cmd.historyEmpty': 'Zatiaľ žiadne príkazy',
+  'cmd.suggestions': 'Zodpovedajúce T-kódy',
 
   'status.ready': 'Pripravené',
   'status.unknown': 'Transakcia {code} neexistuje',
@@ -79,7 +80,6 @@ export const sk: Record<MessageKey, string> = {
   'home.recentEmpty': 'Tu sa objavia kódy, ktoré otvoríš',
   'home.daily': 'T-kód dňa',
   'home.quickWhisper': 'Čo nefunguje?',
-  'home.quickWhisperHint': 'Napríklad „IDoc status 51“ alebo „faktúra je blokovaná“.',
   'home.toolbox': 'Prvá pomoc pri incidente',
   'home.toolboxText': 'Prvé zastávky almanachu pri akomkoľvek incidente.',
   'home.expandAll': 'Rozbaliť všetko',
@@ -160,6 +160,7 @@ export const sk: Record<MessageKey, string> = {
   'whisper.landscape': 'Prostredie',
   'whisper.line': 'Našepkávam',
   'whisper.lineLabel': 'Navrhované poradie T-kódov',
+  'whisper.copyChain': 'Kopírovať reťazec',
   'whisper.matched': 'Zhoda',
   'whisper.signals': 'Rozpozná sa podľa týchto slov',
   'whisper.trail': 'Postup',
@@ -184,6 +185,8 @@ export const sk: Record<MessageKey, string> = {
   'whisper.source.curated': 'Kurátorovaný scenár',
   'whisper.notFound': 'Scenár {id} neexistuje',
   'whisper.allScenarios': 'Všetky scenáre',
+  'whisper.try': 'Skús príklad',
+  'whisper.recent': 'Naposledy hľadané',
 
   'symptom.error': 'Chyba alebo dump',
   'symptom.stuck': 'Zaseknuté alebo vo fronte',
@@ -247,6 +250,9 @@ export const sk: Record<MessageKey, string> = {
   'fav.recentEmpty': 'Tu sa objavia kódy, ktoré otvoríš.',
   'fav.clearFavorites': 'Vymazať obľúbené',
   'fav.clearRecent': 'Vymazať posledné',
+  'fav.clearWhispers': 'Vymazať posledné hľadania',
+  'fav.whispers': 'Naposledy hľadané v našepkávači',
+  'fav.whispersEmpty': 'Tu sa objavia problémy, ktoré opíšeš v našepkávači.',
   'fav.local': 'Uložené iba v tomto zariadení. Bez účtu, nič sa nenahráva.',
 
   'about.title': 'O aplikácii T-Coder',

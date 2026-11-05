@@ -31,6 +31,7 @@ describe('router', () => {
 });
 
 describe('state', () => {
+  const base = { lang: 'en' as const, landscape: 's4' as const, favorites: [], recent: [], history: [], whispers: [] };
   it('defaults the language from the browser (sk/cs → Slovak)', () => {
     expect(detectLang(['sk-SK', 'en'])).toBe('sk');
     expect(detectLang(['cs'])).toBe('sk');
@@ -38,7 +39,6 @@ describe('state', () => {
     expect(detectLang([])).toBe('en');
   });
   it('parses stored state defensively', () => {
-    const base = { lang: 'en' as const, landscape: 's4' as const, favorites: [], recent: [], history: [] };
     expect(parseState(null, base)).toEqual(base);
     expect(parseState('not json', base)).toEqual(base);
     expect(parseState('{"lang":"xx","favorites":["SE16N",3],"landscape":"btp"}', base)).toEqual({
@@ -46,5 +46,14 @@ describe('state', () => {
       landscape: 'btp',
       favorites: ['SE16N'],
     });
+  });
+  it('keeps valid recent whispers, drops junk and caps them at 8', () => {
+    expect(parseState('{"whispers":["IDoc status 51",7,null,"  ","faktúra je blokovaná"]}', base).whispers).toEqual([
+      'IDoc status 51',
+      'faktúra je blokovaná',
+    ]);
+    expect(parseState('{"whispers":"IDoc"}', base).whispers).toEqual([]);
+    const many = Array.from({ length: 12 }, (_, i) => `query ${i}`);
+    expect(parseState(JSON.stringify({ whispers: many }), base).whispers).toEqual(many.slice(0, 8));
   });
 });

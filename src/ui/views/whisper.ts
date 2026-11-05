@@ -1,6 +1,7 @@
 import { ARCHETYPES, getArchetype } from '../../data/archetypes.ts';
 import { AREAS, getCode } from '../../data/catalog.ts';
 import { AREA_INFO } from '../../data/areas.ts';
+import { WHISPER_EXAMPLES } from '../../data/examples.ts';
 import { searchCodes } from '../../engine/search.ts';
 import { scenarioTrail, whisper } from '../../engine/whisper.ts';
 import { otherLang, t, tr } from '../../i18n/index.ts';
@@ -14,7 +15,7 @@ import { codeLink, groupBox, lead, typeBadge } from '../components/basics.ts';
 import type { Screen } from '../shell.ts';
 import { notFoundView } from './notFound.ts';
 import { searchForm } from './search.ts';
-import { hitCard, sourceLabel, trailList, whisperLine } from './whisperParts.ts';
+import { hitCard, queryChips, sourceLabel, trailList, whisperLine } from './whisperParts.ts';
 
 const isSymptom = (s: string | undefined): s is Symptom => !!s && (SYMPTOMS as readonly string[]).includes(s);
 
@@ -105,6 +106,9 @@ const scenarioIndex = (): HTMLElement =>
 export const whisperView = (q: string, areaParam?: string, symptomParam?: string): Screen => {
   const area = areaParam && AREA_INFO[areaParam] ? areaParam : undefined;
   const symptom = isSymptom(symptomParam) ? symptomParam : undefined;
+  // Remember every query that reaches this screen (typed, chip, link or reload);
+  // repeating the latest one is a no-op, so re-renders do not reorder the list.
+  if (q) store.addWhisper(q);
   const form = searchForm(
     q,
     (next) => {
@@ -129,6 +133,8 @@ export const whisperView = (q: string, areaParam?: string, symptomParam?: string
   const result = q || area || symptom ? whisper(q, { ...options, limit: q ? 5 : 12 }) : undefined;
 
   if (!result) {
+    body.push(queryChips(t('whisper.recent'), store.state.whispers));
+    body.push(queryChips(t('whisper.try'), WHISPER_EXAMPLES.map((e) => tr(e.q))));
     body.push(scenarioIndex());
   } else {
     body.push(btpBanner());

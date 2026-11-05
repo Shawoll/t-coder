@@ -6,14 +6,19 @@ import type { MatchChip, RankedCode, TrailStep, WhisperHit } from '../../engine/
 import { t, tr } from '../../i18n/index.ts';
 import { codeHref, href } from '../../router.ts';
 import { isFioriStep, SYMPTOMS, type Symptom } from '../../types.ts';
-import { h } from '../dom.ts';
+import { h, nextId } from '../dom.ts';
 import { icon } from '../icons.ts';
-import { groupBox, stepCodes } from '../components/basics.ts';
+import { button, groupBox, stepCodes } from '../components/basics.ts';
+import { copyText } from '../status.ts';
+
+/** How a ranked key is typed into SAP: /nWE02 for T-codes, the bare id for the Fiori app. */
+const commandForm = (key: string): string => (key === 'F3473' ? key : `/n${key}`);
 
 /** "Whisper: /nST22 → /nSLG1 → /nSM37": the combined ranking as a command chain. */
 export const whisperLine = (ranking: readonly RankedCode[], max = 5): HTMLElement | null => {
   const top = ranking.slice(0, max);
   if (!top.length) return null;
+  const chain = top.map((r) => commandForm(r.key)).join(' → ');
   return h(
     'div',
     { class: 'whisper-line', role: 'group', 'aria-label': t('whisper.lineLabel') },
@@ -27,10 +32,23 @@ export const whisperLine = (ranking: readonly RankedCode[], max = 5): HTMLElemen
           null,
           r.key === 'F3473'
             ? h('span', { class: 'code' }, 'F3473')
-            : h('a', { class: 'code', href: codeHref(r.key) }, `/n${r.key}`),
+            : h('a', { class: 'code', href: codeHref(r.key) }, commandForm(r.key)),
         ),
       ),
     ),
+    button(t('whisper.copyChain'), () => void copyText(chain), { iconName: 'copy', className: 'btn--small whisper-line__copy', title: t('tcode.copyLabel', { form: chain }) }),
+  );
+};
+
+/** A labelled row of whisper queries ("Try an example", "Recently asked"); each chip runs its query. */
+export const queryChips = (label: string, queries: readonly string[]): HTMLElement | null => {
+  if (!queries.length) return null;
+  const id = nextId('qc');
+  return h(
+    'div',
+    { class: 'field field--inline query-chips' },
+    h('span', { class: 'field__label', id }, `${label}:`),
+    h('ul', { class: 'chips chips--list', 'aria-labelledby': id }, queries.map((q) => h('li', null, h('a', { class: 'chip', href: href({ name: 'whisper', q }) }, q)))),
   );
 };
 

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { WHISPER_EXAMPLES } from '../src/data/examples.ts';
 import { whisper } from '../src/engine/whisper.ts';
 import { isFioriStep } from '../src/types.ts';
 
@@ -22,6 +23,16 @@ describe('whisper golden queries', () => {
   it.each(golden)('%s → %s', (query, expected) => {
     expect(topIds(query)[0]).toBe(expected);
   });
+
+  // The example chips on the whisper and home screens must hit what they advertise.
+  it.each(WHISPER_EXAMPLES.flatMap((e) => (['sk', 'en'] as const).map((l) => [e.q[l], e.id] as const)))(
+    'example “%s” → %s',
+    (query, expected) => {
+      const top = whisper(query).hits[0];
+      expect(top?.archetype.id).toBe(expected);
+      expect(top?.confidence).not.toBe('low');
+    },
+  );
 
   it('dump TIME_OUT → short dump in the top 2', () => {
     expect(topIds('dump TIME_OUT', 2)).toContain('short-dump');

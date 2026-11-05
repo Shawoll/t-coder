@@ -298,7 +298,8 @@ a {
   outline-offset: -2px;
 }
 
-.command__history {
+.command__history,
+.command__suggest {
   position: absolute;
   top: 100%;
   left: 0;
@@ -335,6 +336,58 @@ a {
   margin: 0;
   padding: 10px;
   color: var(--ink-muted);
+}
+
+/* Type-ahead: wider than the field so the purpose fits, but never past the viewport
+   (the field starts about 54px from the left edge on every width). */
+.command__suggest {
+  right: auto;
+  width: 30rem;
+  min-width: 100%;
+  max-width: calc(100vw - 64px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.command__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--tap);
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.command__option-code {
+  flex: none;
+  min-width: 6ch;
+  font-family: var(--font-code);
+  font-size: var(--fs-base);
+}
+
+.command__option-text {
+  min-width: 0;
+  color: var(--ink-muted);
+  font-size: var(--fs-sm);
+}
+
+.command__option:hover,
+.command__option[aria-selected='true'] {
+  background: var(--sel);
+  color: var(--sel-ink);
+}
+
+.command__option:hover .command__option-text,
+.command__option[aria-selected='true'] .command__option-text {
+  color: inherit;
+}
+
+@media (forced-colors: active) {
+  .command__option[aria-selected='true'] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
 }
 
 .tool {

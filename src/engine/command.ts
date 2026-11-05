@@ -1,5 +1,5 @@
 import { lookupCode } from '../data/catalog.ts';
-import { suggestCodes } from './search.ts';
+import { searchCodes, suggestCodes } from './search.ts';
 
 /** What the SAP-style command field should do with its input. */
 export type Command =
@@ -56,4 +56,23 @@ export const parseCommand = (input: string): Command => {
     if (looksLikeCode(text)) return openOrUnknown(text, false);
   }
   return { kind: 'search', query: text };
+};
+
+/**
+ * Type-ahead for the command field: catalog codes for what has been typed so far.
+ * Only a single code-shaped token gets suggestions (/n and /o are allowed in front);
+ * free text such as "faktura blokovana" still goes to search on Enter. Description
+ * matches are left out on purpose, so the list stays a list of codes and never
+ * jumps around while a code is being typed.
+ */
+export const typeahead = (input: string, limit = 8): string[] => {
+  const text = input.trim().replace(/^\/[no]/i, '');
+  if (text.length < 2 || /\s/.test(text)) return [];
+  // Code matches always outrank description matches, so filtering after the
+  // limit still yields the best code matches.
+  const hits = searchCodes(text, { limit }).filter((hit) => hit.reason !== 'text');
+  // Near misses help only when nothing matches as typed (SE16X → SE16); next to
+  // real prefix matches they are noise (ME2 → ME12).
+  const asTyped = hits.filter((hit) => hit.reason !== 'fuzzy');
+  return (asTyped.length ? asTyped : hits).map((hit) => hit.code.code);
 };

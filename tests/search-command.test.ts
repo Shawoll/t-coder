@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseCommand } from '../src/engine/command.ts';
+import { parseCommand, typeahead } from '../src/engine/command.ts';
 import { searchCodes, suggestCodes } from '../src/engine/search.ts';
 
 const codes = (q: string, n = 10) => searchCodes(q).slice(0, n).map((h) => h.code.code);
@@ -70,5 +70,31 @@ describe('suggestCodes', () => {
   it('suggests near misses first', () => {
     expect(suggestCodes('ST2')[0]).toBe('ST22');
     expect(suggestCodes('MIG0')).toContain('MIGO');
+  });
+});
+
+describe('typeahead', () => {
+  it('lists codes that start with what was typed, in any case', () => {
+    expect(typeahead('ME2')).toEqual(['ME2N', 'ME2L', 'ME2M', 'ME21N', 'ME22N', 'ME23N']);
+    expect(typeahead('me2')).toEqual(typeahead('ME2'));
+  });
+  it('accepts the /n and /o prefixes', () => {
+    expect(typeahead('/nse16')).toEqual(['SE16', 'SE16N', 'SE16H']);
+    expect(typeahead('/oVA0')).toEqual(['VA01', 'VA02', 'VA03', 'VA05']);
+  });
+  it('finds namespaced codes by segment', () => {
+    expect(typeahead('mon')[0]).toBe('/SCWM/MON');
+  });
+  it('falls back to near misses only when nothing matches as typed', () => {
+    expect(typeahead('SE16X')).toContain('SE16');
+    expect(typeahead('migo')).toEqual(['MIGO']);
+  });
+  it('stays quiet for free text, single characters and bare prefixes', () => {
+    for (const input of ['faktura blokovana', 'faktura', 'banana', 'S', '/n', '/o', '']) {
+      expect(typeahead(input)).toEqual([]);
+    }
+  });
+  it('respects the limit', () => {
+    expect(typeahead('/scwm/', 3)).toHaveLength(3);
   });
 });

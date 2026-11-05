@@ -2,10 +2,10 @@
 // system toolbar with the command field, screen title, application toolbar,
 // content area and status bar.
 
-import { CODES, catalog } from '../data/catalog.ts';
+import { CODES, catalog, getCode } from '../data/catalog.ts';
 import { SYSTEM } from '../config.ts';
-import { parseCommand } from '../engine/command.ts';
-import { lang, t, type MessageKey } from '../i18n/index.ts';
+import { parseCommand, typeahead } from '../engine/command.ts';
+import { lang, t, tr, type MessageKey } from '../i18n/index.ts';
 import { codeHref, href, navigate } from '../router.ts';
 import { store } from '../state.ts';
 import type { Landscape, Lang } from '../types.ts';
@@ -288,10 +288,17 @@ export const mountShell = (root: HTMLElement): void => {
   // System toolbar.
   const inputId = nextId('cmd');
   const historyId = nextId('cmd-history');
+  const suggestId = nextId('cmd-suggest');
+  // The field is a WAI-ARIA combobox: typing a code opens a listbox of matching
+  // T-codes. Focus stays in the field; aria-activedescendant points at the row.
   const input = h('input', {
     id: inputId,
     class: 'command__input',
     type: 'text',
+    role: 'combobox',
+    'aria-autocomplete': 'list',
+    'aria-expanded': 'false',
+    'aria-controls': suggestId,
     autocomplete: 'off',
     autocapitalize: 'characters',
     spellcheck: 'false',
@@ -309,8 +316,91 @@ export const mountShell = (root: HTMLElement): void => {
     historyList.hidden = true;
     historyBtn.setAttribute('aria-expanded', 'false');
   };
+
+  // Type-ahead listbox.
+  const suggestList = h('ul', { class: 'command__suggest', id: suggestId, role: 'listbox', hidden: true });
+  let suggestions: string[] = [];
+  let active = -1;
+  const setActive = (i: number): void => {
+    active = i;
+    const rows = [...suggestList.children];
+    rows.forEach((row, j) => row.setAttribute('aria-selected', String(j === i)));
+    const row = rows[i];
+    if (row) {
+      input.setAttribute('aria-activedescendant', row.id);
+      row.scrollIntoView({ block: 'nearest' });
+    } else {
+      input.removeAttribute('aria-activedescendant');
+    }
+  };
+  const closeSuggest = (): void => {
+    suggestList.hidden = true;
+    suggestList.replaceChildren();
+    suggestions = [];
+    setActive(-1);
+    input.setAttribute('aria-expanded', 'false');
+  };
+  /** Run the chosen code, keeping a typed /n or /o (so /oVA0 → /oVA01 opens a new session). */
+  const pick = (code: string): void => {
+    const prefix = /^\s*(\/[no])/i.exec(input.value)?.[1] ?? '';
+    closeSuggest();
+    input.value = `${prefix}${code}`;
+    executeCommand(input.value, input);
+  };
+  const openSuggest = (): void => {
+    suggestions = typeahead(input.value);
+    if (!suggestions.length) return closeSuggest();
+    closeHistory();
+    suggestList.replaceChildren(
+      ...suggestions.map((code, i) =>
+        h(
+          'li',
+          {
+            id: `${suggestId}-${i}`,
+            class: 'command__option',
+            role: 'option',
+            'aria-selected': 'false',
+            // Keep focus (and the on-screen keyboard) in the field while clicking a row.
+            onmousedown: (e: Event) => e.preventDefault(),
+            onclick: () => pick(code),
+          },
+          h('span', { class: 'command__option-code' }, code),
+          h('span', { class: 'command__option-text' }, tr(getCode(code)!.purpose)),
+        ),
+      ),
+    );
+    setActive(-1);
+    suggestList.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+  };
+  input.addEventListener('input', openSuggest);
+  input.addEventListener('keydown', (e) => {
+    if (e.isComposing) return;
+    const open = !suggestList.hidden;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (!open) openSuggest();
+      const n = suggestions.length;
+      if (!n) return;
+      e.preventDefault();
+      setActive(e.key === 'ArrowDown' ? (active + 1) % n : active <= 0 ? n - 1 : active - 1);
+    } else if (e.key === 'Enter') {
+      const code = open ? suggestions[active] : undefined;
+      if (code) {
+        e.preventDefault();
+        pick(code);
+      }
+      // Without an active row the form submits and runs the input as typed.
+    } else if (e.key === 'Escape' && open) {
+      e.preventDefault();
+      closeSuggest();
+    } else if (e.key === 'Tab') {
+      closeSuggest();
+    }
+  });
+
   historyBtn.addEventListener('click', () => {
     if (!historyList.hidden) return closeHistory();
+    closeSuggest();
     const entries = store.state.history;
     historyList.replaceChildren(
       ...(entries.length
@@ -344,6 +434,13 @@ export const mountShell = (root: HTMLElement): void => {
   document.addEventListener('click', (e) => {
     if (!historyList.contains(e.target as Node) && !historyBtn.contains(e.target as Node)) closeHistory();
   });
+  const field = h('div', { class: 'command__field' }, input, historyBtn, historyList, suggestList);
+  document.addEventListener('click', (e) => {
+    if (!field.contains(e.target as Node)) closeSuggest();
+  });
+  field.addEventListener('focusout', (e) => {
+    if (e.relatedTarget && !field.contains(e.relatedTarget as Node)) closeSuggest();
+  });
 
   const commandLabel = h('label', { class: 'visually-hidden', for: inputId });
   const form = h(
@@ -353,12 +450,13 @@ export const mountShell = (root: HTMLElement): void => {
       role: 'search',
       onsubmit: (e: Event) => {
         e.preventDefault();
+        closeSuggest();
         executeCommand(input.value, input);
       },
     },
     commandLabel,
     h('button', { type: 'submit', class: 'tool tool--enter' }, icon('check'), h('span', { class: 'visually-hidden' })),
-    h('div', { class: 'command__field' }, input, historyBtn, historyList),
+    field,
   );
 
   const fav = toolButton('starOutline', 'tb.favorite', () => {
@@ -430,6 +528,7 @@ export const mountShell = (root: HTMLElement): void => {
     [compactMenu, ...menus].forEach((m) => (m as HTMLElement & { relabel?: () => void }).relabel?.());
     commandLabel.textContent = t('cmd.label');
     input.placeholder = t('cmd.placeholder');
+    suggestList.setAttribute('aria-label', t('cmd.suggestions'));
     form.querySelector('.tool--enter .visually-hidden')!.textContent = t('tb.enter');
     historyBtn.querySelector('.visually-hidden')!.textContent = t('tb.history');
     historyBtn.title = t('tb.history');

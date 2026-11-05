@@ -16,7 +16,7 @@ T-Coder lets SAP developers and consultants browse 393 curated transaction codes
 
 ## Features
 
-- **SAP-style command field.** `SE16N`, `se16n` and `/nSE16N` open a code; `/n` returns to the start menu; `/oVA03` opens a new session (tab); namespaced codes work (`/n/SCWM/MON`). An unknown code gets the familiar red status-bar message, *Transaction XYZ does not exist*, with “did you mean” suggestions. Free text becomes a search. A ▼ button holds the command history, and `Ctrl+/` jumps to the field, as in SAP GUI.
+- **SAP-style command field.** `SE16N`, `se16n` and `/nSE16N` open a code; `/n` returns to the start menu; `/oVA03` opens a new session (tab); namespaced codes work (`/n/SCWM/MON`). An unknown code gets the familiar red status-bar message, *Transaction XYZ does not exist*, with “did you mean” suggestions. Free text becomes a search. While you type a code, a type-ahead list shows matching codes with their purpose (arrow keys, Enter, Escape; a WAI-ARIA combobox). A ▼ button holds the command history, and `Ctrl+/` jumps to the field, as in SAP GUI.
 - **Easy Access tree.** Favorites, the almanac’s 48 fast-start codes, the 18 areas and recent codes. It works by tap or with the arrow keys (WAI-ARIA tree). The side panel holds a T-code of the day, a quick whisper and the first-response toolbox.
 - **ALV-style lists.** These have a light-blue key column, zebra rows, sortable headers, type and area filters, and a yellow totals band. Below 640 px they become cards.
 - **T-code detail.** Each code has four tabs:
@@ -25,7 +25,7 @@ T-Coder lets SAP developers and consultants browse 393 curated transaction codes
   - Related: create/change/display siblings, codes often used together and codes from the same area.
   - Used in: which playbooks, scenarios and processes include the code.
   Legacy codes also show their S/4HANA replacement.
-- **Whisper (troubleshooter).** It covers 61 problem scenarios: the almanac’s 10 playbooks plus 51 curated ones. For each match it shows a traffic-light confidence, matched-term chips, an ordered trail with a reason for every step, and one combined command chain (`/nWE02 → /nSLG1 → /nSMQ1 …`). Guided chips (area and symptom) work without typing. A landscape lens covers three cases:
+- **Whisper (troubleshooter).** It covers 61 problem scenarios: the almanac’s 10 playbooks plus 51 curated ones. For each match it shows a traffic-light confidence, matched-term chips, an ordered trail with a reason for every step, and one combined command chain (`/nWE02 → /nSLG1 → /nSMQ1 …`) with a button that copies it. Guided chips (area and symptom) work without typing. Example queries are one tap away on the empty whisper screen and on Home, and a test keeps each one pointing at its scenario. Your last 8 whisper queries come back as chips too. A landscape lens covers three cases:
   - ECC
   - S/4HANA, which swaps legacy steps such as RSA7 → ODQMON and MB1A → MIGO
   - BTP ABAP, which shows a “no SAP GUI, use ADT” notice
@@ -33,7 +33,7 @@ T-Coder lets SAP developers and consultants browse 393 curated transaction codes
 - **Reference.** Type tags, the command field, data keys and tables, movement types, S/4HANA changes and sources.
 - **Self-test.** The almanac’s 20 interview-style questions as flashcards, with model answers.
 - **Bilingual UI.** SK/EN switches with one tap. The default comes from the browser language (sk/cs → Slovak), and `<html lang>` follows the choice.
-- **PWA, private by design.** Favorites, recent codes and history stay in `localStorage`. Nothing leaves the device.
+- **PWA, private by design.** Favorites, recent codes, command history and recent whisper queries stay in `localStorage`. Nothing leaves the device.
 
 ## How the whisper works
 

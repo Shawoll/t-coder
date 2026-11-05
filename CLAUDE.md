@@ -8,7 +8,7 @@ relevant section there instead of re-deriving it from code.
 
 ## Non-negotiables
 - No framework, no backend, no AI/LLM, no analytics. Everything runs in the browser; user data
-  (favorites, recent, history, lang, landscape) lives only in localStorage (`tcoder:v1`).
+  (favorites, recent, history, whispers, lang, landscape) lives only in localStorage (`tcoder:v1`).
 - Every user-facing string exists in both Slovak and English. Never ship one language only.
 - Content is conservative: say *where to look*, never how to intervene in production.
 - Author sign-off lives in `src/data/reviewed.ts` (note codes, scenario ids, quiz numbers). Never add
@@ -46,6 +46,7 @@ src/data/         Content only, no logic beyond lookups
   notes-tech.ts / notes-business.ts → notes.ts   ~81 curated notes, built with note() from note.ts
   reviewed.ts     author-owned sign-off list; notes.ts derives Note.reviewed from it
   areas.ts, processes.ts, reference.ts, replacements.ts (legacy→S/4), quiz.ts   hand-transcribed
+  examples.ts     WHISPER_EXAMPLES: clickable example queries {q: L10n, id} (first 4 also on Home)
 src/engine/       PURE functions, no DOM, unit-tested: normalize, fuzzy, search, command, related,
                   explain, whisper, daily. Whisper tuning constants sit at the top of whisper.ts.
 src/i18n/         en.ts defines the keys (MessageKey); sk.ts is Record<MessageKey,string>, so a
@@ -100,6 +101,7 @@ tests/            content integrity, whisper golden queries, normalize, search/c
 - 20 quiz items. Every {sk,en} object in the content is non-empty in both languages.
 - REVIEWED ids all exist, each listed once; `NOTES[code].reviewed` is true exactly for listed codes.
 - Whisper: digit-bearing tokens match exactly only (ME21N ≠ ME22N); no match → toolbox fallback.
+- Every whisper example ranks its `id` first, in SK and EN, with at least medium confidence.
 
 ## Project state (as of 2026-11-05)
 - Live on GitHub Pages since 2026-11-05: https://shawoll.github.io/t-coder/ (repo public).
