@@ -102,10 +102,10 @@ tests/            content integrity, whisper golden queries, normalize, search/c
 - Whisper: digit-bearing tokens match exactly only (ME21N ≠ ME22N); no match → toolbox fallback.
 
 ## Project state (as of 2026-11-05)
-- Not deployed by choice; demoed locally via `npm run build && npm run preview`.
+- Live on GitHub Pages since 2026-11-05: https://shawoll.github.io/t-coder/ (repo public).
   The workflow runs only on manual trigger (workflow_dispatch) to save Actions minutes; never add
-  push/PR triggers back. GitHub Pages is not enabled; the `deploy` job is skipped until the
-  repository variable `DEPLOY_PAGES` is `true`.
+  push/PR triggers back. A push does not update the site: run Actions › Test and deploy on main.
+  The deploy job also needs the repository variable `DEPLOY_PAGES=true` (set).
 - Author name is set (Richard Kollar, also in LICENSE). AUTHOR links (linkedin, repository, contact)
   in src/config.ts are still empty, so the About page hides them.
 - Curated content (notes, curated scenarios, quiz model answers) still awaits author review;

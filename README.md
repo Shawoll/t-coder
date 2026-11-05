@@ -1,5 +1,9 @@
 # T-Coder
 
+[![Test and deploy](https://github.com/Shawoll/t-coder/actions/workflows/deploy.yml/badge.svg)](https://github.com/Shawoll/t-coder/actions/workflows/deploy.yml)
+
+**Live: [shawoll.github.io/t-coder](https://shawoll.github.io/t-coder/)**
+
 **A pocket SAP T-code almanac and troubleshooter, in Slovak and English, dressed as a classic SAP GUI session.**
 
 T-Coder lets SAP developers and consultants browse 393 curated transaction codes and describe a problem in plain words (*“IDoc status 51”*, *“faktúra je blokovaná”*). It answers with the T-codes to check, in order, and shows exactly why. No install, no account, no server, no AI: it is a static web app that works offline after the first visit.
