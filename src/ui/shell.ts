@@ -2,7 +2,7 @@
 // system toolbar with the command field, screen title, application toolbar,
 // content area and status bar.
 
-import { CODES, catalog, getCode } from '../data/catalog.ts';
+import { CODE_COUNTS, catalog, getCode } from '../data/catalog.ts';
 import { SYSTEM } from '../config.ts';
 import { parseCommand, typeahead } from '../engine/command.ts';
 import { lang, t, tr, type MessageKey } from '../i18n/index.ts';
@@ -98,7 +98,7 @@ const MENUS: Menu[] = [
       {
         kind: 'action',
         label: () => t('menu.status'),
-        run: () => status('I', t('status.system', { version: SYSTEM.version, codes: CODES.length, edition: catalog.source.edition })),
+        run: () => status('I', t('status.system', { ...CODE_COUNTS, version: SYSTEM.version, edition: catalog.source.edition })),
       },
     ],
   },

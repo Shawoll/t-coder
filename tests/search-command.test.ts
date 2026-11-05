@@ -12,7 +12,8 @@ describe('searchCodes', () => {
     expect(codes('mon')).toContain('/SCWM/MON');
   });
   it('ignores diacritics and searches both languages', () => {
-    expect(codes('faktura')).toEqual(expect.arrayContaining(['MIRO', 'MRBR']));
+    // Billing codes (VF*, V.23) come first; the MM invoice codes follow.
+    expect(codes('faktura', 15)).toEqual(expect.arrayContaining(['MIRO', 'MRBR', 'VF03']));
     expect(codes('faktúra')).toEqual(codes('faktura'));
     expect(codes('billing document')).toContain('VF03');
   });
@@ -40,6 +41,11 @@ describe('parseCommand', () => {
     expect(parseCommand('/n')).toEqual({ kind: 'home' });
     expect(parseCommand('/o')).toEqual({ kind: 'newSession' });
     expect(parseCommand('/oVA03')).toEqual({ kind: 'open', code: 'VA03', newSession: true });
+  });
+  it('opens curated codes like almanac ones, dotted codes included', () => {
+    expect(parseCommand('/nSWI1')).toEqual({ kind: 'open', code: 'SWI1', newSession: false });
+    expect(parseCommand('v.23')).toEqual({ kind: 'open', code: 'V.23', newSession: false });
+    expect(parseCommand('/n/iwfnd/gw_client')).toEqual({ kind: 'open', code: '/IWFND/GW_CLIENT', newSession: false });
   });
   it('handles namespaced codes after /n', () => {
     expect(parseCommand('/n/SCWM/MON')).toEqual({ kind: 'open', code: '/SCWM/MON', newSession: false });
@@ -75,7 +81,8 @@ describe('suggestCodes', () => {
 
 describe('typeahead', () => {
   it('lists codes that start with what was typed, in any case', () => {
-    expect(typeahead('ME2')).toEqual(['ME2N', 'ME2L', 'ME2M', 'ME21N', 'ME22N', 'ME23N']);
+    // Almanac codes lead ties; curated ME28 and ME29N follow them.
+    expect(typeahead('ME2')).toEqual(['ME2N', 'ME2L', 'ME2M', 'ME28', 'ME21N', 'ME22N', 'ME23N', 'ME29N']);
     expect(typeahead('me2')).toEqual(typeahead('ME2'));
   });
   it('accepts the /n and /o prefixes', () => {
@@ -84,6 +91,10 @@ describe('typeahead', () => {
   });
   it('finds namespaced codes by segment', () => {
     expect(typeahead('mon')[0]).toBe('/SCWM/MON');
+  });
+  it('completes curated codes', () => {
+    expect(typeahead('cog')[0]).toBe('COGI');
+    expect(typeahead('swi')).toEqual(expect.arrayContaining(['SWI1', 'SWIA']));
   });
   it('falls back to near misses only when nothing matches as typed', () => {
     expect(typeahead('SE16X')).toContain('SE16');

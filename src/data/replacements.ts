@@ -50,8 +50,25 @@ const toMigrationCockpit = (note: L10n): Replacement => ({
   note,
 });
 
+const toFs00: Replacement = {
+  steps: [
+    {
+      codes: ['FS00'],
+      why: {
+        sk: 'Nákladové druhy sa v S/4HANA udržiavajú ako účty hlavnej knihy',
+        en: 'In S/4HANA, cost elements are maintained as G/L accounts',
+      },
+    },
+  ],
+  note: {
+    sk: 'V S/4HANA sú nákladové druhy účty hlavnej knihy udržiavané v FS00; KA01/KA03 sú legacy.',
+    en: 'In S/4HANA, cost elements are G/L accounts maintained in FS00; KA01/KA03 are legacy.',
+  },
+};
+
 /**
- * Legacy codes (type L) that have a modern replacement in the almanac.
+ * Legacy codes (type L) that have a modern replacement: the almanac's own,
+ * plus SE30, MBST, KA01 and KA03 from the curated codes.
  * SHDB and SCAT are legacy too, but the almanac names no direct successor.
  */
 export const REPLACEMENTS: Readonly<Record<string, Replacement>> = {
@@ -59,6 +76,32 @@ export const REPLACEMENTS: Readonly<Record<string, Replacement>> = {
   MB1B: toMigo,
   MB1C: toMigo,
   MB01: toMigo,
+  MBST: {
+    steps: [
+      {
+        codes: ['MIGO'],
+        why: { sk: 'Storno materiálového dokladu v MIGO', en: 'Cancel the material document in MIGO' },
+      },
+    ],
+    note: {
+      sk: 'MBST patrí medzi legacy MB* transakcie; storno materiálového dokladu rob v MIGO.',
+      en: 'MBST is one of the legacy MB* transactions; cancel material documents in MIGO.',
+    },
+  },
+  SE30: {
+    steps: [
+      {
+        codes: ['SAT'],
+        why: { sk: 'Nástupca klasickej analýzy behu', en: 'Successor of the classic runtime analysis' },
+      },
+    ],
+    note: {
+      sk: 'SE30 je klasická analýza behu ABAP; v novších release ju nahrádza SAT.',
+      en: 'SE30 is the classic ABAP runtime analysis; newer releases replace it with SAT.',
+    },
+  },
+  KA01: toFs00,
+  KA03: toFs00,
   XD01: toBp,
   XD02: toBp,
   XD03: toBp,

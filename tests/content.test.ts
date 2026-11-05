@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ARCHETYPES } from '../src/data/archetypes.ts';
 import { AREA_INFO } from '../src/data/areas.ts';
-import { AREAS, CODES, hasCode } from '../src/data/catalog.ts';
+import { ALMANAC_CODES, AREAS, CODES, CURATED_CODES, hasCode } from '../src/data/catalog.ts';
 import { WHISPER_EXAMPLES } from '../src/data/examples.ts';
 import { NOTES } from '../src/data/notes.ts';
 import { PROCESSES } from '../src/data/processes.ts';
@@ -9,7 +9,7 @@ import { QUIZ } from '../src/data/quiz.ts';
 import * as reference from '../src/data/reference.ts';
 import { REPLACEMENTS } from '../src/data/replacements.ts';
 import { REVIEWED } from '../src/data/reviewed.ts';
-import { isFioriStep, type L10n, type Step } from '../src/types.ts';
+import { isFioriStep, TTYPES, type L10n, type Step } from '../src/types.ts';
 
 const stepCodes = (steps: readonly Step[]) => steps.flatMap((s) => (isFioriStep(s) ? [] : s.codes));
 
@@ -26,18 +26,47 @@ const collectL10n = (value: unknown, path = '', out: [string, L10n][] = []): [st
   return out;
 };
 
+const almanacCodes = new Set(ALMANAC_CODES.map((c) => c.code));
+
 describe('catalog', () => {
-  it('has 393 unique codes in 18 areas', () => {
-    expect(CODES).toHaveLength(393);
-    expect(new Set(CODES.map((c) => c.code)).size).toBe(393);
+  it('has the almanac’s 393 unique codes in 18 areas', () => {
+    expect(ALMANAC_CODES).toHaveLength(393);
+    expect(almanacCodes.size).toBe(393);
     expect(AREAS).toHaveLength(18);
   });
   it('matches the almanac type totals', () => {
-    const count = (t: string) => CODES.filter((c) => c.type === t).length;
+    const count = (t: string) => ALMANAC_CODES.filter((c) => c.type === t).length;
     expect([count('R'), count('W'), count('A'), count('O'), count('L')]).toEqual([123, 134, 89, 30, 17]);
   });
   it('has an intro for every area', () => {
     for (const a of AREAS) expect(AREA_INFO[a.id], a.id).toBeDefined();
+  });
+  it('merges almanac and curated codes, each code once', () => {
+    expect(CODES).toHaveLength(ALMANAC_CODES.length + CURATED_CODES.length);
+    expect(new Set(CODES.map((c) => c.code)).size).toBe(CODES.length);
+  });
+});
+
+describe('curated codes', () => {
+  it('has at least 100, each once', () => {
+    expect(CURATED_CODES.length).toBeGreaterThanOrEqual(100);
+    expect(new Set(CURATED_CODES.map((c) => c.code)).size).toBe(CURATED_CODES.length);
+  });
+  it('never repeats an almanac code (delete it here once the almanac lists it)', () => {
+    expect(CURATED_CODES.filter((c) => almanacCodes.has(c.code)).map((c) => c.code)).toEqual([]);
+  });
+  it('uses an almanac area, a legend type and an upper-case code', () => {
+    const areaIds = new Set(AREAS.map((a) => a.id));
+    for (const c of CURATED_CODES) {
+      expect(areaIds.has(c.area), `${c.code}: area ${c.area}`).toBe(true);
+      expect(TTYPES, c.code).toContain(c.type);
+      // lookupCode() upper-cases the input, so a code must be upper case to be found.
+      expect(c.code, c.code).toMatch(/^\/?[A-Z0-9][A-Z0-9_/.]*$/);
+    }
+  });
+  it('names the S/4HANA replacement of every curated legacy code', () => {
+    const missing = CURATED_CODES.filter((c) => c.type === 'L' && !REPLACEMENTS[c.code]).map((c) => c.code);
+    expect(missing).toEqual([]);
   });
 });
 
@@ -66,6 +95,17 @@ describe('every referenced code exists in the catalog', () => {
   });
   it('replacements cover only legacy (L) codes', () => {
     for (const legacy of Object.keys(REPLACEMENTS)) expect(CODES.find((c) => c.code === legacy)?.type).toBe('L');
+  });
+  it('content transcribed from the almanac uses almanac codes only', () => {
+    const transcribed = {
+      fastStart: [...reference.FAST_START_CODES],
+      processes: PROCESSES.flatMap((p) => p.touchpoints.flatMap((t) => t.codes)),
+      playbooks: ARCHETYPES.filter((a) => a.source === 'almanac').flatMap((a) => stepCodes(a.steps)),
+      quiz: QUIZ.flatMap((item) => item.codes),
+    };
+    for (const [where, codes] of Object.entries(transcribed)) {
+      expect(codes.filter((c) => !almanacCodes.has(c)), where).toEqual([]);
+    }
   });
 });
 
@@ -111,7 +151,13 @@ describe('author sign-off list (reviewed.ts)', () => {
     expect(REVIEWED.notes.filter((c) => !NOTES[c])).toEqual([]);
     expect(REVIEWED.scenarios.filter((id) => !ARCHETYPES.some((a) => a.id === id))).toEqual([]);
     expect(REVIEWED.quiz.filter((n) => !Number.isInteger(n) || n < 1 || n > QUIZ.length)).toEqual([]);
-    expect([...dupes(REVIEWED.notes), ...dupes(REVIEWED.scenarios), ...dupes(REVIEWED.quiz)]).toEqual([]);
+    expect(REVIEWED.codes.filter((c) => !CURATED_CODES.some((x) => x.code === c))).toEqual([]);
+    expect([
+      ...dupes(REVIEWED.notes),
+      ...dupes(REVIEWED.scenarios),
+      ...dupes(REVIEWED.quiz),
+      ...dupes(REVIEWED.codes),
+    ]).toEqual([]);
   });
   it('marks a note reviewed exactly when its code is listed', () => {
     const reviewed = Object.entries(NOTES).filter(([, n]) => n.reviewed).map(([c]) => c);

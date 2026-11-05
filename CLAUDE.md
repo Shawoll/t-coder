@@ -1,8 +1,9 @@
 # T-Coder — guide for Claude
 
-Static, offline-first PWA: a bilingual (SK/EN) SAP T-code almanac (393 codes, 18 areas) plus a
-deterministic troubleshooter ("whisper"), styled as a late-90s SAP GUI session. Portfolio piece
-for employers: code quality, tests, accessibility and content accuracy matter as much as features.
+Static, offline-first PWA: a bilingual (SK/EN) SAP T-code almanac (393 codes, 18 areas, plus 110
+curated codes) and a deterministic troubleshooter ("whisper"), styled as a late-90s SAP GUI
+session. Portfolio piece for employers: code quality, tests, accessibility and content accuracy
+matter as much as features.
 README.md has the user-facing detail (features, whisper algorithm, provenance, design) — read the
 relevant section there instead of re-deriving it from code.
 
@@ -11,8 +12,8 @@ relevant section there instead of re-deriving it from code.
   (favorites, recent, history, whispers, lang, landscape) lives only in localStorage (`tcoder:v1`).
 - Every user-facing string exists in both Slovak and English. Never ship one language only.
 - Content is conservative: say *where to look*, never how to intervene in production.
-- Author sign-off lives in `src/data/reviewed.ts` (note codes, scenario ids, quiz numbers). Never add
-  ids there — only the author does that, after checking the item.
+- Author sign-off lives in `src/data/reviewed.ts` (note codes, scenario ids, quiz numbers, curated
+  codes). Never add ids there — only the author does that, after checking the item.
 - No SAP assets, logos or fonts. Icons are original inline SVGs (`src/ui/icons.ts`).
 - Ask before every commit/push; approval does not carry over to the next one.
 
@@ -41,8 +42,10 @@ src/router.ts     Hash routes. `Route` union, parseHash() ⇄ href() are inverse
 src/main.ts       Font/CSS imports, render(route) switch → view, re-render on lang/landscape change
 src/data/         Content only, no logic beyond lookups
   generated/catalog.json  GENERATED — never hand-edit; change scripts/build-catalog.ts or the raw text
-  catalog.ts      CODES, AREAS, getCode/hasCode/lookupCode/codesInArea
-  archetypes.ts   ~61 whisper scenarios (10 almanac playbooks + curated); sig()/pat()/step() helpers
+  codes-curated.ts  CURATED_CODES: ~110 codes not in the almanac, c(code, area, type, sk, en)
+  catalog.ts      ALMANAC_CODES, CURATED_CODES, CODES (merged per area, almanac first), AREAS,
+                  CODE_COUNTS, isCurated, getCode/hasCode/lookupCode/codesInArea
+  archetypes.ts   ~66 whisper scenarios (10 almanac playbooks + curated); sig()/pat()/step() helpers
   notes-tech.ts / notes-business.ts → notes.ts   ~81 curated notes, built with note() from note.ts
   reviewed.ts     author-owned sign-off list; notes.ts derives Note.reviewed from it
   areas.ts, processes.ts, reference.ts, replacements.ts (legacy→S/4), quiz.ts   hand-transcribed
@@ -84,6 +87,10 @@ tests/            content integrity, whisper golden queries, normalize, search/c
   bilingual title/summary, signals (synonym groups; terms pass through normalizeTerm so
   diacritics are fine), optional regex patterns, and steps using catalog codes only. Add a
   golden query to tests/whisper.test.ts and confirm existing golden queries still pass.
+- **New curated code:** add to CURATED_CODES in codes-curated.ts under its area, with an almanac type
+  (R/W/A/O/L) and short SK/EN purposes; English "Create/Change/Display X" pairs siblings. Only codes
+  that surely exist; never one the almanac already lists. A type L code needs a REPLACEMENTS entry.
+  It stays unreviewed until the author adds it to `REVIEWED.codes`.
 - **New curated note:** add to notes-tech.ts or notes-business.ts with note([sk,en], tips,
   pitfalls, s4?) — 2–4 tips, 1–3 pitfalls; it counts as unreviewed until the author lists it.
 - **Content review:** `npm run review` → the author reads review/checklist.md and adds checked ids to
@@ -91,15 +98,17 @@ tests/            content integrity, whisper golden queries, normalize, search/c
 - **Colour change:** edit tokens.css only; new text/background pairs go into tests/contrast.test.ts.
 
 ## Invariants enforced by tests/CI (don't break, don't "fix" the tests)
-- Catalog: 393 unique codes, 18 areas, type totals R123/W134/A89/O30/L17; the parser also checks
-  per-chapter counts and the alphabetical index. CI fails if catalog.json drifts from the parser.
+- Almanac (ALMANAC_CODES): 393 unique codes, 18 areas, type totals R123/W134/A89/O30/L17; the parser
+  also checks per-chapter counts and the alphabetical index. CI fails if catalog.json drifts.
+- Curated codes: ≥100, unique, none in the almanac, almanac area + type, upper case. Content
+  transcribed from the almanac (fast start, processes, playbooks 1–10, quiz) uses almanac codes only.
 - Every code referenced anywhere (trails, processes, notes, quiz, replacements, fast start = 48)
   must exist in the catalog. The only non-T-code step allowed is Fiori app `F3473`.
 - REPLACEMENTS keys are legacy (type L) codes only.
 - Exactly 10 almanac playbooks (playbook 1–10), ≥40 curated scenarios, unique ids.
 - Every fast-start, playbook and process code has a note (except FBL3N, VA05); ≥80 notes.
 - 20 quiz items. Every {sk,en} object in the content is non-empty in both languages.
-- REVIEWED ids all exist, each listed once; `NOTES[code].reviewed` is true exactly for listed codes.
+- REVIEWED ids all exist (codes: curated codes only), each listed once; `NOTES[code].reviewed` is true exactly for listed codes.
 - Whisper: digit-bearing tokens match exactly only (ME21N ≠ ME22N); no match → toolbox fallback.
 - Every whisper example ranks its `id` first, in SK and EN, with at least medium confidence.
 

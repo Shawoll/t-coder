@@ -1,4 +1,4 @@
-import { catalog } from '../../data/catalog.ts';
+import { CODE_COUNTS, catalog } from '../../data/catalog.ts';
 import {
   COMMAND_TIPS,
   DATA_KEYS,
@@ -117,7 +117,7 @@ const sourcesTab = (): Node =>
     'div',
     { class: 'stack' },
     groupBox(t('ref.provenance'), [
-      h('p', null, t('ref.provenanceText')),
+      h('p', null, t('ref.provenanceText', CODE_COUNTS)),
       h('p', { class: 'muted' }, `${catalog.source.title}, ${catalog.source.edition}, ${catalog.source.pages} pp.`),
     ]),
     groupBox(t('ref.sources'), table([t('ref.key'), t('ref.meaning')], SOURCES.map((s) => [s.id, s.title]))),

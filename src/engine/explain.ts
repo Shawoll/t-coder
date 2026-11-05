@@ -1,7 +1,7 @@
-// Generated context for every catalog code, built only from almanac facts:
-// type legend, safety rule, chapter, legacy replacement and verification steps.
+// Generated context for every catalog code, built only from catalog facts:
+// type legend, safety rule, area, legacy replacement and verification steps.
 
-import { getArea, getCode } from '../data/catalog.ts';
+import { getArea, getCode, isCurated } from '../data/catalog.ts';
 import { FAST_START_CODES, TYPE_LEGEND, VERIFY_STEPS } from '../data/reference.ts';
 import { getReplacement, type Replacement } from '../data/replacements.ts';
 import type { L10n, TCode, TType } from '../types.ts';
@@ -19,6 +19,8 @@ export interface Explanation {
   namespace?: L10n;
   replacement?: Replacement;
   fastStart: boolean;
+  /** Added for T-Coder, not part of the almanac. */
+  curated: boolean;
   verify: readonly L10n[];
 }
 
@@ -55,9 +57,19 @@ export const explain = (codeId: string): Explanation | undefined => {
   const replacement = getReplacement(code.code);
   const fastStart = FAST_START_CODES.has(code.code);
   const namespaced = code.code.startsWith('/');
+  const curated = isCurated(code.code);
 
-  const areaSk = area ? `kapitoly ${area.id} – ${area.title.sk}` : 'almanachu';
-  const areaEn = area ? `chapter ${area.id}, ${area.title.en}` : 'the almanac';
+  // Curated codes join an almanac area but are not in the almanac: say so.
+  const areaSk = area
+    ? curated
+      ? `oblasti ${area.id} – ${area.title.sk}; do T-Coderu bol doplnený mimo almanachu`
+      : `kapitoly ${area.id} – ${area.title.sk}`
+    : 'almanachu';
+  const areaEn = area
+    ? curated
+      ? `area ${area.id}, ${area.title.en}; it was added for T-Coder and is not in the almanac`
+      : `chapter ${area.id}, ${area.title.en}`
+    : 'the almanac';
   const replacementCodes = replacement?.steps
     .map((s) => ('fiori' in s ? `Fiori ${s.fiori}` : s.codes.join('/')))
     .join(' + ');
@@ -83,6 +95,7 @@ export const explain = (codeId: string): Explanation | undefined => {
     safety: SAFETY[code.type],
     forms: [`/n${code.code}`, `/o${code.code}`],
     fastStart,
+    curated,
     verify: VERIFY_STEPS,
   };
   if (namespaced) {

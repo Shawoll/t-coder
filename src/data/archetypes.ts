@@ -616,6 +616,77 @@ const CURATED: Archetype[] = [
       step('SM21', 'Systémový log', 'System log'),
     ],
   },
+  {
+    id: 'workflow-stuck',
+    source: 'curated',
+    areas: ['03'],
+    symptoms: ['stuck', 'error'],
+    title: l('Workflow visí alebo zlyhal', 'Workflow stuck or failed'),
+    summary: l(
+      'Pracovná položka nedošla schvaľovateľovi, workflow stojí v chybe alebo sa vôbec nespustil. Zisti stav položky, jej agenta a či udalosť workflow naštartovala.',
+      'A work item never reached the approver, the workflow is in error, or it never started. Check the work item status, its agent and whether the event started the workflow.',
+    ),
+    signals: [
+      sig(3, 'workflow', 'workflowy', 'work item', 'workitem', 'pracovna polozka', 'schvalovanie', 'approval', 'schvalovatel', 'approver', 'swi1', 'sbwp'),
+      sig(1.5, 'stuck', 'visi', 'zaseknuty', 'zaseknuta', 'error', 'chyba', 'failed', 'zlyhal', 'not started', 'nespustil', 'inbox', 'agent'),
+    ],
+    steps: [
+      step('SWI1', 'Stav pracovnej položky a log workflow', 'Work item status and the workflow log'),
+      step('SBWP', 'Inbox agenta: dostal položku?', "The agent's inbox: did the item arrive?"),
+      step('SWE2', 'Spustila udalosť workflow? (prepojenie udalostí)', 'Did the event start the workflow? (event linkage)'),
+      step('SWIA', 'Administrátorské zásahy do položky', 'Administrator actions on the work item'),
+    ],
+    caution: NOT_ON_PRD,
+  },
+  {
+    id: 'batch-input-errors',
+    source: 'curated',
+    areas: ['03'],
+    symptoms: ['error'],
+    title: l('Batch input relácia má chyby', 'Batch input session errors'),
+    summary: l(
+      'Relácia v SM35 skončila s chybami alebo ostala nespracovaná. Log relácie ukáže, ktorá transakcia a obrazovka zlyhala.',
+      'A session in SM35 ended with errors or was never processed. The session log shows which transaction and screen failed.',
+    ),
+    signals: [
+      sig(3, 'batch input', 'batch-input', 'bdc', 'batch input session', 'relacia', 'relacie', 'sm35', 'recording', 'nahravka'),
+      sig(1.5, 'error', 'errors', 'chyba', 'chyby', 'failed', 'zlyhala', 'not processed', 'nespracovana', 'incorrect', 'chybna'),
+      sig(0.7, 'session', 'sessions', 'job', 'pozadie', 'background'),
+    ],
+    steps: [
+      step('SM35', 'Log relácie: ktorá transakcia a obrazovka', 'Session log: which transaction and screen'),
+      step('SM37', 'Job, ktorý reláciu vytvoril alebo spustil', 'The job that created or ran the session'),
+      step('SHDB', 'Nahrávka, z ktorej relácia vznikla', 'The recording behind the session'),
+    ],
+    caution: l(
+      'Reláciu nespúšťaj znova naslepo: opakované spracovanie môže zaúčtovať doklady dvakrát.',
+      'Do not reprocess a session blindly: running it again can post documents twice.',
+    ),
+  },
+  {
+    id: 'email-not-sent',
+    source: 'curated',
+    areas: ['03'],
+    symptoms: ['missing'],
+    title: l('E-mail zo SAP neodišiel', 'E-mail from SAP not sent'),
+    summary: l(
+      'Faktúra, objednávka alebo upozornenie mali odísť e-mailom, ale príjemca nič nedostal. SOST ukáže stav odoslania, SCOT nastavenie SMTP a SM37 job odosielania.',
+      'An invoice, order or alert should have gone out by e-mail, but the recipient got nothing. SOST shows the send status, SCOT the SMTP setup and SM37 the send job.',
+    ),
+    signals: [
+      sig(3, 'email', 'e-mail', 'emaily', 'e-maily', 'mail', 'maily', 'sapconnect', 'smtp', 'sost', 'scot'),
+      sig(1.5, 'not sent', 'neodisiel', 'neodosiel', 'neodoslany', 'neodoslal', 'neodoslala', 'nedostal', 'nedosiel', 'didnt receive', 'not received', 'missing', 'waiting', 'caka'),
+    ],
+    steps: [
+      step('SOST', 'Stav odoslania a chybová hláška', 'Send status and the error message'),
+      step('SCOT', 'SMTP uzol a nastavenie (iba čítať)', 'SMTP node and settings (read only)'),
+      step('SM37', 'Job odosielania SAPconnect', 'The SAPconnect send job'),
+    ],
+    caution: l(
+      'Opätovné odoslanie zo SOST pošle e-mail znova skutočnému príjemcovi.',
+      'Resending from SOST sends the e-mail again to the real recipient.',
+    ),
+  },
   // ── Security ────────────────────────────────────────────────────
   {
     id: 'user-locked',
@@ -683,8 +754,8 @@ const CURATED: Archetype[] = [
       sig(1.5, 'who changed', 'kto zmenil', 'who did', 'kto spustil', 'evidence', 'dokaz'),
     ],
     steps: [
-      step('SM20', 'Vyhodnotenie Security Audit Log', 'Security Audit Log analysis'),
-      step('SM19', 'Čo sa vôbec zaznamenáva', 'What is being recorded at all'),
+      step(['SM20', 'RSAU_READ_LOG'], 'Vyhodnotenie Security Audit Log (novšie release: RSAU_READ_LOG)', 'Security Audit Log analysis (newer releases: RSAU_READ_LOG)'),
+      step(['SM19', 'RSAU_CONFIG'], 'Čo sa vôbec zaznamenáva (novšie release: RSAU_CONFIG)', 'What is being recorded at all (newer releases: RSAU_CONFIG)'),
       step('SUIM', 'Zmenové doklady používateľov a rolí', 'Change documents for users and roles'),
     ],
   },
@@ -769,6 +840,7 @@ const CURATED: Archetype[] = [
       sig(2, 'idoc', 'idocs'),
       sig(2, 'not sent', 'not created', 'neodoslany', 'neodisiel', 'nevytvoril', 'nevznikol', 'no idoc', 'ziadny idoc', 'missing', 'nedostal', 'didnt receive'),
       sig(1.5, 'partner', 'partner profile', 'partnersky profil', 'port', 'distribution model', 'distribucny model', 'logical system', 'logicky system', 'message type'),
+      sig(1.5, 'change pointer', 'change pointers', 'zmenovy ukazovatel', 'zmenove ukazovatele', 'master data', 'kmenove data'),
     ],
     patterns: [pat(/idoc (was |is )?not (sent|created|generated)|nevznik|neodosl|no idoc|ziadny idoc/, 2, 'IDoc chýba', 'IDoc missing')],
     steps: [
@@ -776,8 +848,10 @@ const CURATED: Archetype[] = [
       step('WE20', 'Partnerský profil a message type', 'Partner profile and message type'),
       step('WE21', 'Port', 'Port'),
       step('BD64', 'ALE distribučný model', 'ALE distribution model'),
+      step(['BD61', 'BD21'], 'Kmeňové dáta: zmenové ukazovatele aktívne a spracované?', 'Master data: change pointers active and processed?'),
       step('SM59', 'RFC destinácia portu', 'RFC destination of the port'),
     ],
+    caution: NOT_ON_PRD,
   },
   {
     id: 'queue-stuck',
@@ -844,9 +918,15 @@ const CURATED: Archetype[] = [
       step('/IWFND/ERROR_LOG', 'Chyby Gateway vo frontende', 'Gateway errors in the frontend'),
       step('/IWBEP/ERROR_LOG', 'Chyby OData v backende', 'OData errors in the backend'),
       step('/IWFND/MAINT_SERVICE', 'Je služba aktivovaná?', 'Is the service activated?'),
+      step('/IWFND/GW_CLIENT', 'Zopakuj požiadavku a prečítaj odpoveď', 'Replay the request and read the response'),
       step(['SU53', 'STAUTHTRACE'], 'Oprávnenia (aj na službu)', 'Authorizations (including the service)'),
       step('ST22', 'Dump v backende', 'Dump in the backend'),
+      step(['/IWFND/CACHE_CLEANUP', '/IWBEP/CACHE_CLEANUP'], 'Zastaraná cache metadát po zmene služby', 'Stale metadata cache after a service change'),
     ],
+    caution: l(
+      'Gateway Client vie posielať aj zápisy (POST, PUT, DELETE) a čistenie cache ovplyvní všetkých používateľov: na produkcii iba so schválením.',
+      'The Gateway Client can send writes too (POST, PUT, DELETE), and a cache cleanup affects every user: in production only with approval.',
+    ),
   },
   {
     id: 'soap-error',
@@ -889,6 +969,32 @@ const CURATED: Archetype[] = [
       step('SM58', 'tRFC chyby', 'tRFC errors'),
       step('SM59', 'Spojenie na PI', 'Connection to PI'),
     ],
+  },
+  {
+    id: 'fiori-tile-missing',
+    source: 'curated',
+    areas: ['06', '04'],
+    symptoms: ['missing', 'access'],
+    title: l('Fiori dlaždica chýba', 'Fiori tile missing'),
+    summary: l(
+      'Používateľ v launchpade nevidí aplikáciu alebo dlaždicu. Najčastejšie jeho role chýba katalóg (a skupina alebo stránka) alebo oprávnenie na OData službu.',
+      'A user cannot see an app or tile in the launchpad. Most often the role lacks the catalog (and the group or page), or the authorization for the OData service.',
+    ),
+    signals: [
+      sig(3, 'tile', 'tiles', 'dlazdica', 'dlazdice', 'dlazdicu', 'catalog', 'katalog', 'launchpad'),
+      sig(2, 'missing', 'chyba', 'chybaju', 'not visible', 'nevidi', 'neviditelna', 'cannot see', 'disappeared', 'zmizla', 'empty', 'prazdny'),
+      sig(1, 'fiori', 'flp', 'app', 'aplikacia', 'role', 'rola', 'user', 'pouzivatel'),
+    ],
+    steps: [
+      step('/UI2/FLP', 'Čo launchpad naozaj ponúka', 'What the launchpad actually offers'),
+      step('/UI2/FLPD_CUST', 'Je dlaždica v katalógu? (iba čítať)', 'Is the tile in the catalog? (read only)'),
+      step('PFCG', 'Katalóg a skupina alebo stránka v role', 'Catalog and group or page in the role'),
+      step('SU53', 'Chýbajúce oprávnenie (aj na OData službu)', 'Missing authorization (including the OData service)'),
+    ],
+    caution: l(
+      'Katalógy a roly sa menia vo vývoji a idú transportom, nie priamo na produkcii.',
+      'Catalogs and roles are changed in development and transported, not edited directly in production.',
+    ),
   },
   // ── MM ──────────────────────────────────────────────────────────
   {
@@ -933,6 +1039,7 @@ const CURATED: Archetype[] = [
       step('MMBE', 'Je dostupná zásoba?', 'Is stock available?'),
       step('MM03', 'Pohľady materiálu pre závod/sklad', 'Material views for plant/storage location'),
       step('MB51', 'Podobné úspešné pohyby', 'Similar successful movements'),
+      step('COGI', 'Automatické pohyby (spätné vykazovanie), ktoré zlyhali', 'Automatic movements (backflush) that failed'),
       step('OMJJ', 'Nastavenie druhu pohybu (iba čítať)', 'Movement-type settings (read only)'),
     ],
   },
@@ -996,6 +1103,7 @@ const CURATED: Archetype[] = [
     ],
     steps: [
       step('VF04', 'Billing due list: prečo nie', 'Billing due list: why not'),
+      step('V.23', 'Má objednávka blok fakturácie?', 'Does the order have a billing block?'),
       step('VA03', 'Tok dokladov a neúplnosť', 'Document flow and incompletion'),
       step('VL03N', 'Je zaúčtovaný výdaj tovaru?', 'Is goods issue posted?'),
       step(['VF03', 'VF05'], 'Existujúce faktúry', 'Existing billing documents'),
@@ -1044,6 +1152,31 @@ const CURATED: Archetype[] = [
     ],
     caution: l('Pri O2C sa výdaj účtuje typicky z dodávky (VL02N); MIGO nie je univerzálna alternatíva PGI.', 'In O2C, goods issue is normally posted from the delivery (VL02N); MIGO is not a universal replacement for PGI.'),
   },
+  {
+    id: 'credit-block',
+    source: 'curated',
+    areas: ['09'],
+    symptoms: ['blocked'],
+    title: l('Objednávka blokovaná kontrolou úveru', 'Sales order on credit block'),
+    summary: l(
+      'Kontrola úveru zablokovala objednávku alebo dodávku. Zisti, prečo kontrola neprešla; uvoľnenie nechaj na kreditný manažment.',
+      'The credit check blocked an order or delivery. Find out why the check failed; leave the release to credit management.',
+    ),
+    signals: [
+      sig(3, 'credit', 'credit block', 'credit limit', 'credit check', 'kredit', 'kreditny', 'kreditny limit', 'kreditny blok', 'uver', 'uverovy', 'uverovy blok', 'vkm1'),
+      sig(1.5, 'blocked', 'block', 'blok', 'blokovana', 'blokovany', 'release', 'uvolnit', 'uvolnenie', 'exceeded', 'prekroceny'),
+      sig(1, 'sales order', 'objednavka', 'objednavku', 'order', 'delivery', 'dodavka', 'customer', 'odberatel'),
+    ],
+    steps: [
+      step('VKM1', 'Blokované doklady a dôvod bloku', 'Blocked documents and the block reason'),
+      step('VA03', 'Stav úveru v objednávke a tok dokladov', 'Credit status in the order and the document flow'),
+      step('VA14L', 'Ďalšie doklady blokované na dodanie', 'Other documents blocked for delivery'),
+    ],
+    caution: l(
+      'Uvoľnenie je obchodné rozhodnutie kreditného manažmentu, nie IT. V S/4HANA sa limity spravujú v SAP Credit Management.',
+      'Releasing is a business decision for credit management, not IT. In S/4HANA, limits live in SAP Credit Management.',
+    ),
+  },
   // ── FI / CO ─────────────────────────────────────────────────────
   {
     id: 'posting-period',
@@ -1062,10 +1195,14 @@ const CURATED: Archetype[] = [
     patterns: [pat(/not open|nie je otvoren|neni otvoren|\bf5\s*201\b|\bm7\s*053\b/, 3, 'Hláška o období', 'Period message')],
     steps: [
       step('OB52', 'Otvorené obdobia pre typ účtu', 'Open periods per account type'),
+      step(['MMRV', 'MMPV'], 'MM obdobie pri hláške M7 053 (MMPV ho posúva)', 'MM period for message M7 053 (MMPV moves it)'),
       step('SU53', 'Autorizačná skupina obdobia', 'Authorization group for the period'),
       step('FB03', 'Porovnaj dátum účtovania podobného dokladu', 'Compare the posting date of a similar document'),
     ],
-    caution: l('Obdobie mení iba FI podľa uzávierkového kalendára, nie IT na požiadanie.', 'Only FI changes periods, per the closing calendar, not IT on request.'),
+    caution: l(
+      'Obdobia (FI aj MM) sa menia iba podľa uzávierkového kalendára a so súhlasom FI, nie IT na požiadanie.',
+      'Periods (FI and MM) change only per the closing calendar and with FI approval, not by IT on request.',
+    ),
   },
   {
     id: 'payment-run',
@@ -1086,6 +1223,7 @@ const CURATED: Archetype[] = [
       step('FBL1N', 'Otvorené položky a bloky', 'Open items and blocks'),
       step('BP', 'Bankové údaje a platobné metódy', 'Bank details and payment methods'),
       step('FB03', 'Doklad faktúry', 'The invoice document'),
+      step('FBZP', 'Nastavenie platobného programu (iba čítať)', 'Payment program configuration (read only)'),
     ],
   },
   {
@@ -1169,12 +1307,14 @@ const CURATED: Archetype[] = [
     signals: [
       sig(3, 'exchange rate', 'vymenny kurz', 'kurz', 'kurzy', 'kurzu', 'fx', 'rate type', 'typ kurzu', 'translation', 'prepocet'),
       sig(1, 'currency', 'mena', 'meny', 'foreign currency', 'cudzia mena'),
+      sig(1, 'valuation', 'revaluation', 'precenenie', 'precenovanie'),
     ],
     patterns: [pat(/exchange rate .*(not|missing|maintained)|no exchange rate|kurz .*(nie je|chyba)/, 2, 'Hláška o kurze', 'Rate message')],
     steps: [
       step('OB08', 'Kurzy pre typ a dátum', 'Rates for type and date'),
       step('FB03', 'Kurz použitý v doklade', 'Rate used in the document'),
       step('SM37', 'Job, ktorý kurzy nahráva', 'The job that loads rates'),
+      step('FAGL_FCV', 'Precenenie cudzej meny pri uzávierke', 'Foreign currency valuation at closing'),
     ],
   },
   {
@@ -1255,13 +1395,14 @@ const CURATED: Archetype[] = [
       'Confirming an operation fails, or the confirmation created failed goods movements (backflush).',
     ),
     signals: [
-      sig(3, 'confirmation', 'potvrdenie', 'potvrdit', 'confirm', 'co11n', 'backflush', 'spatne vykazovanie', 'failed goods movements'),
+      sig(3, 'confirmation', 'potvrdenie', 'potvrdit', 'confirm', 'co11n', 'backflush', 'spatne vykazovanie', 'failed goods movements', 'cogi'),
       sig(1, 'production', 'vyroba', 'vyrobny prikaz', 'production order', 'operation', 'operacia'),
     ],
     steps: [
       step('CO11N', 'Hlášky potvrdenia', 'Confirmation messages'),
+      step('COGI', 'Chybné skladové pohyby z potvrdenia', 'Failed goods movements from the confirmation'),
       step('CO03', 'Stav príkazu (uvoľnený? TECO?)', 'Order status (released? TECO?)'),
-      step('COOIS', 'Chýbajúce diely, chybné pohyby', 'Missing parts, failed movements'),
+      step('COOIS', 'Chýbajúce diely a prehľad príkazov', 'Missing parts and order overview'),
       step('MMBE', 'Zásoba komponentov', 'Component stock'),
     ],
   },
@@ -1367,11 +1508,14 @@ const CURATED: Archetype[] = [
     signals: [
       sig(3, 'delta', 'extraction', 'extrakcia', 'extraktor', 'extractor', 'datasource', 'data source', 'odp', 'odq', 'delta queue', 'delta init', 'odqmon', 'rsa7'),
       sig(1, 'bw', 'datasphere', 'missing', 'chyba', 'no data', 'ziadne data'),
+      sig(3, 'lo cockpit', 'logistics extraction', 'logisticka extrakcia', 'mcex', 'lbwe', 'lbwq'),
+      sig(1.5, 'setup table', 'setup tables', 'setup tabulky'),
     ],
     steps: [
       step('ODQMON', 'ODP delta queue', 'ODP delta queue'),
       step('RSA3', 'Test extraktora', 'Extractor test'),
       step('RSA6', 'Je DataSource aktívny?', 'Is the DataSource active?'),
+      step(['LBWQ', 'LBWE'], 'Logistika: extrakčné fronty MCEX a LO Cockpit', 'Logistics: MCEX extraction queues and the LO cockpit'),
       step('SM37', 'Joby extrakcie', 'Extraction jobs'),
       step('RSA7', 'Klasická delta queue (legacy)', 'Classic delta queue (legacy)'),
     ],

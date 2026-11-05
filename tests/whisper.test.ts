@@ -19,6 +19,15 @@ describe('whisper golden queries', () => {
     ['locked by user', 'lock-entries'],
     ['posting period not open', 'posting-period'],
     ['XD01 in S/4', 'legacy-in-s4'],
+    // Scenarios built around the curated codes.
+    ['workflow visí', 'workflow-stuck'],
+    ['work item stuck in the approver inbox', 'workflow-stuck'],
+    ['batch input session has errors', 'batch-input-errors'],
+    ['email sa neodoslal', 'email-not-sent'],
+    ['dlaždica vo Fiori launchpade chýba', 'fiori-tile-missing'],
+    ['sales order on credit block', 'credit-block'],
+    ['objednávka má úverový blok', 'credit-block'],
+    ['LO cockpit setup tables', 'bw-delta-missing'],
   ];
   it.each(golden)('%s → %s', (query, expected) => {
     expect(topIds(query)[0]).toBe(expected);

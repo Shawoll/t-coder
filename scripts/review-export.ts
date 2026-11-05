@@ -1,6 +1,6 @@
 // Writes review/checklist.md: every curated item (notes, whisper scenarios,
-// quiz) with Slovak and English side by side, ticked when its id is in
-// src/data/reviewed.ts. The file is gitignored; regenerate it after edits.
+// quiz, curated T-codes) with Slovak and English side by side, ticked when its
+// id is in src/data/reviewed.ts. The file is gitignored; regenerate it after edits.
 //
 // Runs on plain Node (>= 22.18 strips the TypeScript types natively):
 //   node scripts/review-export.ts
@@ -9,9 +9,10 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ARCHETYPES, type Archetype } from '../src/data/archetypes.ts';
+import { CURATED_CODES } from '../src/data/codes-curated.ts';
 import { NOTES } from '../src/data/notes.ts';
 import { QUIZ } from '../src/data/quiz.ts';
-import { REVIEWED, isQuizReviewed, isScenarioReviewed } from '../src/data/reviewed.ts';
+import { REVIEWED, isCodeReviewed, isQuizReviewed, isScenarioReviewed } from '../src/data/reviewed.ts';
 import { isFioriStep, type Catalog, type L10n, type Step } from '../src/types.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -40,8 +41,9 @@ const push = (...lines: string[]) => out.push(...lines);
 
 // ── Notes, grouped by catalog area in almanac order ─────────────────────
 const noteCodes = new Set(Object.keys(NOTES));
+const allCodes = [...catalog.codes, ...CURATED_CODES];
 const notesByArea = catalog.areas
-  .map((a) => ({ area: a, codes: catalog.codes.filter((c) => c.area === a.id && noteCodes.has(c.code)) }))
+  .map((a) => ({ area: a, codes: allCodes.filter((c) => c.area === a.id && noteCodes.has(c.code)) }))
   .filter((g) => g.codes.length > 0);
 
 const reviewedNotes = Object.values(NOTES).filter((n) => n.reviewed).length;
@@ -95,12 +97,32 @@ QUIZ.forEach((item, i) => {
   push(...table([['Question', item.question], ['Model answer', item.answer]]));
 });
 
+// ── Curated T-codes, grouped by area ────────────────────────────────────
+push(
+  '## 5. Curated codes',
+  '',
+  'Added for T-Coder, not in the almanac. Check that the code exists under this name, the type tag',
+  '(R read, W write, A admin, O optional component, L legacy) and both purposes.',
+  '',
+);
+for (const area of catalog.areas) {
+  const codes = CURATED_CODES.filter((c) => c.area === area.id);
+  if (!codes.length) continue;
+  push(`### ${area.id} · ${area.title.en} / ${area.title.sk}`, '', '| | Code | Type | SK | EN |', '|---|---|---|---|---|');
+  for (const c of codes) {
+    push(`| ${box(isCodeReviewed(c.code))} | \`'${c.code}'\` | ${c.type} | ${esc(c.purpose.sk)} | ${esc(c.purpose.en)} |`);
+  }
+  push('');
+}
+
 // ── Header, unknown ids, write ──────────────────────────────────────────
 const reviewedScenarios = ARCHETYPES.filter((a) => isScenarioReviewed(a.id)).length;
 const reviewedQuiz = QUIZ.filter((_, i) => isQuizReviewed(i + 1)).length;
+const reviewedCodes = CURATED_CODES.filter((c) => isCodeReviewed(c.code)).length;
 const summary =
   `Reviewed: notes ${reviewedNotes}/${noteCodes.size} · ` +
-  `scenarios ${reviewedScenarios}/${ARCHETYPES.length} · quiz ${reviewedQuiz}/${QUIZ.length}`;
+  `scenarios ${reviewedScenarios}/${ARCHETYPES.length} · quiz ${reviewedQuiz}/${QUIZ.length} · ` +
+  `codes ${reviewedCodes}/${CURATED_CODES.length}`;
 
 // sv-SE formats as YYYY-MM-DD in local time (toISOString would give the UTC date).
 const today = new Date().toLocaleDateString('sv-SE');
@@ -118,6 +140,7 @@ const header = [
   `2. Almanac playbooks (${playbooks.length})`,
   `3. Curated scenarios (${curated.length})`,
   `4. Quiz (${QUIZ.length})`,
+  `5. Curated codes (${CURATED_CODES.length}) → \`REVIEWED.codes\``,
   '',
 ];
 
@@ -131,6 +154,7 @@ const unknown = [
   ...REVIEWED.notes.filter((c) => !noteCodes.has(c)).map((c) => `notes: '${c}'`),
   ...REVIEWED.scenarios.filter((id) => !scenarioIds.has(id)).map((id) => `scenarios: '${id}'`),
   ...REVIEWED.quiz.filter((n) => !Number.isInteger(n) || n < 1 || n > QUIZ.length).map((n) => `quiz: ${n}`),
+  ...REVIEWED.codes.filter((c) => !CURATED_CODES.some((x) => x.code === c)).map((c) => `codes: '${c}'`),
 ];
 if (unknown.length > 0) {
   console.error(`Unknown ids in src/data/reviewed.ts: ${unknown.join(', ')}`);

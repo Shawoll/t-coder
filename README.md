@@ -6,7 +6,7 @@
 
 **A pocket SAP T-code almanac and troubleshooter, in Slovak and English, dressed as a classic SAP GUI session.**
 
-T-Coder lets SAP developers and consultants browse 393 curated transaction codes and describe a problem in plain words (*“IDoc status 51”*, *“faktúra je blokovaná”*). It answers with the T-codes to check, in order, and shows exactly why. No install, no account, no server, no AI: it is a static web app that works offline after the first visit.
+T-Coder lets SAP developers and consultants browse 503 transaction codes (the almanac’s 393 plus 110 curated ones) and describe a problem in plain words (*“IDoc status 51”*, *“faktúra je blokovaná”*). It answers with the T-codes to check, in order, and shows exactly why. No install, no account, no server, no AI: it is a static web app that works offline after the first visit.
 
 ![T-Coder Easy Access on desktop](docs/screenshots/easy-access.png)
 
@@ -20,12 +20,12 @@ T-Coder lets SAP developers and consultants browse 393 curated transaction codes
 - **Easy Access tree.** Favorites, the almanac’s 48 fast-start codes, the 18 areas and recent codes. It works by tap or with the arrow keys (WAI-ARIA tree). The side panel holds a T-code of the day, a quick whisper and the first-response toolbox.
 - **ALV-style lists.** These have a light-blue key column, zebra rows, sortable headers, type and area filters, and a yellow totals band. Below 640 px they become cards.
 - **T-code detail.** Each code has four tabs:
-  - Overview: the purpose in both languages, what the type tag means, a safety rule, command-field forms with copy buttons, area context and how to verify the code in your own system.
+  - Overview: the purpose in both languages, what the type tag means, a safety rule, command-field forms with copy buttons, area context and how to verify the code in your own system. Codes that are not in the almanac carry a *Curated* label.
   - Curated note, for 81 key codes.
   - Related: create/change/display siblings, codes often used together and codes from the same area.
   - Used in: which playbooks, scenarios and processes include the code.
   Legacy codes also show their S/4HANA replacement.
-- **Whisper (troubleshooter).** It covers 61 problem scenarios: the almanac’s 10 playbooks plus 51 curated ones. For each match it shows a traffic-light confidence, matched-term chips, an ordered trail with a reason for every step, and one combined command chain (`/nWE02 → /nSLG1 → /nSMQ1 …`) with a button that copies it. Guided chips (area and symptom) work without typing. Example queries are one tap away on the empty whisper screen and on Home, and a test keeps each one pointing at its scenario. Your last 8 whisper queries come back as chips too. A landscape lens covers three cases:
+- **Whisper (troubleshooter).** It covers 66 problem scenarios: the almanac’s 10 playbooks plus 56 curated ones. For each match it shows a traffic-light confidence, matched-term chips, an ordered trail with a reason for every step, and one combined command chain (`/nWE02 → /nSLG1 → /nSMQ1 …`) with a button that copies it. Guided chips (area and symptom) work without typing. Example queries are one tap away on the empty whisper screen and on Home, and a test keeps each one pointing at its scenario. Your last 8 whisper queries come back as chips too. A landscape lens covers three cases:
   - ECC
   - S/4HANA, which swaps legacy steps such as RSA7 → ODQMON and MB1A → MIGO
   - BTP ABAP, which shows a “no SAP GUI, use ADT” notice
@@ -75,9 +75,11 @@ almanach.txt ──(parser + self-checks)──▶ src/data/generated/catalog.js
 
 The CI workflow re-runs the parser and fails if the committed catalog drifts. The smaller, irregular pages are transcribed by hand into `src/data/`: area intros, fast start, playbooks, processes, keys, movement types, S/4 changes and quiz questions.
 
-**Curated content** comprises 81 notes, 51 scenarios and 20 quiz model answers. It was written for T-Coder and is labelled as such in the UI. It is deliberately conservative: it says where to look, never how to intervene in production. Nothing counts as reviewed until the author signs it off.
+**Curated codes.** The almanac is a selection, so 110 everyday codes it does not list (workflow, batch input, SAPconnect, Gateway and launchpad, COGI, VL10A, MMPV, FEBAN, LO cockpit…) live next to it in `src/data/codes-curated.ts`. They join the almanac’s 18 areas and its type legend, come after the almanac codes in every list, and their detail page carries a *Curated* label and says they are not in the almanac. The parser and its self-checks never see them, so the almanac totals above stay exact. A test fails if a code appears in both lists: when a later almanac edition covers a curated code, it is deleted from the curated list.
 
-**Content review.** `npm run review` writes `review/checklist.md` (not committed): every note, playbook, scenario and quiz item with Slovak and English side by side, ticked once signed off, plus the counts (`Reviewed: notes 0/81 · scenarios 0/61 · quiz 0/20`). The author signs an item off by adding its id to `src/data/reviewed.ts`; the tests reject unknown or duplicate ids. **Review the curated content before showing the app publicly.**
+**Curated content** comprises 110 codes, 81 notes, 56 scenarios and 20 quiz model answers. It was written for T-Coder and is labelled as such in the UI. It is deliberately conservative: it says where to look, never how to intervene in production. Nothing counts as reviewed until the author signs it off.
+
+**Content review.** `npm run review` writes `review/checklist.md` (not committed): every note, playbook, scenario, quiz item and curated code with Slovak and English side by side, ticked once signed off, plus the counts (`Reviewed: notes 0/81 · scenarios 0/66 · quiz 0/20 · codes 0/110`). The author signs an item off by adding its id to `src/data/reviewed.ts`; the tests reject unknown or duplicate ids. **Review the curated content before showing the app publicly.**
 
 ## Architecture
 
@@ -86,13 +88,13 @@ Vite + TypeScript (strict, with `noUncheckedIndexedAccess` and `exactOptionalPro
 ```
 scripts/        extract-pdf.mjs · build-catalog.ts · make-icons.mjs (dependency-free PNG encoder)
 src/
-  data/         catalog (generated) · areas · archetypes · notes · processes · reference · replacements · quiz
+  data/         catalog (generated) · codes-curated · areas · archetypes · notes · processes · reference · replacements · quiz
   engine/       normalize · fuzzy · search · command · related · explain · whisper · daily   ← pure, unit-tested
   i18n/         en.ts · sk.ts (typed against en, so a missing translation fails to compile)
   ui/           dom.ts (tiny hyperscript; text is never parsed as HTML) · shell.ts (window chrome)
                 components/ (tree, ALV grid, tab strip, flow, group box) · views/ (one per route)
   styles/       tokens.css · chrome.css · components.css · views.css
-tests/          129 Vitest tests: engines, golden queries, content integrity, router/state, WCAG contrast
+tests/          174 Vitest tests: engines, golden queries, content integrity, router/state, WCAG contrast
 ```
 
 Hash routes make every screen deep-linkable from any static host. Examples: `#/t/%2FSCWM%2FMON`, `#/whisper?q=…&area=06&symptom=stuck`, `#/process/o2c`, `#/ref/keys`.

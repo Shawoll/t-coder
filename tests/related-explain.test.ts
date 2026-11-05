@@ -10,6 +10,11 @@ describe('siblings', () => {
     expect(siblings('ME22N')).toEqual(['ME21N', 'ME23N']);
     expect(siblings('MSC2N')).toEqual(['MSC1N', 'MSC3N']);
   });
+  it('pairs curated codes too', () => {
+    expect(siblings('IP01')).toEqual(['IP02', 'IP03']);
+    expect(siblings('KE51')).toEqual(['KE53']);
+    expect(siblings('KA03')).toEqual(['KA01']);
+  });
   it('rejects codes that differ in object or are not create/change/display', () => {
     expect(siblings('SM12')).toEqual([]);
     expect(siblings('VA01')).not.toContain('VA11'); // a sales inquiry, not a sales order
@@ -50,6 +55,18 @@ describe('explain', () => {
     expect(x.replacement).toBeDefined();
     expect(x.summary.en).toContain('BP');
     expect(explain('LTMC')!.summary.en).toContain('F3473');
+  });
+  it('says when a code is curated rather than from the almanac', () => {
+    const x = explain('COGI')!;
+    expect(x.curated).toBe(true);
+    expect(x.summary.en).toContain('area 12');
+    expect(x.summary.en).toContain('not in the almanac');
+    expect(x.summary.sk).toContain('mimo almanachu');
+    expect(explain('SE16N')!.curated).toBe(false);
+  });
+  it('points curated legacy codes to their successor', () => {
+    expect(explain('SE30')!.summary.en).toContain('use SAT instead');
+    expect(explain('MBST')!.replacement).toBeDefined();
   });
   it('explains namespaced codes', () => {
     expect(explain('/SCWM/MON')!.namespace?.en).toContain('/n/SCWM/MON');

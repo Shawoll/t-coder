@@ -1,5 +1,5 @@
 import { AUTHOR, SYSTEM } from '../../config.ts';
-import { catalog } from '../../data/catalog.ts';
+import { CODE_COUNTS, catalog } from '../../data/catalog.ts';
 import { t } from '../../i18n/index.ts';
 import { h } from '../dom.ts';
 import { groupBox, lead } from '../components/basics.ts';
@@ -18,14 +18,14 @@ export const aboutView = (): Screen => {
     content: h(
       'div',
       { class: 'stack' },
-      lead(t('about.lead')),
+      lead(t('about.lead', CODE_COUNTS)),
       h(
         'div',
         { class: 'grid-2' },
         groupBox(t('about.how'), h('p', null, t('about.howText'))),
         groupBox(t('whisper.how'), h('p', null, t('whisper.howText'))),
         groupBox(t('ref.provenance'), [
-          h('p', null, t('ref.provenanceText')),
+          h('p', null, t('ref.provenanceText', CODE_COUNTS)),
           h('p', { class: 'muted' }, `${catalog.source.title}, ${catalog.source.edition}. T-Coder ${SYSTEM.version}.`),
         ]),
         groupBox(t('about.author'), [

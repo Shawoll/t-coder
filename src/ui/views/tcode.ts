@@ -54,6 +54,7 @@ const overview = (x: Explanation): Node => {
       area ? h('p', null, h('a', { href: `#/area/${area.id}` }, `${area.id} ${tr(area.title)}`)) : null,
       info ? h('p', { class: 'muted' }, tr(info.intro)) : null,
       x.fastStart ? h('p', { class: 'type-line' }, h('span', { class: 'pill' }, t('tcode.fastStart')), t('tcode.fastStartText')) : null,
+      x.curated ? h('p', { class: 'type-line' }, h('span', { class: 'pill' }, t('tcode.curatedCode')), t('tcode.curatedCodeText')) : null,
     ]),
     groupBox(t('tcode.verify'), h('ol', { class: 'steps' }, x.verify.map((v) => h('li', null, tr(v))))),
   );
